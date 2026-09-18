@@ -28,9 +28,16 @@ de otra Organization. El resultado es deny-by-default.
 ## Ports, adaptadores y persistencia
 
 `CoreStore` es el port de persistencia y auditoría. v0.1.0 incluye
-`InMemoryCoreStore` para pruebas y uso local reproducible. Una integración
-productiva deberá implementar el mismo port con su almacenamiento, sin
-mover reglas al adaptador. No se elige todavía una base de datos.
+`InMemoryCoreStore` para pruebas y uso local reproducible y
+`SupabaseCoreStore` como adaptador productivo opcional. El adaptador recibe
+URL y clave desde la aplicación anfitriona, usa PostgREST con el perfil `core`
+y no mueve reglas de negocio al proveedor.
+
+La migración idempotente `supabase/migrations/20260918000000_core_schema.sql`
+crea las nueve tablas del schema `core`, sus índices, restricciones, grants y
+políticas RLS. El service role usado por el backend anfitrión puede persistir;
+las sesiones `authenticated` sólo leen filas dentro de su Organization/Site
+mediante las policies explícitas.
 
 ## Auditoría y seguridad
 
@@ -52,5 +59,8 @@ política pública y los parches mantienen compatibilidad dentro de `0.1.x`.
 
 `tests/test_core_platform.py` verifica multiplicidad de Sites, pertenencia
 multi-Organization, roles/permisos, aislamiento, alcance por Site, auditoría,
-membership inactiva y consumibilidad del contrato. Las pruebas no requieren
-servicios externos.
+membership inactiva y consumibilidad del contrato. `tests/test_supabase_adapter.py`
+verifica headers/profile, configuración proporcionada por el anfitrión y
+conversión de entidades. Las pruebas no requieren servicios externos; la
+validación contra un proyecto Supabase real requiere credenciales y un
+entorno externo no disponible en este checkout.

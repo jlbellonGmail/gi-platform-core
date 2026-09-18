@@ -1,6 +1,7 @@
 """GI-PLATFORM-CORE public package for v0.1.0."""
 
 from .adapters import InMemoryCoreStore
+from .supabase_adapter import SupabaseCoreStore
 from .application import CoreService
 from .authorization import AuthorizationDecision, TenantContext
 from .contracts import CoreApi, CONTRACT_VERSION
@@ -11,5 +12,6 @@ __all__ = [
     "CoreApi",
     "CoreService",
     "InMemoryCoreStore",
+    "SupabaseCoreStore",
     "TenantContext",
 ]

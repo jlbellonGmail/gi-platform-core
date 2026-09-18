@@ -27,6 +27,12 @@ class CoreApi:
     def create_site(self, organization_id: str, name: str) -> dict:
         return _public(self.service.create_site(organization_id, name))
 
+    def list_organizations(self) -> list[dict]:
+        return [_public(item) for item in self.service.list_organizations()]
+
+    def list_memberships(self, user_id: str) -> list[dict]:
+        return [_public(item) for item in self.service.list_memberships(user_id)]
+
     def create_user(self, external_subject: str, display_name: str) -> dict:
         return _public(self.service.create_user(external_subject, display_name))
 

@@ -16,4 +16,7 @@ repositorio. Chat, Voice, WhatsApp, Web, Mobile y Desktop son canales futuros
 que usarán los mismos casos de uso server-side.
 
 La integración actual es transport-neutral mediante `CoreApi`; no expone
-tablas ni requiere una UI o una base de datos concreta.
+tablas ni requiere una UI. Para producción, la aplicación anfitriona puede
+registrar `SupabaseCoreStore` con su URL y clave server-side y aplicar la
+migración `supabase/migrations/20260918000000_core_schema.sql`. La clave no
+se configura dentro del Core ni se expone al navegador.

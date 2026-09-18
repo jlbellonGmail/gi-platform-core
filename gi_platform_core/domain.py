@@ -22,6 +22,7 @@ def required(value: str, label: str) -> str:
 class Organization:
     name: str
     id: str = field(default_factory=new_id)
+    active: bool = True
 
     def __post_init__(self) -> None:
         required(self.name, "organization.name")
@@ -32,6 +33,7 @@ class Site:
     organization_id: str
     name: str
     id: str = field(default_factory=new_id)
+    active: bool = True
 
     def __post_init__(self) -> None:
         required(self.organization_id, "site.organization_id")
@@ -43,6 +45,7 @@ class UserProfile:
     external_subject: str
     display_name: str
     id: str = field(default_factory=new_id)
+    active: bool = True
 
     def __post_init__(self) -> None:
         required(self.external_subject, "user.external_subject")
@@ -54,6 +57,7 @@ class Permission:
     code: str
     description: str
     id: str = field(default_factory=new_id)
+    active: bool = True
 
     def __post_init__(self) -> None:
         code = required(self.code, "permission.code")
@@ -68,6 +72,7 @@ class Role:
     name: str
     permission_codes: FrozenSet[str]
     id: str = field(default_factory=new_id)
+    active: bool = True
 
     def __post_init__(self) -> None:
         required(self.organization_id, "role.organization_id")
