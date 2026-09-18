@@ -375,3 +375,22 @@ y árbol exactos. La integración se hace por PR de gobernanza desde develop,
 sin tocar main ni tags. No se cambia el modelo snapshot de adopción ni se
 migra automáticamente ningún proyecto consumidor. Se descarta reemplazar
 ahora scripts maduros: no existe evidencia comparativa que lo justifique.
+
+## Decisión: Core de plataforma neutral v0.1.0
+
+GI-PLATFORM-CORE adopta Python estándar como implementación mínima del Core
+porque el repositorio no declaraba stack de producto y la necesidad v0.1.0 es
+un núcleo de dominio portable, no un servidor o una UI. No se agrega framework,
+base de datos ni servicio externo.
+
+La implementación está separada en dominio, aplicación, contratos públicos,
+ports y adaptadores. `InMemoryCoreStore` es únicamente el adaptador
+determinista de prueba/local; la persistencia productiva se elegirá detrás de
+`CoreStore` cuando exista esa necesidad. La primera vertical consumidora
+prevista es `GI-CLINICADENTAL`, pero no existe ninguna dependencia hacia ella
+ni hacia `gi-vertical-dental`.
+
+La autorización combina identidad, membership activa, roles, permisos,
+Organization y Site/contexto. Las operaciones y decisiones relevantes emiten
+`AuditEvent`. La dirección de dependencias es producto/vertical → Core y la
+UI nunca accede directamente a almacenamiento privado.

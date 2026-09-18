@@ -14,8 +14,8 @@ La procedencia de esta baseline es:
 - Template: v2.0.0
 - SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
 
-Antes de iniciar la primera work unit, definir `GOAL.md` y luego agregar al
-`ROADMAP.md` únicamente trabajo funcional confirmado.
+La primera work unit funcional es `01-core-platform-v010`; su estado y
+evidencia se mantienen en `ROADMAP.md` y `runs/`.
 
 ## Comprobaciones
 

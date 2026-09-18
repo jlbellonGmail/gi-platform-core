@@ -6,8 +6,8 @@ GI-PLATFORM-CORE fue inicializado desde Template v2.0.0. Este archivo no
 contiene funcionalidades inventadas ni conserva las fases de construcción
 del Template.
 
-La primera entrada funcional se agregará después de definir `GOAL.md`, con
-el formato normal de work units y su evidencia en `runs/`.
+- [-] 01-core-platform-v010 — Core neutral de tenancy, identidad,
+  autorización contextual, aislamiento, auditoría y contratos públicos v0.1.0.
 
 ## Procedencia de la baseline
 
@@ -20,5 +20,6 @@ el formato normal de work units y su evidencia en `runs/`.
 - `[-]`: READY_FOR_PR.
 - `[x]`: completado después del merge.
 
-Las entradas funcionales deben ser líneas `NN-slug — descripción` y no deben
-aparecer aquí hasta que exista una decisión de producto trazable.
+Las entradas funcionales deben ser líneas `NN-slug — descripción`. La entrada
+01 queda en READY_FOR_PR después de la validación local; solo un merge humano
+puede cambiarla a `[x]`.

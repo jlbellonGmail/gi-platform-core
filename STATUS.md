@@ -11,7 +11,7 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 
 - Rama estable/local: `develop`.
 - Trabajo activo: ninguno.
-- ROADMAP funcional: todavía no definido; depende de `GOAL.md`.
+- ROADMAP funcional: `01-core-platform-v010` en READY_FOR_PR.
 - Work units activas: ninguna.
 - Runs de producto: ninguno.
 - Skills: cero, estado válido hasta demostrar una necesidad especializada.
@@ -20,16 +20,17 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 
 ## Próximo paso exacto
 
-Definir `GOAL.md` y, a partir de él, crear la primera work unit funcional.
+Revisar la PR local propuesta para `01-core-platform-v010`; el merge humano
+queda fuera de esta ejecución.
 
 <!-- STATUS:AUTO:BEGIN -->
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-18T03:24:25Z
-- Versión: v2.0.0
+- Actualizado: 2026-09-18T04:01:12Z
+- Versión: v0.1.0
 - Rama: develop
-- HEAD: 69864120c6271fd40c88bdd15257dcd67ec941bb
+- HEAD: 73d19bbaedd1bebdd9e64143f9fc5e086fdee9a3
 - Remoto: UNKNOWN / sin remoto
 - Working tree: dirty
 - Worktrees: 3

@@ -76,16 +76,22 @@ try {
             }
         }
         $workingTree = if (Invoke-Git @("status", "--porcelain")) { "dirty" } else { "clean" }
+        $projectVersion = 'v2.0.0'
+        if (Test-Path -LiteralPath "GOAL.md") {
+            $goalText = Get-Content -LiteralPath "GOAL.md" -Raw -Encoding UTF8
+            $goalMatch = [regex]::Match($goalText, '(?i)GI-PLATFORM-CORE\s+v(?<version>\d+\.\d+\.\d+)')
+            if ($goalMatch.Success) { $projectVersion = "v$($goalMatch.Groups['version'].Value)" }
+        }
         $remoteResult = Invoke-Optional "git" @("remote", "get-url", "origin")
         $remote = if ($remoteResult.Code -eq 0 -and $remoteResult.Text) { $remoteResult.Text } else { "UNKNOWN / sin remoto" }
-        $snapshot = [ordered]@{ schemaVersion = 1; generatedAt = [DateTime]::UtcNow.ToString('o'); version = 'v2.0.0'; branch = $branch; head = $head; remote = $remote; workingTree = $workingTree; worktrees = $trees; activeUnits = $units; pullRequest = $pr; ci = $ci; release = $release }
+        $snapshot = [ordered]@{ schemaVersion = 1; generatedAt = [DateTime]::UtcNow.ToString('o'); version = $projectVersion; branch = $branch; head = $head; remote = $remote; workingTree = $workingTree; worktrees = $trees; activeUnits = $units; pullRequest = $pr; ci = $ci; release = $release }
         $jsonText = $snapshot | ConvertTo-Json -Depth 12
         if ($MachinePath) { [IO.File]::WriteAllText([IO.Path]::GetFullPath($MachinePath), $jsonText + $NL, (New-Object Text.UTF8Encoding($false))) }
         if ($Json) { Write-Output $jsonText; exit 0 }
         $prText = if ($pr) { "#$($pr.number) $($pr.url)" } else { "UNKNOWN / sin PR abierta" }
         $ciText = if ($ci) { "$($ci.conclusion) @ $($ci.headSha)" } else { "UNKNOWN / sin CI verificable" }
         $unitText = if ($units.Count) { ($units | ForEach-Object { "$($_.slug)=$($_.state) [$($_.branch)]" }) -join '; ' } else { 'ninguna' }
-        $block = @("<!-- STATUS:AUTO:BEGIN -->", "", "## Estado verificado automáticamente", "", "- Actualizado: $([DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ'))", "- Versión: v2.0.0", "- Rama: $branch", "- HEAD: $head", "- Remoto: $($snapshot.remote)", "- Working tree: $workingTree", "- Worktrees: $($trees.Count)", "- Worktrees Git: $($trees.Count)", "- Unidades activas: $unitText", "- PR activa: $prText", "- CI: $ciText", "- CI vigente: $ciText", "- Última release: $(if ($release) { $release.tagName } else { 'UNKNOWN / no disponible' })", "", "<!-- STATUS:AUTO:END -->") -join $NL
+        $block = @("<!-- STATUS:AUTO:BEGIN -->", "", "## Estado verificado automáticamente", "", "- Actualizado: $([DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ'))", "- Versión: $projectVersion", "- Rama: $branch", "- HEAD: $head", "- Remoto: $($snapshot.remote)", "- Working tree: $workingTree", "- Worktrees: $($trees.Count)", "- Worktrees Git: $($trees.Count)", "- Unidades activas: $unitText", "- PR activa: $prText", "- CI: $ciText", "- CI vigente: $ciText", "- Última release: $(if ($release) { $release.tagName } else { 'UNKNOWN / no disponible' })", "", "<!-- STATUS:AUTO:END -->") -join $NL
         $status = Join-Path $root "STATUS.md"
         $content = [IO.File]::ReadAllText($status, [Text.Encoding]::UTF8)
         [IO.File]::WriteAllText($status, (Replace-Auto $content $block), (New-Object Text.UTF8Encoding($false)))
