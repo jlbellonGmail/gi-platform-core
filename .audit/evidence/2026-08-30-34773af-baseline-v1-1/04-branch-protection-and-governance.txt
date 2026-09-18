@@ -1,0 +1,32 @@
+=== gh api branches/develop/protection ===
+{"message":"Upgrade to GitHub Pro or make this repository public to enable this feature.","documentation_url":"https://docs.github.com/rest/branches/branch-protection#get-branch-protection","status":"403"}gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)
+
+=== gh repo view visibility ===
+{"isPrivate":true,"visibility":"PRIVATE"}
+
+=== default workflow permissions ===
+{"default_workflow_permissions":"read","can_approve_pull_request_reviews":false}
+=== git log --first-parent develop (direct-commit audit A1) ===
+4c940d6 ci: add product-tests job - separate placeholder job for CI gate
+2a7c22e ci: fix YAML syntax - quote echo string with colon
+5515ca8 ci: fix path separator for Ubuntu (./scripts/)
+0a604e8 ci: fix encoding issues in ci.yml - ASCII only for GitHub Actions
+e665484 ci: sync opencode.json - fix adapter drift for CI
+d76152f ci: trigger CI to diagnose failures
+1f3ba93 chore: sync opencode.json cleanup (empty mcp.servers removed by sync script)
+5ef6c7d tests: rewrite test_agents_e2e.py - fixed compatibilities
+1a94170 tests: fix test_agents_e2e.py - compatibles con estructura template 10/10
+79d6414 tests: add test_agents_e2e.py - End-to-end circuit agent validation
+18cfe47 scripts: add migrate-from-v0.ps1 - Migrate old template versions to 10/10
+f0ceca2 docs: add quick-start README.md - 3-step onboarding for AI-Native template
+994d859 feat: template 10/10 - Tests CI, bootstrap, Auto-Fix, Dockerfile
+a80f575 feat: resolver conflicto CI - integrar job validar adapters + placeholder product-tests
+48b0e8c feat: completar template AI-NIVELE 100% - Poblar contexto producto, añadir informe ejecutivo, feature ejemplo completo, validar CI y schemas JSON
+f8fa8f8 chore: agregar items 03-05 al backlog (operational readiness)
+a32360a docs: cerrar 02-integridad-post-hitl-y-ready-for-pr en ROADMAP.md
+fe6295d chore: agregar 02-integridad-post-hitl-y-ready-for-pr al backlog de ROADMAP
+45fde47 docs: cerrar 01-code-reviewer-y-sdd en ROADMAP.md
+d009da3 chore: agregar 01-code-reviewer-y-sdd al backlog de ROADMAP
+f747225 docs: cerrar 00-fuente-unica-router-modelos en ROADMAP.md
+cdf6af7 chore: sincronizar base con feature
+81ea9aa chore: inicializar rama de desarrollo

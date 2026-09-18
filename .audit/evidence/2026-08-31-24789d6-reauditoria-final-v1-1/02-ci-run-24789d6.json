@@ -1,0 +1,141 @@
+{
+    "conclusion": "success",
+    "jobs": [
+        {
+            "completedAt": "2026-08-31T17:38:59Z",
+            "conclusion": "success",
+            "databaseId": 99581278882,
+            "name": "circuit-tests",
+            "startedAt": "2026-08-31T17:36:18Z",
+            "status": "completed",
+            "steps": [
+                {
+                    "completedAt": "2026-08-31T17:36:20Z",
+                    "conclusion": "success",
+                    "name": "Set up job",
+                    "number": 1,
+                    "startedAt": "2026-08-31T17:36:19Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:22Z",
+                    "conclusion": "success",
+                    "name": "Run actions/checkout@v4",
+                    "number": 2,
+                    "startedAt": "2026-08-31T17:36:20Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:24Z",
+                    "conclusion": "success",
+                    "name": "Instalar Python 3.12",
+                    "number": 3,
+                    "startedAt": "2026-08-31T17:36:22Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:29Z",
+                    "conclusion": "success",
+                    "name": "Instalar dependencias",
+                    "number": 4,
+                    "startedAt": "2026-08-31T17:36:24Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:38:56Z",
+                    "conclusion": "success",
+                    "name": "Tests (pytest)",
+                    "number": 5,
+                    "startedAt": "2026-08-31T17:36:29Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:38:57Z",
+                    "conclusion": "success",
+                    "name": "Validar adaptadores agenticos",
+                    "number": 6,
+                    "startedAt": "2026-08-31T17:38:56Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:38:57Z",
+                    "conclusion": "success",
+                    "name": "Post Instalar Python 3.12",
+                    "number": 11,
+                    "startedAt": "2026-08-31T17:38:57Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:38:57Z",
+                    "conclusion": "success",
+                    "name": "Post Run actions/checkout@v4",
+                    "number": 12,
+                    "startedAt": "2026-08-31T17:38:57Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:38:57Z",
+                    "conclusion": "success",
+                    "name": "Complete job",
+                    "number": 13,
+                    "startedAt": "2026-08-31T17:38:57Z",
+                    "status": "completed"
+                }
+            ],
+            "url": "https://github.com/jlbellonGmail/template/actions/runs/33420464378/job/99581278882"
+        },
+        {
+            "completedAt": "2026-08-31T17:36:21Z",
+            "conclusion": "success",
+            "databaseId": 99581279004,
+            "name": "product-tests",
+            "startedAt": "2026-08-31T17:36:17Z",
+            "status": "completed",
+            "steps": [
+                {
+                    "completedAt": "2026-08-31T17:36:19Z",
+                    "conclusion": "success",
+                    "name": "Set up job",
+                    "number": 1,
+                    "startedAt": "2026-08-31T17:36:18Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:19Z",
+                    "conclusion": "success",
+                    "name": "Run actions/checkout@v4",
+                    "number": 2,
+                    "startedAt": "2026-08-31T17:36:19Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:19Z",
+                    "conclusion": "success",
+                    "name": "Placeholder (sin stack definido)",
+                    "number": 3,
+                    "startedAt": "2026-08-31T17:36:19Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:20Z",
+                    "conclusion": "success",
+                    "name": "Post Run actions/checkout@v4",
+                    "number": 6,
+                    "startedAt": "2026-08-31T17:36:19Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:20Z",
+                    "conclusion": "success",
+                    "name": "Complete job",
+                    "number": 7,
+                    "startedAt": "2026-08-31T17:36:20Z",
+                    "status": "completed"
+                }
+            ],
+            "url": "https://github.com/jlbellonGmail/template/actions/runs/33420464378/job/99581279004"
+        }
+    ],
+    "name": "CI",
+    "status": "completed"
+}

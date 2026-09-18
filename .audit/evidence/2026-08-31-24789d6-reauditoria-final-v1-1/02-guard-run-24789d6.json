@@ -1,0 +1,98 @@
+{
+    "conclusion": "success",
+    "jobs": [
+        {
+            "completedAt": "2026-08-31T17:36:22Z",
+            "conclusion": "success",
+            "databaseId": 99581279179,
+            "name": "guard-develop",
+            "startedAt": "2026-08-31T17:36:17Z",
+            "status": "completed",
+            "steps": [
+                {
+                    "completedAt": "2026-08-31T17:36:19Z",
+                    "conclusion": "success",
+                    "name": "Set up job",
+                    "number": 1,
+                    "startedAt": "2026-08-31T17:36:18Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:20Z",
+                    "conclusion": "success",
+                    "name": "Checkout develop (historial completo)",
+                    "number": 2,
+                    "startedAt": "2026-08-31T17:36:19Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "success",
+                    "name": "Detectar violacion (push directo sin PR mergeada asociada)",
+                    "number": 3,
+                    "startedAt": "2026-08-31T17:36:20Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "skipped",
+                    "name": "Configurar git",
+                    "number": 4,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "skipped",
+                    "name": "Revertir commits sin PR mergeada asociada",
+                    "number": 5,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "skipped",
+                    "name": "Restaurar develop tras push forzado",
+                    "number": 6,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "skipped",
+                    "name": "Registrar incidente auditable",
+                    "number": 7,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "skipped",
+                    "name": "Marcar el run como fallido (violacion detectada)",
+                    "number": 8,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "success",
+                    "name": "Post Checkout develop (historial completo)",
+                    "number": 16,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                },
+                {
+                    "completedAt": "2026-08-31T17:36:21Z",
+                    "conclusion": "success",
+                    "name": "Complete job",
+                    "number": 17,
+                    "startedAt": "2026-08-31T17:36:21Z",
+                    "status": "completed"
+                }
+            ],
+            "url": "https://github.com/jlbellonGmail/template/actions/runs/33420464281/job/99581279179"
+        }
+    ],
+    "name": "Guard develop branch",
+    "status": "completed"
+}

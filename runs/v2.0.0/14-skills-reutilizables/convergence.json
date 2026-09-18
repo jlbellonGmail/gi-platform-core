@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "convergence": "CONVERGENCE",
+  "iteration": 1,
+  "depth": "LIGHT",
+  "verdict": "APPROVED",
+  "terminal": true,
+  "budget": {
+    "maxIterations": 2,
+    "policy": "LIGHT=2, STANDARD=4, FULL=6; configurable por MaxIterations"
+  },
+  "findings": {
+    "open": [],
+    "resolved": [],
+    "openCount": 0,
+    "resolvedCount": 0,
+    "fingerprint": ""
+  },
+  "progress": true,
+  "noProgress": false,
+  "escalation": null,
+  "nextAction": "",
+  "reviewerIndependent": true,
+  "builderMayApprove": false,
+  "providerAgnostic": true
+}

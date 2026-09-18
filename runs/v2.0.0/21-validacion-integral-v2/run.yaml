@@ -1,0 +1,6 @@
+execution:
+  model: default
+  variant: high
+  fallback:
+    - go
+    - zen

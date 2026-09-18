@@ -1,0 +1,2 @@
+=== sync-agentic-adapters.ps1 -Check ===
+Adaptadores agenticos sincronizados.

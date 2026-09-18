@@ -1,0 +1,49 @@
+close-feature	Set up job	﻿2026-09-04T00:47:44.8099454Z Current runner version: '2.337.0'
+close-feature	Set up job	2026-09-04T00:47:44.8151411Z ##[group]Runner Image Provisioner
+close-feature	Set up job	2026-09-04T00:47:44.8152785Z Hosted Compute Agent
+close-feature	Set up job	2026-09-04T00:47:44.8153670Z Version: 20260819.586
+close-feature	Set up job	2026-09-04T00:47:44.8155041Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+close-feature	Set up job	2026-09-04T00:47:44.8156224Z Build Date: 2026-08-18T23:20:18Z
+close-feature	Set up job	2026-09-04T00:47:44.8157399Z Worker ID: {606d5356-f955-4fe9-ab7e-97bd245aed53}
+close-feature	Set up job	2026-09-04T00:47:44.8158572Z Azure Region: northcentralus
+close-feature	Set up job	2026-09-04T00:47:44.8159506Z ##[endgroup]
+close-feature	Set up job	2026-09-04T00:47:44.8161693Z ##[group]Operating System
+close-feature	Set up job	2026-09-04T00:47:44.8162661Z Ubuntu
+close-feature	Set up job	2026-09-04T00:47:44.8163653Z 24.04.4
+close-feature	Set up job	2026-09-04T00:47:44.8164788Z LTS
+close-feature	Set up job	2026-09-04T00:47:44.8165590Z ##[endgroup]
+close-feature	Set up job	2026-09-04T00:47:44.8166560Z ##[group]Runner Image
+close-feature	Set up job	2026-09-04T00:47:44.8167519Z Image: ubuntu-24.04
+close-feature	Set up job	2026-09-04T00:47:44.8168518Z Version: 20260823.283.1
+close-feature	Set up job	2026-09-04T00:47:44.8170331Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260823.283/images/ubuntu/Ubuntu2404-Readme.md
+close-feature	Set up job	2026-09-04T00:47:44.8173233Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260823.283
+close-feature	Set up job	2026-09-04T00:47:44.8175138Z ##[endgroup]
+close-feature	Set up job	2026-09-04T00:47:44.8177259Z ##[group]GITHUB_TOKEN Permissions
+close-feature	Set up job	2026-09-04T00:47:44.8180236Z Contents: write
+close-feature	Set up job	2026-09-04T00:47:44.8181146Z Metadata: read
+close-feature	Set up job	2026-09-04T00:47:44.8182162Z PullRequests: read
+close-feature	Set up job	2026-09-04T00:47:44.8183096Z ##[endgroup]
+close-feature	Set up job	2026-09-04T00:47:44.8186614Z Secret source: Actions
+close-feature	Set up job	2026-09-04T00:47:44.8188644Z Prepare workflow directory
+close-feature	Set up job	2026-09-04T00:47:44.9092668Z Prepare all required actions
+close-feature	Set up job	2026-09-04T00:47:44.9243757Z Getting action download info
+close-feature	Set up job	2026-09-04T00:47:45.1797520Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+close-feature	Set up job	2026-09-04T00:47:45.4039664Z Complete job name: close-feature
+close-feature	Derivar slug y modo de work unit	﻿2026-09-04T00:47:45.4693391Z ##[group]Run head_ref='chore/remediacion-final-100'
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4694643Z ^[[36;1mhead_ref='chore/remediacion-final-100'^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4695462Z ^[[36;1mif [[ "$head_ref" =~ ^feature/([0-9]{2}-[a-z0-9]+(-[a-z0-9]+)*)$ ]]; then^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4696317Z ^[[36;1m  echo "slug=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4697028Z ^[[36;1m  echo "branch=$head_ref" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4697688Z ^[[36;1m  echo "mode=Feature" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4698439Z ^[[36;1melif [[ "$head_ref" =~ ^milestone/([a-z0-9]+(-[a-z0-9]+)*)$ ]]; then^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4699225Z ^[[36;1m  echo "slug=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4699920Z ^[[36;1m  echo "branch=$head_ref" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4700591Z ^[[36;1m  echo "mode=Milestone" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4701177Z ^[[36;1melse^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4702006Z ^[[36;1m  echo "La rama '$head_ref' no sigue feature/NN-slug ni milestone/slug; no hay cierre automatico de ROADMAP."^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4703001Z ^[[36;1m  echo "skip=true" >> "$GITHUB_OUTPUT"^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4703575Z ^[[36;1mfi^[[0m
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4750750Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4751943Z ##[endgroup]
+close-feature	Derivar slug y modo de work unit	2026-09-04T00:47:45.4901720Z La rama 'chore/remediacion-final-100' no sigue feature/NN-slug ni milestone/slug; no hay cierre automatico de ROADMAP.
+close-feature	Complete job	﻿2026-09-04T00:47:45.5112354Z Cleaning up orphan processes

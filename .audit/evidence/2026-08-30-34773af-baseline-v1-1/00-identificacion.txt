@@ -1,0 +1,16 @@
+=== git status ===
+On branch chore/auditoria-baseline-v1.1
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.audit/evidence/2026-08-30-34773af-baseline-v1-1/
+	.claude/.headroom_wrap_marker.json
+	.claude/.headroom_wrap_owners.json
+	.claude/.headroom_wrap_settings.lock
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+=== git rev-parse HEAD ===
+34773af3b03d0bd84b0c88f621353a7dfd6a83ed
+
+=== git branch --show-current ===
+chore/auditoria-baseline-v1.1

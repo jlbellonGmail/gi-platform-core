@@ -1,0 +1,2 @@
+42 passed, 2 warnings, 129 errors in 148.16s (0:02:28)
+Causa raiz comun de los 129 errores: PermissionError [WinError 5] Acceso denegado: C:\Users\jlbel\AppData\Local\Temp\pytest-of-jlbellon (limpieza de tmp_path de pytest, entorno local del auditor, no del repositorio).

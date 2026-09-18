@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "sdd": "ADAPTIVE",
+  "depth": "LIGHT",
+  "reason": "Evaluacion documental y de infraestructura sin cambio de comportamiento",
+  "required": ["SUMMARY", "code-review"],
+  "skillsCreated": 0,
+  "providerAgnostic": true,
+  "f10Implemented": false
+}

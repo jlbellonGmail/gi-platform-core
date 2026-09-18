@@ -1,0 +1,60 @@
+HALLAZGO NUEVO (no presente en la baseline 34773af): la rama `main`
+declarada en AGENTS.md como "Rama de produccion" no existe en el
+repositorio.
+
+Comando: git branch -a
+Resultado: no aparece ninguna rama `main` ni `remotes/origin/main` en
+ningun listado (local, remoto, ni en el historial completo de ramas
+borradas visibles via `git branch -a -v`).
+
+Comando: gh api repos/jlbellonGmail/template --jq '.default_branch'
+Resultado: develop
+
+Comando: gh run list --workflow=docs.yml --limit 10
+Resultado: sin corridas (exit 1 / lista vacia). docs.yml nunca se ha
+ejecutado ni una sola vez.
+
+Comando: gh api repos/jlbellonGmail/template/pages
+Resultado: {"message":"Not Found","status":"404"}. GitHub Pages no esta
+configurado (Settings -> Pages -> Source: no aplicado), pese a que
+AGENTS.md, seccion "Setup manual", lo lista como paso pendiente
+explicito.
+
+Analisis de coherencia (AGENTS.md, seccion "Git", texto literal):
+  "Rama de produccion: main -- solo recibe merges desde develop via PR,
+  cuando se decide hacer un release (no en cada feature)"
+Este texto describe `main` en tiempo presente, como si ya existiera.
+docs/tecnica/operational-readiness-docs.md ("Por que develop y no
+main") tambien presupone que `main` existe, explicando solo por que la
+proteccion de rama no se aplica alli todavia -- no explica ni reconoce
+que `main` no existe como rama en absoluto.
+
+Impacto verificado sobre la adopcion: TEMPLATE.md lista "Use this
+template" como mecanismo de reutilizacion explicitamente soportado. El
+mecanismo "Use this template" de GitHub copia por defecto unicamente la
+rama default del repositorio origen (salvo que el usuario marque
+"Include all branches"). La rama default de este repositorio es
+`develop`, no `main`. Un consumidor nuevo que use ese mecanismo
+recibiria un repositorio SIN rama `main`, exactamente el mismo estado
+que este repositorio tiene hoy -- contradiciendo el flujo de
+"Setup manual" de AGENTS.md, que presupone "hacer el primer push de
+`main` y `develop`" como si `main` ya existiera para pushear.
+
+docs.yml (`on: push: branches: [main], paths: ["docs/**",
+"mkdocs.yml"]`) no puede dispararse en el estado actual del
+repositorio porque su unica condicion de disparo (push a `main`) no
+tiene una rama real a la cual aplicarse. Combinado con GitHub Pages sin
+configurar, la capacidad "publicar el sitio MkDocs a GitHub Pages",
+descrita en AGENTS.md seccion "CI/CD" como parte de la infraestructura
+actual del proyecto, no es funcional en el estado auditado ni puede
+llegar a disparar sin una intervencion humana no documentada como paso
+obligatorio (main no aparece en la lista de "Setup manual").
+
+No se considera SUGGESTION: hay una perdida de puntuacion real y
+verificable (ver matriz Q1.2, Q1.3, Q2.1, Q4.2, Q6.1 en el informe).
+
+Verificacion de build (aislada del deploy, ver 08-mkdocs-build.txt):
+`mkdocs build --strict` SI funciona y es reproducible localmente -- la
+falla es especificamente de topologia de ramas / disparo de CI/CD y
+configuracion de Pages, no del contenido de la documentacion ni de
+mkdocs.yml.

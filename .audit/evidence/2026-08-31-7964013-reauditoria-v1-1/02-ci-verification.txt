@@ -1,0 +1,21 @@
+Comando: gh api repos/jlbellonGmail/template/commits/79640139f6718cdebcd4ae3a6827ffc3df1e8d10/check-runs --jq '.check_runs[] | {name, status, conclusion}'
+Resultado:
+{"conclusion":"success","name":"guard-develop","status":"completed"}
+{"conclusion":"success","name":"product-tests","status":"completed"}
+{"conclusion":"success","name":"circuit-tests","status":"completed"}
+
+Estado: VERIFICADO. Los tres checks del commit exacto auditado (7964013)
+estan en verde, confirmado via GitHub API en vivo (evidencia E5/Nivel 1
+de AUDIT_RULES.md: comportamiento verificado, no documentacion).
+
+Comando: gh run list --workflow=ci.yml --limit 5
+Resultado (recortado):
+completed success  Merge pull request #17 ...  CI  develop      push          33391634119  2m55s  2026-08-31T12:24:55Z
+completed success  Corregir permisos ...       CI  chore/...    pull_request  33391166466  2m52s  2026-08-31T12:19:12Z
+completed success  Merge pull request #16 ...  CI  develop      push          33342778810  2m51s  2026-08-30T23:48:23Z
+completed success  Remediar hallazgos ...      CI  chore/...    pull_request  33342420595  3m26s  2026-08-30T23:40:04Z
+completed success  Merge pull request #15 ...  CI  develop      push          33323211038  3m27s  2026-08-30T16:42:26Z
+
+No hay corridas rojas recientes de ci.yml. product-tests sigue siendo
+el placeholder documentado explicitamente en AGENTS.md / ci.yml (sin
+stack de producto todavia), consistente con el contrato declarado.

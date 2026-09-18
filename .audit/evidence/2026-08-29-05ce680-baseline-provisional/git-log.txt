@@ -1,0 +1,5 @@
+05ce680a5f4dc0c9affb6b3d06cf3ca5f1eb5e49 2026-08-29 20:36:08 -0300 Merge pull request #12 from jlbellonGmail/chore/auditoria-integridad-circuito
+0abf445efdeda8a25927eaf7bd0b91dba331077d 2026-08-29 20:31:03 -0300 Incorporar framework de auditoría de calidad
+7d4e5a81c24afb86870d2b38ffa62cf2bd6e5de3 2026-08-29 11:06:58 -0300 chore: auditoria de integridad del circuito - remover artefactos de commits directos a develop y declarar rubrica de evaluacion
+1fffaade3061684d2cee74910c545842c5d61ee3 2026-08-29 09:16:43 -0300 Merge pull request #11 from jlbellonGmail/chore/verificacion-track-b
+f69f386d4b5a24184b1c060e886988d5f6b94b0f 2026-08-28 23:20:52 -0300 chore: verificar suite completa, cerrar cobertura de drift de opencode.json y declarar PowerShell/Windows como decision

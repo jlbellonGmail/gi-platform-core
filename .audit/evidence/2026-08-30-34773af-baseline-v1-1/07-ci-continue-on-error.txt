@@ -1,0 +1,4 @@
+=== CI adapter-drift step has continue-on-error: true ===
+28:      - name: Validar adaptadores agenticos
+29-        run: pwsh -NoProfile -ExecutionPolicy Bypass -File ./scripts/sync-agentic-adapters.ps1 -Check
+30-        continue-on-error: true

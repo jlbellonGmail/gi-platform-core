@@ -1,0 +1,8 @@
+?? .audit/evidence/2026-08-29-05ce680/
+!! .claude/settings.local.json
+!! .claude/worktrees/
+!! .opencode/.gitignore
+!! .opencode/node_modules/
+!! .opencode/package-lock.json
+!! .pytest_cache/
+!! tests/__pycache__/

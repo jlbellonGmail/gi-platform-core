@@ -1,0 +1,10 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- C:\Program Files\Python\python.exe
+cachedir: .pytest_cache
+rootdir: D:\proyectos\template
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 7 items
+
+tests/test_local_reconciler_scripts.py::test_start_reconciler_in_main_checkout FAILED [ 14%]
+tests/test_local_reconciler_scripts.py::test_start_reconciler_from_linked_worktree 

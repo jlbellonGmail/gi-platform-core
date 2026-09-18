@@ -1,0 +1,57 @@
+Reverificacion independiente de los 5 hallazgos puntuables de la
+baseline oficial anterior (AUDIT-2026-08-30-34773af-baseline-v1-1.md),
+consultada UNICAMENTE despues de consolidar el score propio de esta
+reauditoria, solo con fines de comparacion historica (instruccion
+explicita del prompt de esta reauditoria).
+
+F-001 (baseline) -- Residuo documental
+docs/producto/informe-ejecutivo-2026.md:
+  Comando: ls docs/producto/informe-ejecutivo-2026.md
+  Resultado: no existe. Confirmado por diff 34773af..HEAD: archivo
+  borrado (108 deletions) en el commit 9bd7bed ("Remediar hallazgos de
+  la baseline v1.1").
+  Estado: RESUELTO, confirmado independientemente.
+
+F-002 (baseline) -- continue-on-error en CI:
+  Comando: grep -rn "continue-on-error" .github/workflows/*.yml
+  Resultado: 0 coincidencias en ningun workflow.
+  Estado: RESUELTO, confirmado independientemente.
+
+F-003 (baseline) -- Discrepancia de conteo de tests README vs realidad:
+  Comando: grep -n "test\|pytest" README.md | grep -iE "[0-9]{2,3}"
+  Resultado: sin coincidencias -- README ya no afirma un numero fijo de
+  tests, remite a "correr pytest -v tests/ para el numero y detalle
+  actuales".
+  Estado: RESUELTO, confirmado independientemente.
+
+F-004 (baseline, CRITICAL) -- Sin enforcement tecnico real contra commits
+directos a develop:
+  Ver 04-guard-develop-branch-verification.txt y
+  05-branch-protection-and-visibility.txt para el detalle completo.
+  guard-develop-branch.yml existe, esta activo, tiene 19 tests
+  estructurales pasando, un permiso critico corregido con test de
+  regresion explicito, y evidencia real de una ejecucion exitosa
+  posterior al fix. El HITL humano aprobo explicitamente esta
+  mitigacion como control compensatorio suficiente (ver AGENTS.md,
+  parrafo final de "Setup manual", "Aprobacion HITL de esta
+  mitigacion").
+  Estado: RESUELTO EN ESTA REAUDITORIA (candidato a verificacion segun
+  el propio AGENTS.md; esta reauditoria independiente confirma la
+  resolucion con evidencia E3+E4 proporcional al riesgo dado que E5
+  completo requeriria una accion prohibida por el alcance de esta
+  auditoria).
+
+F-005 (baseline) -- Modelo de evolucion snapshot no declarado:
+  Comando: grep -n "modelo de evolucion del template es \`snapshot\`"
+  docs/tecnica/arquitectura.md
+  Resultado: encontrado en linea 196, seccion dedicada con
+  justificacion explicita.
+  Estado: RESUELTO, confirmado independientemente.
+
+CONCLUSION DE LA REVERIFICACION: los 5 hallazgos puntuables de la
+baseline anterior estan genuinamente resueltos, verificados de forma
+independiente con evidencia actual (no se acepto la afirmacion de la
+baseline por si sola). Esta reauditoria identifica 2 hallazgos NUEVOS
+no presentes en la baseline anterior (rama `main` inexistente y su
+consecuencia sobre docs.yml/GitHub Pages), detallados en el informe
+principal como F-001 y F-002 de esta reauditoria.

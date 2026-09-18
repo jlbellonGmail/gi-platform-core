@@ -1,0 +1,57 @@
+Comando oficial (README.md, PASO 2): pytest -v tests/
+
+Nota metodologica: la primera ejecucion con el basetemp por defecto de
+pytest fallo con PermissionError sobre
+C:\Users\jlbel\AppData\Local\Temp\pytest-of-jlbellon (limitacion del
+entorno del auditor -- carpeta temporal de Windows con permisos
+bloqueados, no relacionada con el repositorio). Se repitio la
+verificacion usando --basetemp apuntando al scratchpad de la sesion,
+sin modificar ningun mecanismo oficial del repositorio.
+
+Ejecucion 1 (basetemp custom):
+6 failed, 184 passed in 1230.60s (0:20:30)
+
+Ejecucion 2 (basetemp custom, repeticion para confirmar reproducibilidad):
+6 failed, 184 passed in 1158.73s (0:19:18)
+
+Los 6 tests que fallan en ambas ejecuciones, siempre los mismos:
+FAILED tests/test_local_reconciler_scripts.py::test_start_reconciler_in_main_checkout
+FAILED tests/test_local_reconciler_scripts.py::test_start_reconciler_from_linked_worktree
+FAILED tests/test_local_reconciler_scripts.py::test_start_reconciler_replaces_stale_lock
+FAILED tests/test_local_reconciler_scripts.py::test_reconciler_cleans_worktree_and_branch_when_remote_closed
+FAILED tests/test_local_reconciler_scripts.py::test_reconciler_cleans_only_target_worktree_and_branch
+FAILED tests/test_local_reconciler_scripts.py::test_reconciler_never_removes_dirty_worktree
+
+Causa raiz confirmada (evidencia E3, documentacion normativa del propio
+repositorio): docs/tecnica/circuito-agentico.md, seccion
+"Troubleshooting: EDR/antivirus agresivo bloquea el reconciliador
+local (Windows)" y su nota "mismo sintoma bajo pytest tests/" nombran
+EXPLICITAMENTE estos 6 tests como sintoma conocido: un proceso
+powershell.exe lanzado en background por un proceso padre python.exe es
+terminado silenciosamente en 1-2s por heuristicas EDR/antivirus que
+tratan "Python lanzando PowerShell oculto" como patron sospechoso. El
+propio repositorio documenta que esto NO ocurre en el uso real del
+circuito (ready-for-pr.ps1 corrido desde shell, sin Python de por
+medio), y que estos tests ya estan excluidos de CI:
+
+tests/test_local_reconciler_scripts.py linea 15-20:
+  pytestmark = pytest.mark.skipif(
+      os.name != "nt"
+      or shutil.which("powershell.exe") is None
+      or os.environ.get("CODEX_SANDBOX_NETWORK_DISABLED") == "1",
+      reason="Requiere Windows con PowerShell 5.1 fuera del sandbox Codex",
+  )
+
+Verificacion cruzada con CI real (ver 02-ci-verification.txt): el job
+`circuit-tests` de GitHub Actions (ubuntu-latest) para el commit
+7964013 exacto reporta SUCCESS. En ubuntu-latest `os.name != "nt"`, por
+lo que estos 6 tests se saltan automaticamente y no forman parte del
+gate real.
+
+Clasificacion: NO VERIFICADO COMO FALLO DEL REPOSITORIO -- LIMITACION
+DE ENTORNO LOCAL DOCUMENTADA Y CONFIRMADA POR EL PROPIO REPOSITORIO. No
+resta puntos en Q5.3 (ver AUDIT_RULES.md #19 "Dependencias faltantes",
+Caso B, y QUALITY_SCORE.md #16 "NO VERIFICADO").
+
+Total: 190 tests recolectados, 184 passed, 6 failed (limitacion de
+entorno documentada), 0 errors reales del repositorio.

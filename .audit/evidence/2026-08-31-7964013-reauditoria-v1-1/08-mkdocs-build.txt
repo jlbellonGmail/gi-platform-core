@@ -1,0 +1,17 @@
+Comando: python -m mkdocs build --strict
+Resultado: exit code 0. "Documentation built in 1.42 seconds."
+
+Advertencias INFO (no promovidas a error por --strict en esta version
+de mkdocs-material 9.7.7): 16 paginas de docs/tecnica y docs/usuario
+existen pero no estan en la seccion "nav" de mkdocs.yml. Es informativo,
+no bloqueante, y no decrementa Q6.5 (el build en si es reproducible y
+exitoso).
+
+Directorio "site/" generado se elimino despues de la verificacion
+(rm -rf site) para no dejar residuo en el estado auditado.
+
+pip show mkdocs-material: version 9.7.7, presente localmente
+(dependencia no declarada en requirements-dev.txt porque docs.yml la
+instala directamente via pip en el propio workflow -- consistente con
+que no es dependencia del circuito de tests sino del pipeline de
+publicacion de docs).

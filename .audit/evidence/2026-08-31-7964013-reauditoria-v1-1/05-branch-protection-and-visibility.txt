@@ -1,0 +1,18 @@
+Comando: gh api repos/jlbellonGmail/template/branches/develop/protection
+Resultado: {"message":"Upgrade to GitHub Pro or make this repository
+public to enable this feature.","status":"403"}
+
+Comando: gh api repos/jlbellonGmail/template/rulesets
+Resultado: {"message":"Upgrade to GitHub Pro or make this repository
+public to enable this feature.","status":"403"}
+
+Comando: gh api repos/jlbellonGmail/template --jq '{private, visibility}'
+Resultado: {"private":true,"visibility":"private"}
+
+Estado: VERIFICADO. Confirma exactamente la limitacion documentada en
+AGENTS.md ("Limitacion conocida verificada en este repositorio"):
+branch protection y rulesets nativos de GitHub no estan disponibles en
+el plan actual para un repositorio privado. guard-develop-branch.yml
+(ver 04-guard-develop-branch-verification.txt) es la mitigacion tecnica
+compensatoria evaluada bajo TEMPLATE.md Q6.2 (objetivo de control de
+integracion, no exigencia de una funcionalidad comercial concreta).

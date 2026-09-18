@@ -1,0 +1,3 @@
+{"conclusion":"success","name":"circuit-tests","steps":[{"conclusion":"success","name":"Set up job"},{"conclusion":"success","name":"Run actions/checkout@v4"},{"conclusion":"success","name":"Instalar Python 3.12"},{"conclusion":"success","name":"Instalar dependencias"},{"conclusion":"success","name":"Tests (pytest)"},{"conclusion":"success","name":"Validar adaptadores agenticos"},{"conclusion":"success","name":"Post Instalar Python 3.12"},{"conclusion":"success","name":"Post Run actions/checkout@v4"},{"conclusion":"success","name":"Complete job"}]}
+================= 161 passed, 10 skipped in 190.30s (0:03:10) ==================
+Run: https://github.com/jlbellonGmail/template/actions/runs/33281358971 (push a develop, commit 05ce680)
