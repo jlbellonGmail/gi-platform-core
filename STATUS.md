@@ -1,42 +1,43 @@
 # Estado operativo
 
-Versión: v2.0.0  
-Estado general: F01–F17 y T01–T04 cerradas; PR #91 fue mergeada de `develop` a `main` con commit `35199b2`. v2.0.0 está lista para validación final, tag y publicación.
+Proyecto nuevo: GI-PLATFORM-CORE.
 
-## Próximas fases
+## Procedencia
 
-- F16 — validación integral, cerrada y mergeada en PR #86.
-- PR #91 — release v2.0.0 desde `develop` hacia `main`, mergeada.
+- Template base: v2.0.0
+- Template SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
 
-Próximo paso exacto: validar `main`, crear tag anotado `v2.0.0` sobre su SHA estable y publicar la release.
+## Estado
 
-## Evidencia real
+- Rama estable/local: `develop`.
+- Trabajo activo: ninguno.
+- ROADMAP funcional: todavía no definido; depende de `GOAL.md`.
+- Work units activas: ninguna.
+- Runs de producto: ninguno.
+- Skills: cero, estado válido hasta demostrar una necesidad especializada.
+- MCP reales: cero; catálogo declarativo vacío.
+- Modelos/proveedores: cero configurados; routing declarativo preparado.
 
-PR #69 (F08), PR #68 (F10), PR #67 (F12), PR #77 (F13), PR #78 (F15)
-y PR #86 (F16) y PR #90 (F17) están mergeadas contra `develop`.
-PR #91 está mergeada contra `main`; el run vigente 34930241973 terminó
-`completed/success` y sus tres jobs están verdes.
+## Próximo paso exacto
 
-## Incidencias
-
-El host PowerShell mostró retención durante una ejecución sin timeout; se corrigió el wait de CI con timeout/polling controlado. La suite local completa tuvo un fallo ambiental aislado de locking Git; el reconciliador aislado pasó 7/7 y CI remoto pasó.
+Definir `GOAL.md` y, a partir de él, crear la primera work unit funcional.
 
 <!-- STATUS:AUTO:BEGIN -->
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-16T00:00:00Z
+- Actualizado: 2026-09-18T03:24:25Z
 - Versión: v2.0.0
 - Rama: develop
-- HEAD: 422c94dfd0349fd6b152bc83814b39047248c557
-- Remoto: https://github.com/jlbellonGmail/template
-- Working tree: clean
+- HEAD: 69864120c6271fd40c88bdd15257dcd67ec941bb
+- Remoto: UNKNOWN / sin remoto
+- Working tree: dirty
 - Worktrees: 3
 - Worktrees Git: 3
 - Unidades activas: ninguna
-- PR activa: #91 (develop → main)
-- CI: 34930241973 / success
-- CI vigente: 34930241973 / success
-- Última release: v1.1.0 (v2.0.0 pendiente de publicación)
+- PR activa: UNKNOWN / sin PR abierta
+- CI: UNKNOWN / sin CI verificable
+- CI vigente: UNKNOWN / sin CI verificable
+- Última release: UNKNOWN / no disponible
 
 <!-- STATUS:AUTO:END -->

@@ -2,7 +2,7 @@
 name: reviewer
 description: Verifica independientemente intención, resultado, diff, tests, evidencia y criterios; emite APPROVED, CHANGES_REQUESTED o BLOCKED.
 tools: Read, Grep, Glob
-model: sonnet
+model: default
 effort: high
 ---
 

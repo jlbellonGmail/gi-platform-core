@@ -1,6 +1,14 @@
-# Proyecto: template
+# Proyecto: GI-PLATFORM-CORE
 
-## Roles canónicos (F03)
+## Identidad y procedencia
+
+Este repositorio es un proyecto nuevo inicializado desde la baseline congelada
+Template v2.0.0, SHA `f5d4b6cc029c34c0d0c05831bfd28134276fa167`.
+La procedencia se conserva como trazabilidad de bootstrap; la historia,
+roadmap y evidencias del desarrollo del Template no forman parte de este
+producto.
+
+## Roles canónicos
 
 La arquitectura conceptual tiene tres roles definidos por capacidad:
 **Planner** interpreta intención, consume ASSESS y planifica SDD; **Builder**
@@ -35,7 +43,7 @@ validaciones reforzadas. Los artefactos no exigidos pueden no existir y nunca
 se crean placeholders. La ausencia de `sdd.json` conserva el contrato legacy.
 `ready-for-pr.ps1` consume la misma política; JSON/JSONL es evidencia máquina.
 
-## Transición a v2: vigencia y dirección
+## Operación v2: vigencia y dirección
 
 Leer también [CONSTITUTION.md](CONSTITUTION.md), fuente de principios normativos.
 La Fase 00 dejó el diseño técnico v2 en [fundamentos-v2](docs/tecnica/fundamentos-v2.md).
@@ -70,7 +78,7 @@ tecnología no declarada.
 
 ## Stack
 
-Sin stack fijo todavía. Este template no tiene código de producto: solo
+Sin stack fijo todavía. GI-PLATFORM-CORE no tiene código de producto: solo
 el circuito agéntico, su motor ejecutable (`scripts/*.ps1`), sus tests y
 la estructura de documentación. Cuando el proyecto real que use este
 template defina su stack (frontend, backend, base de datos, hosting,
@@ -82,10 +90,10 @@ explícitamente.
 ## Estructura del repo
 
 Las unidades nuevas pueden declarar identidad completa con
-`start-work-unit.ps1 -Version v2.0.0 -Mode Feature -Slug 08-arquitectura-roles`.
-Eso produce `feature/v2.0.0-08-arquitectura-roles`, el worktree
-`../worktrees/v2.0.0-08-arquitectura-roles/` y el run
-`runs/v2.0.0/08-arquitectura-roles/`. La omisión de `-Version` conserva la
+`start-work-unit.ps1 -Version v2.0.0 -Mode Feature -Slug 01-primera-unidad`.
+Eso produce `feature/v2.0.0-01-primera-unidad`, el worktree
+`../worktrees/v2.0.0-01-primera-unidad/` y el run
+`runs/v2.0.0/01-primera-unidad/`. La omisión de `-Version` conserva la
 interfaz legacy para unidades históricas.
 
 - `runs/`: artefactos por feature (`spec.md`, `plan.md`, `tasks.md`,
@@ -570,7 +578,7 @@ comportamiento correcto y esperado del template — no una etapa
 creación de `main`" describe el evento que conecta una etapa con la
 otra.
 
-### Estado inicial del template
+### Estado inicial del proyecto
 
 - `develop` es la rama de integración y de trabajo diario. El circuito
   de features/milestones opera enteramente sobre ella desde el momento

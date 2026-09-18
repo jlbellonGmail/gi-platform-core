@@ -1,1 +1,0 @@
-{"schemaVersion":1,"sdd":"ADAPTIVE","deterministic":true,"depth":"FULL","objective":"Validar integralmente Template v2.0.0 antes de F17 sin publicar la release.","requiredArtifacts":["objective","spec","plan","tasks","decision","validation-evidence","test-evidence","review","gates"]}

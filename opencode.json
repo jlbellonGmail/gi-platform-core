@@ -4,12 +4,12 @@
     "AGENTS.md",
     ".claude/rules/*.md"
   ],
-  "model": "opencode-go/kimi-k2.7-code",
+  "model": "default",
   "agent": {
     "builder": {
       "description": "Materializa el cambio dentro del alcance, ejecuta herramientas y tests, diagnostica fallos y produce evidencia técnica.",
       "mode": "subagent",
-      "model": "opencode-go/kimi-k2.7-code",
+      "model": "default",
       "prompt": "{file:./.agentic/roles/builder.md}",
       "reasoningEffort": "high",
       "permission": {
@@ -20,7 +20,7 @@
     "planner": {
       "description": "Convierte objetivo, contexto, ASSESS y profundidad SDD en una estrategia ejecutable proporcional al riesgo. Read-only.",
       "mode": "subagent",
-      "model": "opencode-go/kimi-k2.7-code",
+      "model": "default",
       "prompt": "{file:./.agentic/roles/planner.md}",
       "reasoningEffort": "high",
       "permission": {
@@ -32,7 +32,7 @@
     "reviewer": {
       "description": "Verifica independientemente intención, resultado, diff, tests, evidencia y criterios; emite APPROVED, CHANGES_REQUESTED o BLOCKED.",
       "mode": "subagent",
-      "model": "opencode-go/kimi-k2.7-code",
+      "model": "default",
       "prompt": "{file:./.agentic/roles/reviewer.md}",
       "reasoningEffort": "high",
       "permission": {

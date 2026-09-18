@@ -1,8 +1,0 @@
-=== Action pinning check (major-version tags, not SHA) ===
-.github/workflows/ci.yml:13:      - uses: actions/checkout@v4
-.github/workflows/ci.yml:16:        uses: actions/setup-python@v5
-.github/workflows/ci.yml:35:      - uses: actions/checkout@v4
-.github/workflows/docs.yml:12:      - uses: actions/checkout@v4
-.github/workflows/docs.yml:13:      - uses: actions/setup-python@v5
-.github/workflows/post-hitl-merge-gate.yml:58:        uses: actions/checkout@v4
-.github/workflows/post-merge-close-feature.yml:41:        uses: actions/checkout@v4

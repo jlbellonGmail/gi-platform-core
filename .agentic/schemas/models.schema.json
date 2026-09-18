@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://template.local/agentic/schemas/models.schema.json",
   "title": "models.json schema",
-  "description": "Describe la forma real de .agentic/models.json: router minimo de modelos OpenCode, allowlists, variantes validas, proveedores y fallbacks por rol.",
+  "description": "Describe la forma real de .agentic/models.json: router declarativo, allowlists, variantes y fallbacks por rol. Un proyecto nuevo puede declarar cero proveedores hasta definir sus necesidades.",
   "type": "object",
   "required": ["validVariants", "fallbackAliases", "providers", "roles"],
   "properties": {
@@ -16,12 +16,12 @@
     },
     "fallbackAliases": {
       "type": "object",
-      "minProperties": 1,
+      "minProperties": 0,
       "additionalProperties": { "type": "string" }
     },
     "providers": {
       "type": "object",
-      "minProperties": 1,
+      "minProperties": 0,
       "additionalProperties": {
         "type": "object",
         "required": ["credentialEnv", "models"],
@@ -44,7 +44,7 @@
     },
     "roles": {
       "type": "object",
-      "minProperties": 1,
+      "minProperties": 0,
       "additionalProperties": {
         "type": "object",
         "required": ["default", "fallback"],
@@ -60,7 +60,7 @@
           },
           "fallback": {
             "type": "array",
-            "minItems": 1,
+            "minItems": 0,
             "items": {
               "type": "object",
               "required": ["label", "model", "variant"],

@@ -1,5 +1,6 @@
 import json
 import os
+import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -41,6 +42,32 @@ def make_router_repo(tmp_path: Path) -> Path:
     repo = tmp_path / "repo"
     repo.mkdir()
     shutil.copytree(ROOT / ".agentic", repo / ".agentic")
+    # Fixture sintético: el proyecto real comienza sin proveedores/modelos.
+    # Estas pruebas conservan cobertura del mecanismo de allowlist/fallback
+    # sin convertir esa cobertura en configuración del producto.
+    fixture = {
+        "$schema": "./schemas/models.schema.json",
+        "validVariants": ["default", "none", "minimal", "low", "medium", "high", "xhigh", "max"],
+        "fallbackAliases": {"go": "test-go", "zen": "test-zen", "openrouter-free": "test-router"},
+        "providers": {
+            "opencode-go": {"credentialEnv": ["AGENTIC_OPENCODE_GO_READY"], "models": ["kimi-k2.7-code"]},
+            "opencode": {"credentialEnv": ["AGENTIC_OPENCODE_ZEN_READY"], "models": ["kimi-k2.7-code", "mimo-v2.5-pro"]},
+            "openrouter": {"credentialEnv": ["OPENROUTER_API_KEY", "AGENTIC_OPENROUTER_READY"], "models": ["qwen/qwen3-coder:free"], "requiresExplicitFallback": True},
+        },
+        "roleAliases": {"analyst-agent": "planner", "builder-agent": "builder", "reviewer-agent": "reviewer", "qa-agent": "reviewer", "code-reviewer-agent": "reviewer"},
+        "roles": {
+            role: {
+                "default": {"model": "opencode-go/kimi-k2.7-code", "variant": "high"},
+                "fallback": [
+                    {"label": "go", "model": "opencode-go/kimi-k2.7-code", "variant": "high"},
+                    {"label": "zen", "model": "opencode/kimi-k2.7-code", "variant": "high"},
+                    {"label": "openrouter-free", "model": "openrouter/qwen/qwen3-coder:free", "variant": "high"},
+                ],
+            }
+            for role in ("planner", "builder", "reviewer")
+        },
+    }
+    (repo / ".agentic" / "models.json").write_text(json.dumps(fixture), encoding="utf-8")
     subprocess.run(["git", "init"], cwd=repo, env=command_env(), check=True, capture_output=True)
     return repo
 

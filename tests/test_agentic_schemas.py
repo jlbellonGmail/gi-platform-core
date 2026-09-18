@@ -76,6 +76,9 @@ def test_models_schema_rejects_role_fallback_without_variant():
     schema = load_json(SCHEMAS_DIR / "models.schema.json")
     document = load_json(ROOT / ".agentic" / "models.json")
     broken = copy.deepcopy(document)
+    broken["roles"]["reviewer"]["fallback"].append(
+        {"label": "synthetic", "model": "synthetic/model", "variant": "high"}
+    )
     del broken["roles"]["reviewer"]["fallback"][0]["variant"]
 
     with pytest.raises(ValidationError):

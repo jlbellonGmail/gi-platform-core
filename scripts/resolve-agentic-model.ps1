@@ -451,6 +451,10 @@ try {
         throw "Variante invalida o no autorizada: $selectedVariant"
     }
 
+    if ($selectedModel -eq "default" -and @($models.providers.PSObject.Properties).Count -eq 0) {
+        throw "No hay proveedores ni modelos configurados. El router declarativo está operativo; configure .agentic/models.json cuando exista una necesidad explícita."
+    }
+
     $primary = Assert-ModelAllowed -Models $models -ModelRef $selectedModel
     $selectedForEvidence = $primary
     $selectionOriginForEvidence = $modelOrigin

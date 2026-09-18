@@ -2,7 +2,7 @@
 name: builder
 description: Materializa el cambio dentro del alcance, ejecuta herramientas y tests, diagnostica fallos y produce evidencia técnica.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: sonnet
+model: default
 effort: high
 ---
 

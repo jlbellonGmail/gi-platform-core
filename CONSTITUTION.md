@@ -1,11 +1,10 @@
-# Principios del Template
+# Constitución de GI-PLATFORM-CORE
 
-Normativa estable de diseño para v2. La elección del nombre y la transición
-están justificadas en [arquitectura](docs/tecnica/arquitectura.md). El
+Normativa estable adoptada desde Template v2.0.0 (`f5d4b6cc029c34c0d0c05831bfd28134276fa167`). El
 comportamiento ejecutable vigente sigue en [AGENTS.md](AGENTS.md); los
 principios no habilitan anticipadamente capacidades futuras.
 
-El Template optimiza la probabilidad de entregar correctamente cada cambio
+GI-PLATFORM-CORE optimiza la probabilidad de entregar correctamente cada cambio
 con el mínimo costo, latencia, contexto y supervisión compatibles con su riesgo.
 
 1. **SDD permanente, profundidad adaptativa.** Todo cambio debe tener intención

@@ -1,3 +1,0 @@
-=== .agentic/*.json schema validation ===
-.agentic/agents.json OK
-.agentic/models.json OK

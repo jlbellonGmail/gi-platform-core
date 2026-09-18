@@ -1,3 +1,0 @@
-164 passed, 1 warning in 916.58s (0:15:16)
-Comando: python -m pytest -q tests/ --basetemp=<tmp propio> --ignore=tests/test_local_reconciler_scripts.py
-100% verde local, excluyendo unicamente el archivo con el problema de EDR ya documentado por el propio repositorio.

@@ -1,3 +1,0 @@
-Adaptador desactualizado o divergente: .mcp.json
-Adaptador desactualizado o divergente: opencode.json
-EXIT_CODE=1

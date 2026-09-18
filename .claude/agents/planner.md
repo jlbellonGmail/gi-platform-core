@@ -2,7 +2,7 @@
 name: planner
 description: Convierte objetivo, contexto, ASSESS y profundidad SDD en una estrategia ejecutable proporcional al riesgo. Read-only.
 tools: Read, Grep, Glob
-model: sonnet
+model: default
 effort: high
 ---
 
