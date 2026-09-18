@@ -10,7 +10,8 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 ## Estado
 
 - Rama estable/local: `develop`.
-- Trabajo activo: persistencia Supabase del Core e integración de contratos.
+- Trabajo activo: persistencia Supabase del Core e integración de contratos;
+  corregido el almacenamiento normalizado de `site_access`.
 - ROADMAP funcional: `01-core-platform-v010` en READY_FOR_PR.
 - Work units activas: ninguna.
 - Runs de producto: ninguno.
@@ -23,13 +24,14 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 Revisar y aplicar en un proyecto Supabase real la migración
 `supabase/migrations/20260918000000_core_schema.sql`, ejecutar pruebas de
 integración con credenciales server-side y revisar el diff local antes de
-crear una PR. No se hizo push ni se crearon tags.
+  crear una PR. No se hizo push ni se crearon tags. Docker Desktop no tiene
+  el daemon activo para una validación PostgreSQL local.
 
 <!-- STATUS:AUTO:BEGIN -->
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-18T04:58:00Z
+- Actualizado: 2026-09-18T05:10:00Z
 - Versión: v0.1.0
 - Rama: develop
 - HEAD: f2fa2eca19f2f05370f90d4f22708af537cdf511

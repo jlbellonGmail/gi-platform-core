@@ -74,6 +74,7 @@ def test_site_access_is_scoped_and_does_not_leak_to_other_site(core):
     service.grant_site_access(membership.id, allowed_site.id)
     assert service.authorize(TenantContext(user.id, org.id, allowed_site.id), "site:read").allowed
     assert not service.authorize(TenantContext(user.id, org.id, denied_site.id), "site:read").allowed
+    assert [site.id for site in service.list_sites(TenantContext(user.id, org.id))] == [allowed_site.id]
 
 
 def test_relevant_operations_are_audited_and_inactive_membership_denied(core):
@@ -93,3 +94,18 @@ def test_api_contract_contains_context_without_exposing_store_details(core):
     assert response["contract_version"] == "0.1.0"
     assert response["allowed"] is False
     assert "permissions" not in response
+
+
+def test_public_contract_covers_membership_roles_and_site_operations(core):
+    service, _ = core
+    api = CoreApi(service)
+    organization = api.create_organization('Contract')
+    site = api.create_site(organization['id'], 'Main')
+    user = api.create_user('contract-user', 'Contract User')
+    membership = api.add_membership(user['id'], organization['id'])
+    role = api.create_role(organization['id'], 'reader', {'site:read'})
+    api.assign_role(membership['id'], role['id'])
+    api.grant_site_access(membership['id'], site['id'])
+    sites = api.list_sites(user['id'], organization['id'], site['id'])
+    assert sites[0]['id'] == site['id']
+    assert api.list_memberships(user['id'])[0]['organization_id'] == organization['id']

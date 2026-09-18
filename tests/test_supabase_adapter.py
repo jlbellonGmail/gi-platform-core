@@ -25,7 +25,7 @@ def test_supabase_store_uses_host_configuration_and_core_profile_headers():
         store = SupabaseCoreStore('https://example.supabase.co/', 'server-key')
         CoreService(store).create_organization('Acme')
 
-    assert len(requests) == 9  # 7 deterministic refreshes + organization + audit
+    assert len(requests) == 10  # 7 entity refreshes + site access refresh + organization + audit
     assert all(request.headers['Accept-profile'] == 'core' for request, _ in requests)
     assert all(request.headers['Authorization'] == 'Bearer server-key' for request, _ in requests)
     assert requests[-2][0].method == 'POST'
@@ -45,3 +45,27 @@ def test_supabase_adapter_decodes_role_and_site_access_shapes():
     })
     assert role.permission_codes == frozenset({'site:read'})
     assert membership.site_ids == frozenset({'s'})
+
+
+def test_supabase_store_persists_site_access_in_its_own_table():
+    requests = []
+
+    def fake_urlopen(request, timeout):
+        requests.append(request)
+        return FakeResponse([])
+
+    with patch('gi_platform_core.supabase_adapter.urlopen', fake_urlopen):
+        store = SupabaseCoreStore('https://example.supabase.co', 'server-key')
+        service = CoreService(store)
+        organization = service.create_organization('Acme')
+        site = service.create_site(organization.id, 'North')
+        user = service.create_user('subject', 'User')
+        membership = service.add_membership(user.id, organization.id)
+        service.grant_site_access(membership.id, site.id)
+
+    site_access_posts = [request for request in requests if '/rest/v1/site_access?' in request.full_url]
+    assert len(site_access_posts) == 1
+    body = json.loads(site_access_posts[0].data.decode())
+    assert body == {'membership_id': membership.id, 'site_id': site.id, 'active': True}
+    membership_posts = [request for request in requests if '/rest/v1/organization_memberships?' in request.full_url]
+    assert 'site_ids' not in json.loads(membership_posts[-1].data.decode())

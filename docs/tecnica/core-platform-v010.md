@@ -39,6 +39,11 @@ políticas RLS. El service role usado por el backend anfitrión puede persistir;
 las sesiones `authenticated` sólo leen filas dentro de su Organization/Site
 mediante las policies explícitas.
 
+El alcance de Sites se persiste normalizado en `core.site_access`; no se
+serializa como una columna de `organization_memberships`. El adaptador carga
+ese alcance al reconstruir el store y lo escribe junto con la membership, lo
+que mantiene equivalencia con `InMemoryCoreStore`.
+
 ## Auditoría y seguridad
 
 Las mutaciones y decisiones de autorización emiten `AuditEvent` con actor,

@@ -110,7 +110,19 @@ class CoreService:
 
     def list_sites(self, context: TenantContext) -> list[Site]:
         self.authorize(context, "site:read").require()
-        return [site for site in self.store.all_sites() if site.organization_id == context.organization_id]
+        membership = next(
+            membership for membership in self.store.all_memberships()
+            if membership.user_id == context.user_id
+            and membership.organization_id == context.organization_id
+            and membership.active
+        )
+        allowed = set(membership.site_ids)
+        return [
+            site for site in self.store.all_sites()
+            if site.organization_id == context.organization_id
+            and site.id in allowed
+            and (context.site_id is None or site.id == context.site_id)
+        ]
 
     def _denied(self, context: TenantContext, reason: str) -> AuthorizationDecision:
         self._audit("authorization.checked", context.user_id, context.organization_id, context.site_id, "denied", reason=reason)

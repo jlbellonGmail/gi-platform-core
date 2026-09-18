@@ -7,7 +7,7 @@ never import this module, so Supabase remains an infrastructure adapter.
 from __future__ import annotations
 
 import json
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import datetime
 from typing import Any
 from urllib.parse import urlencode
@@ -80,6 +80,13 @@ class SupabaseCoreStore:
                 elif isinstance(entity, OrganizationMembership): self.memberships[entity.id] = entity
                 elif isinstance(entity, Role): self.roles[entity.id] = entity
                 elif isinstance(entity, MembershipRole): self.membership_roles[entity.id] = entity
+        for row in self._request("site_access"):
+            membership = self.memberships.get(row.get("membership_id"))
+            if membership and row.get("active", True):
+                self.memberships[membership.id] = replace(
+                    membership,
+                    site_ids=frozenset((*membership.site_ids, row["site_id"])),
+                )
 
     @staticmethod
     def _from_row(cls, row: dict[str, Any]):
@@ -91,26 +98,41 @@ class SupabaseCoreStore:
         return cls(**values)
 
     @staticmethod
-    def _row(entity: Any) -> dict[str, Any]:
+    def _row(entity: Any, table: str | None = None) -> dict[str, Any]:
         row = asdict(entity)
         if isinstance(entity, Role): row["permission_codes"] = sorted(row["permission_codes"])
-        if isinstance(entity, OrganizationMembership): row["site_ids"] = sorted(row["site_ids"])
+        if isinstance(entity, OrganizationMembership):
+            if table == "organization_memberships": row.pop("site_ids", None)
+            else: row["site_ids"] = sorted(row["site_ids"])
         row.pop("created_at", None); row.pop("updated_at", None); row.pop("occurred_at", None)
         return row
 
     def _save(self, table: str, entity: Any, key: str = "id") -> None:
-        self._request(table, "POST", query=f"?on_conflict={key}", body=self._row(entity), prefer="resolution=merge-duplicates,return=representation")
+        self._request(table, "POST", query=f"?on_conflict={key}", body=self._row(entity, table), prefer="resolution=merge-duplicates,return=representation")
 
     def save_organization(self, entity): self.organizations[entity.id] = entity; self._save("organizations", entity)
     def save_site(self, entity): self.sites[entity.id] = entity; self._save("sites", entity)
     def save_user(self, entity): self.users[entity.id] = entity; self._save("user_profiles", entity)
-    def save_membership(self, entity): self.memberships[entity.id] = entity; self._save("organization_memberships", entity)
+    def save_membership(self, entity):
+        self.memberships[entity.id] = entity
+        self._save("organization_memberships", entity)
+        for site_id in entity.site_ids:
+            self._save_site_access(entity.id, site_id)
     def save_permission(self, entity): self.permissions[entity.code] = entity; self._save("permissions", entity, "code")
     def save_role(self, entity): self.roles[entity.id] = entity; self._save("roles", entity)
     def save_membership_role(self, entity): self.membership_roles[entity.id] = entity; self._save("membership_roles", entity)
 
+    def _save_site_access(self, membership_id: str, site_id: str) -> None:
+        self._request(
+            "site_access",
+            "POST",
+            query="?on_conflict=membership_id,site_id",
+            body={"membership_id": membership_id, "site_id": site_id, "active": True},
+            prefer="resolution=merge-duplicates,return=minimal",
+        )
+
     def record_audit(self, event: AuditEvent) -> None:
-        self._request("audit_events", "POST", body=self._row(event), prefer="return=minimal")
+        self._request("audit_events", "POST", body=self._row(event, "audit_events"), prefer="return=minimal")
 
     def get_organization(self, entity_id): return self.organizations.get(entity_id)
     def get_site(self, entity_id): return self.sites.get(entity_id)
