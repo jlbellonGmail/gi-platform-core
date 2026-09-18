@@ -12,8 +12,9 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 - Rama estable/local: `develop`.
 - Trabajo activo: persistencia Supabase del Core e integración de contratos;
   corregido el almacenamiento normalizado de `site_access`.
-- Validación local: pytest `278 passed`; prueba SQL con Docker no ejecutable
-  porque Docker Desktop no tiene el daemon activo.
+- Validación local: pytest `278 passed`.
+- Validación posterior: PostgreSQL efímero con roles Supabase simulados pasó
+  DDL, 9 tablas, 9 policies, RLS en 9 tablas y aislamiento efectivo.
 - ROADMAP funcional: `01-core-platform-v010` en READY_FOR_PR.
 - Work units activas: ninguna.
 - Runs de producto: ninguno.
