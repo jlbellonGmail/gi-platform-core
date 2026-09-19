@@ -1,6 +1,6 @@
 status: approved
 scope: 04-post-merge-close-dispatch
-head: b17ad03
+head: HEAD
 base: develop
 
 Revisión independiente del estado publicado de la PR #4: el workflow conserva
