@@ -45,5 +45,6 @@ calificación subjetiva.
 - [Core public contract V010](core-contract-v010.md)
 - [Supabase gi-dev validation](supabase-gi-dev-validation.md)
 - [Post Hitl Versioned Evidence](post-hitl-versioned-evidence.md)
+- [Post Merge Close Dispatch](post-merge-close-dispatch.md)
 
 <!-- FEATURE_LINKS_END -->

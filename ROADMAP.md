@@ -12,6 +12,8 @@ del Template.
   validación autenticada de RLS del Core contra Supabase gi-dev.
 - [x] 03-post-hitl-versioned-evidence — Corrección del gate Post-HITL para
   resolver evidencias por versión y slug de work unit.
+- [-] 04-post-merge-close-dispatch — Habilitar el cierre post-merge manual
+  seguro cuando el evento automático queda suprimido por GITHUB_TOKEN.
 
 ## Procedencia de la baseline
 
@@ -27,4 +29,5 @@ del Template.
 Las entradas funcionales deben ser líneas `NN-slug — descripción`. La entrada
 01 queda en READY_FOR_PR después de la validación local; solo un merge humano
 puede cambiarla a `[x]`.
+
 
