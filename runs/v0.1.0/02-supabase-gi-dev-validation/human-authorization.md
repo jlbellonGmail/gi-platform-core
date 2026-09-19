@@ -7,7 +7,7 @@ Cuando el mantenedor decida, debe reemplazar este contenido con el formato
 exacto exigido por `complete-approved-pr.ps1`:
 
 ```yaml
-decision: MERGE
+decision: <PENDING_HUMAN_DECISION>
 scope: 02-supabase-gi-dev-validation
 phase: 02
 authorizedBy: user-instruction
@@ -15,4 +15,3 @@ authorizedBy: user-instruction
 
 La alternativa humana es registrar explícitamente `NO MERGE` mediante el
 mecanismo oficial; el agente no puede inferir ninguna de las dos decisiones.
-
