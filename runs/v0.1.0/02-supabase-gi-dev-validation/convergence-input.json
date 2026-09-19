@@ -1,0 +1,20 @@
+{
+  "assessmentPath": "runs/v0.1.0/02-supabase-gi-dev-validation/assess.json",
+  "sddPath": "runs/v0.1.0/02-supabase-gi-dev-validation/sdd.json",
+  "iteration": 1,
+  "reviewer": {
+    "verdict": "APPROVED",
+    "findings": [],
+    "needsPlanner": false,
+    "needsHumanDecision": false,
+    "blockedExternal": false
+  },
+  "tests": {
+    "status": "green",
+    "passed": true,
+    "previouslyFailed": true
+  },
+  "execution": {
+    "status": "passed"
+  }
+}

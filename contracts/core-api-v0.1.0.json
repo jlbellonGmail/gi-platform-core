@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gi-platform.invalid/contracts/core-api-v0.1.0.json",
+  "title": "GI Platform Core public contract",
+  "description": "Transport-neutral operations exposed by CoreApi.",
+  "version": "0.1.0",
+  "type": "object",
+  "required": ["contract_version", "operations", "invariants"],
+  "properties": {
+    "contract_version": {"const": "0.1.0"},
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "purpose", "response"],
+        "properties": {
+          "name": {"type": "string"},
+          "purpose": {"type": "string"},
+          "response": {"type": "string"}
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "invariants": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}

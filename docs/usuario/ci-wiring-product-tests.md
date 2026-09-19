@@ -1,5 +1,11 @@
 # CI wiring product tests
 
+> **Estado vigente de GI-PLATFORM-CORE:** este documento conserva la decisión
+> histórica del template sobre la separación de jobs. En este repositorio el
+> placeholder ya fue reemplazado: `product-tests` instala el paquete y ejecuta
+> `tests/test_core_platform.py` y `tests/test_supabase_adapter.py`. La fuente
+> ejecutable actual es `.github/workflows/ci.yml`.
+
 ## Para qué sirve
 
 Antes de esta feature, la pestaña "Checks" de cualquier PR o push a

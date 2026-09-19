@@ -32,6 +32,7 @@ fuente canónica, regenerar adaptadores y declarar modelos por ejecución.
 - [Validacion integral v2](validacion-integral-v2.md)
 - [[v2.0.0][F17] Auditoría final y release v2.0.0](auditoria-release-v2.md)
 - [Core Platform V010](core-platform-v010.md)
+- [Supabase gi-dev validation](supabase-gi-dev-validation.md)
 - [Post Hitl Versioned Evidence](post-hitl-versioned-evidence.md)
 
 <!-- FEATURE_LINKS_END -->

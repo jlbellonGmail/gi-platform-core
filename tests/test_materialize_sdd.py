@@ -12,7 +12,7 @@ MATERIALIZE = ROOT / "scripts" / "materialize-sdd.ps1"
 
 
 def powershell():
-    for candidate in ("powershell.exe", "pwsh") if os.name == "nt" else ("pwsh", "powershell"):
+    for candidate in ("pwsh", "powershell.exe") if os.name == "nt" else ("pwsh", "powershell"):
         if shutil.which(candidate):
             return candidate
     pytest.skip("PowerShell no esta disponible")

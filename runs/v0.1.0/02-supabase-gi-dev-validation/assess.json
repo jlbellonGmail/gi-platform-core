@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "assessment": "ASSESS",
+  "deterministic": true,
+  "evaluatedAt": "2026-09-19T17:21:47.1415746Z",
+  "changedFiles": ["scripts/bootstrap_validate_supabase.py"],
+  "fileCount": 1,
+  "score": 4,
+  "risk": "HIGH",
+  "depth": "FULL",
+  "signals": [
+    {
+      "code": "automation-or-governance",
+      "level": "high",
+      "weight": 4,
+      "reason": "Automatizacion o gobernanza puede afectar gates."
+    }
+  ],
+  "rationale": "Clasificacion determinista por ruta sensible de automatizacion; se conserva profundidad FULL.",
+  "nextAction": "Aplicar profundidad recomendada en planificacion vigente y conservar este resultado como evidencia."
+}

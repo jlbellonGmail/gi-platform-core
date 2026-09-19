@@ -67,11 +67,11 @@ def test_circuit_tests_job_runs_pytest():
     assert "pytest -v" in circuit_block
 
 
-def test_product_tests_job_has_placeholder_marker():
+def test_product_tests_job_runs_core_tests():
     content = _read_ci_workflow()
     product_block = _job_block(content, "product-tests")
-    assert "PLACEHOLDER" in product_block
-    assert "docs/tecnica/arquitectura.md" in product_block
+    assert "pip install . -r requirements-dev.txt" in product_block
+    assert "pytest -q tests/test_core_platform.py tests/test_supabase_adapter.py" in product_block
 
 
 def test_validar_adaptadores_agenticos_is_a_real_gate():

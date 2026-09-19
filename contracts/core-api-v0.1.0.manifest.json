@@ -1,0 +1,24 @@
+{
+  "contract_version": "0.1.0",
+  "operations": [
+    {"name": "create_organization", "purpose": "Create a tenant root", "response": "Organization"},
+    {"name": "create_location", "purpose": "Create a location within an organization", "response": "Location"},
+    {"name": "create_user", "purpose": "Register a host identity reference", "response": "UserProfile"},
+    {"name": "add_membership", "purpose": "Join a user to an organization", "response": "OrganizationMembership"},
+    {"name": "create_permission", "purpose": "Register a namespaced permission", "response": "Permission"},
+    {"name": "create_role", "purpose": "Create an organization-scoped role", "response": "Role"},
+    {"name": "assign_role", "purpose": "Assign a role to a membership", "response": "MembershipRole"},
+    {"name": "grant_location_access", "purpose": "Grant membership access to a location", "response": "OrganizationMembership"},
+    {"name": "list_organizations", "purpose": "List organizations visible through a user's active memberships", "response": "Organization[]"},
+    {"name": "list_memberships", "purpose": "List memberships for a user", "response": "OrganizationMembership[]"},
+    {"name": "list_locations", "purpose": "List locations allowed by tenant context", "response": "Location[]"},
+    {"name": "authorize", "purpose": "Evaluate a permission in tenant context", "response": "AuthorizationDecision"}
+  ],
+  "invariants": [
+    "Every response includes contract_version equal to 0.1.0.",
+    "Responses contain JSON primitives, arrays, and objects only.",
+    "Authorization denies inactive memberships and cross-organization or unauthorized location access.",
+    "Authorization checks emit an audit event.",
+    "The contract contains no Dental-specific entity or rule."
+  ]
+}

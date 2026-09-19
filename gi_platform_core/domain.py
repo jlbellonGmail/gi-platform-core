@@ -29,15 +29,15 @@ class Organization:
 
 
 @dataclass(frozen=True)
-class Site:
+class Location:
     organization_id: str
     name: str
     id: str = field(default_factory=new_id)
     active: bool = True
 
     def __post_init__(self) -> None:
-        required(self.organization_id, "site.organization_id")
-        required(self.name, "site.name")
+        required(self.organization_id, "location.organization_id")
+        required(self.name, "location.name")
 
 
 @dataclass(frozen=True)
@@ -86,7 +86,7 @@ class OrganizationMembership:
     user_id: str
     organization_id: str
     active: bool = True
-    site_ids: FrozenSet[str] = frozenset()
+    location_ids: FrozenSet[str] = frozenset()
     id: str = field(default_factory=new_id)
 
 
@@ -102,7 +102,7 @@ class AuditEvent:
     action: str
     actor_user_id: str | None
     organization_id: str | None
-    site_id: str | None
+    location_id: str | None
     outcome: str
     metadata: dict[str, str] = field(default_factory=dict)
     id: str = field(default_factory=new_id)

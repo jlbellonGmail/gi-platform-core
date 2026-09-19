@@ -13,7 +13,7 @@ from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Site, UserProfile
+from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
 from .errors import CoreError
 
 
@@ -26,7 +26,7 @@ class SupabaseCoreStore:
 
     _tables = {
         "organizations": Organization,
-        "sites": Site,
+        "locations": Location,
         "user_profiles": UserProfile,
         "organization_memberships": OrganizationMembership,
         "roles": Role,
@@ -41,7 +41,7 @@ class SupabaseCoreStore:
         self.key = key
         self.timeout = timeout
         self.organizations: dict[str, Organization] = {}
-        self.sites: dict[str, Site] = {}
+        self.locations: dict[str, Location] = {}
         self.users: dict[str, UserProfile] = {}
         self.memberships: dict[str, OrganizationMembership] = {}
         self.permissions: dict[str, Permission] = {}
@@ -75,24 +75,24 @@ class SupabaseCoreStore:
                 entity = self._from_row(cls, row)
                 if isinstance(entity, Permission): self.permissions[entity.code] = entity
                 elif isinstance(entity, Organization): self.organizations[entity.id] = entity
-                elif isinstance(entity, Site): self.sites[entity.id] = entity
+                elif isinstance(entity, Location): self.locations[entity.id] = entity
                 elif isinstance(entity, UserProfile): self.users[entity.id] = entity
                 elif isinstance(entity, OrganizationMembership): self.memberships[entity.id] = entity
                 elif isinstance(entity, Role): self.roles[entity.id] = entity
                 elif isinstance(entity, MembershipRole): self.membership_roles[entity.id] = entity
-        for row in self._request("site_access"):
+        for row in self._request("location_access"):
             membership = self.memberships.get(row.get("membership_id"))
             if membership and row.get("active", True):
                 self.memberships[membership.id] = replace(
                     membership,
-                    site_ids=frozenset((*membership.site_ids, row["site_id"])),
+                    location_ids=frozenset((*membership.location_ids, row["location_id"])),
                 )
 
     @staticmethod
     def _from_row(cls, row: dict[str, Any]):
         values = {key: value for key, value in row.items() if key in cls.__dataclass_fields__}
         if cls is Role: values["permission_codes"] = frozenset(values.pop("permission_codes", []))
-        if cls is OrganizationMembership: values["site_ids"] = frozenset(values.pop("site_ids", []))
+        if cls is OrganizationMembership: values["location_ids"] = frozenset(values.pop("location_ids", []))
         for field in ("created_at", "updated_at", "occurred_at"):
             if field in values and isinstance(values[field], str): values[field] = datetime.fromisoformat(values[field].replace("Z", "+00:00"))
         return cls(**values)
@@ -102,8 +102,8 @@ class SupabaseCoreStore:
         row = asdict(entity)
         if isinstance(entity, Role): row["permission_codes"] = sorted(row["permission_codes"])
         if isinstance(entity, OrganizationMembership):
-            if table == "organization_memberships": row.pop("site_ids", None)
-            else: row["site_ids"] = sorted(row["site_ids"])
+            if table == "organization_memberships": row.pop("location_ids", None)
+            else: row["location_ids"] = sorted(row["location_ids"])
         row.pop("created_at", None); row.pop("updated_at", None); row.pop("occurred_at", None)
         return row
 
@@ -111,23 +111,23 @@ class SupabaseCoreStore:
         self._request(table, "POST", query=f"?on_conflict={key}", body=self._row(entity, table), prefer="resolution=merge-duplicates,return=representation")
 
     def save_organization(self, entity): self.organizations[entity.id] = entity; self._save("organizations", entity)
-    def save_site(self, entity): self.sites[entity.id] = entity; self._save("sites", entity)
+    def save_location(self, entity): self.locations[entity.id] = entity; self._save("locations", entity)
     def save_user(self, entity): self.users[entity.id] = entity; self._save("user_profiles", entity)
     def save_membership(self, entity):
         self.memberships[entity.id] = entity
         self._save("organization_memberships", entity)
-        for site_id in entity.site_ids:
-            self._save_site_access(entity.id, site_id)
+        for location_id in entity.location_ids:
+            self._save_location_access(entity.id, location_id)
     def save_permission(self, entity): self.permissions[entity.code] = entity; self._save("permissions", entity, "code")
     def save_role(self, entity): self.roles[entity.id] = entity; self._save("roles", entity)
     def save_membership_role(self, entity): self.membership_roles[entity.id] = entity; self._save("membership_roles", entity)
 
-    def _save_site_access(self, membership_id: str, site_id: str) -> None:
+    def _save_location_access(self, membership_id: str, location_id: str) -> None:
         self._request(
-            "site_access",
+            "location_access",
             "POST",
-            query="?on_conflict=membership_id,site_id",
-            body={"membership_id": membership_id, "site_id": site_id, "active": True},
+            query="?on_conflict=membership_id,location_id",
+            body={"membership_id": membership_id, "location_id": location_id, "active": True},
             prefer="resolution=merge-duplicates,return=minimal",
         )
 
@@ -135,11 +135,11 @@ class SupabaseCoreStore:
         self._request("audit_events", "POST", body=self._row(event, "audit_events"), prefer="return=minimal")
 
     def get_organization(self, entity_id): return self.organizations.get(entity_id)
-    def get_site(self, entity_id): return self.sites.get(entity_id)
+    def get_location(self, entity_id): return self.locations.get(entity_id)
     def get_user(self, entity_id): return self.users.get(entity_id)
     def get_membership(self, entity_id): return self.memberships.get(entity_id)
     def get_role(self, entity_id): return self.roles.get(entity_id)
-    def all_sites(self): return self.sites.values()
+    def all_locations(self): return self.locations.values()
     def all_memberships(self): return self.memberships.values()
     def all_roles(self): return self.roles.values()
     def all_membership_roles(self): return self.membership_roles.values()

@@ -22,7 +22,7 @@ END_MARKER = "<!-- FEATURE_LINKS_END -->"
 
 
 def powershell() -> str:
-    candidates = ["powershell.exe", "pwsh"] if os.name == "nt" else ["pwsh", "powershell"]
+    candidates = ["pwsh", "powershell.exe"] if os.name == "nt" else ["pwsh", "powershell"]
     for candidate in candidates:
         path = shutil.which(candidate)
         if path:
