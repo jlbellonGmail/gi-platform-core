@@ -44,5 +44,6 @@ calificación subjetiva.
 - [Core Platform V010](core-platform-v010.md)
 - [Core public contract V010](core-contract-v010.md)
 - [Supabase gi-dev validation](supabase-gi-dev-validation.md)
+- [Post Hitl Versioned Evidence](post-hitl-versioned-evidence.md)
 
 <!-- FEATURE_LINKS_END -->

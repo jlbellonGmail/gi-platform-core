@@ -10,6 +10,8 @@ del Template.
   autorización contextual, aislamiento, auditoría y contratos públicos v0.1.0.
 - [-] 02-supabase-gi-dev-validation — Integración, bootstrap sintético y
   validación autenticada de RLS del Core contra Supabase gi-dev.
+- [x] 03-post-hitl-versioned-evidence — Corrección del gate Post-HITL para
+  resolver evidencias por versión y slug de work unit.
 
 ## Procedencia de la baseline
 
