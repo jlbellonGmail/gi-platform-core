@@ -1,6 +1,6 @@
 """Minimal infrastructure adapters; replaceable without changing use cases."""
 
-from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Site, UserProfile
+from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
 
 
 class InMemoryCoreStore:
@@ -8,7 +8,7 @@ class InMemoryCoreStore:
 
     def __init__(self) -> None:
         self.organizations: dict[str, Organization] = {}
-        self.sites: dict[str, Site] = {}
+        self.locations: dict[str, Location] = {}
         self.users: dict[str, UserProfile] = {}
         self.memberships: dict[str, OrganizationMembership] = {}
         self.permissions: dict[str, Permission] = {}
@@ -22,8 +22,8 @@ class InMemoryCoreStore:
     def save_organization(self, entity: Organization) -> None:
         self.organizations[entity.id] = entity
 
-    def save_site(self, entity: Site) -> None:
-        self.sites[entity.id] = entity
+    def save_location(self, entity: Location) -> None:
+        self.locations[entity.id] = entity
 
     def save_user(self, entity: UserProfile) -> None:
         self.users[entity.id] = entity
@@ -41,11 +41,11 @@ class InMemoryCoreStore:
         self.membership_roles[entity.id] = entity
 
     def get_organization(self, entity_id: str): return self.organizations.get(entity_id)
-    def get_site(self, entity_id: str): return self.sites.get(entity_id)
+    def get_location(self, entity_id: str): return self.locations.get(entity_id)
     def get_user(self, entity_id: str): return self.users.get(entity_id)
     def get_membership(self, entity_id: str): return self.memberships.get(entity_id)
     def get_role(self, entity_id: str): return self.roles.get(entity_id)
-    def all_sites(self): return self.sites.values()
+    def all_locations(self): return self.locations.values()
     def all_memberships(self): return self.memberships.values()
     def all_roles(self): return self.roles.values()
     def all_membership_roles(self): return self.membership_roles.values()

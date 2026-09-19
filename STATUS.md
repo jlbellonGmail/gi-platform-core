@@ -9,12 +9,35 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 
 ## Estado
 
+- `AGENTS.md` corregido y reducido a contrato operativo; referencia verificada
+  contra `D:\proyectos\template\AGENTS.md` de Template v2.0.1.
+- En progreso: empaquetado instalable, contrato de consumo, CI real del Core y
+  ejemplo reproducible para hosts externos.
+- Contrato público v0.1.0 formalizado en `contracts/`, exportado por el paquete
+  y validado como JSON; ejemplo de consumo ejecutado correctamente.
 - Rama estable/local: `develop`.
 - Trabajo activo: persistencia Supabase del Core e integración de contratos;
-  corregido el almacenamiento normalizado de `site_access`.
-- Validación local: pytest `278 passed`.
+  corregido el almacenamiento normalizado de `location_access`.
+- Validación local: pytest completo `280 passed` tras corregir el launcher de
+  PowerShell 7 usado por los tests en Windows.
 - Validación posterior: PostgreSQL efímero con roles Supabase simulados pasó
   DDL, 9 tablas, 9 policies, RLS en 9 tablas y aislamiento efectivo.
+- Validación externa read-only: endpoint Supabase configurado respondió HTTP 200
+  y no expuso filas anónimas; falta validar JWT/autorización real.
+- Validador reproducible agregado en `scripts/validate_supabase_core.py`; su
+  prueba local y la comprobación pública actual pasan.
+- La migración Core tiene cobertura estática de sus 9 tablas, RLS, grants y
+  clave compuesta de `location_access` (`3 passed` en las pruebas nuevas).
+- La lectura pública `list_organizations` quedó scoped por usuario y membership
+  activa para evitar enumeración cross-tenant; contrato y tests actualizados.
+- Consumo externo verificado en un entorno virtual limpio: el wheel
+  `gi_platform_core-0.1.0` se instaló sin el checkout y `CoreApi` respondió con
+  contrato/version `0.1.0`.
+- Mecanismo de publicación agregado en
+  `.github/workflows/publish-core-package.yml`: un tag SemVer humano publica el
+  wheel como artefacto de la release.
+- Documentación histórica del template sobre `product-tests` marcada como tal;
+  la CI vigente del Core quedó referenciada como fuente ejecutable.
 - ROADMAP funcional: `01-core-platform-v010` en READY_FOR_PR.
 - Work units activas: ninguna.
 - Runs de producto: ninguno.
@@ -24,27 +47,36 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 
 ## Próximo paso exacto
 
-Revisar y aplicar en un proyecto Supabase real la migración
-`supabase/migrations/20260918000000_core_schema.sql`, ejecutar pruebas de
-integración con credenciales server-side y revisar el diff local antes de
-  crear una PR. No se hizo push ni se crearon tags. Docker Desktop no tiene
-  el daemon activo para una validación PostgreSQL local.
+La construcción local de `gi-platform-core==0.1.0` ya fue verificada. El paso
+siguiente es validar JWT/RLS contra el proyecto Supabase real y aplicar las
+migraciones sólo con credenciales server-side autorizadas. Después ejecutar la
+validación completa y crear la PR. No se hizo push ni se crearon tags; no hay
+remoto configurado.
+
+## Bloqueo externo actual
+
+El checkout no tiene `origin` y no se encontró un repositorio GitHub inequívoco
+para este proyecto bajo la cuenta autenticada. `.env` tampoco contiene
+`SUPABASE_ACCESS_TOKEN` ni una credencial server-side. Para reanudar el cierre
+se necesita configurar el remoto correcto y proporcionar, de forma segura, un
+JWT de usuario de prueba; no se requieren cambios adicionales de código para
+esas dos validaciones.
 
 <!-- STATUS:AUTO:BEGIN -->
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-18T05:10:00Z
+- Actualizado: 2026-09-19T17:22:33Z
 - Versión: v0.1.0
-- Rama: develop
-- HEAD: f2fa2eca19f2f05370f90d4f22708af537cdf511
-- Remoto: UNKNOWN / sin remoto
-- Working tree: dirty (cambios locales de persistencia y adaptador pendientes de commit)
-- Worktrees: 3
-- Worktrees Git: 3
-- Unidades activas: ninguna
+- Rama: feature/v0.1.0-02-supabase-gi-dev-validation
+- HEAD: 009029cb28f8a4d2907b1d4196b5dd1098732a12
+- Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
+- Working tree: dirty
+- Worktrees: 2
+- Worktrees Git: 2
+- Unidades activas: = [feature/v0.1.0-02-supabase-gi-dev-validation]
 - PR activa: UNKNOWN / sin PR abierta
-- CI: no ejecutado; sin PR abierta
+- CI: UNKNOWN / sin CI verificable
 - CI vigente: UNKNOWN / sin CI verificable
 - Última release: UNKNOWN / no disponible
 

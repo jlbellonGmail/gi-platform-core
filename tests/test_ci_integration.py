@@ -60,11 +60,11 @@ def test_circuit_tests_runs_pytest(workflow_file: str):
 
 
 @pytest.mark.parametrize("workflow_file", ["ci.yml"])
-def test_product_tests_is_placeholder(workflow_file: str):
-    """product-tests debe contener mensaje de placeholder."""
+def test_product_tests_runs_real_core_tests(workflow_file: str):
+    """product-tests debe ejecutar las pruebas reales del Core."""
     content = _read_workflow(workflow_file)
-    assert "placeholder" in content.lower(), "product-tests debe indicar es placeholder"
-    assert "arquitectura.md" in content.lower(), "debe referenciar docs/tecnica/arquitectura.md"
+    assert "pip install . -r requirements-dev.txt" in content
+    assert "pytest -q tests/test_core_platform.py tests/test_supabase_adapter.py" in content
 
 
 @pytest.mark.parametrize("workflow_file", ["ci.yml"])

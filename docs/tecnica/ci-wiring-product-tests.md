@@ -1,5 +1,10 @@
 # CI wiring product tests
 
+> **Vigencia:** este expediente describe la decisión histórica del template.
+> En GI-PLATFORM-CORE el placeholder fue reemplazado por pruebas reales del
+> paquete; el comportamiento vigente está en `.github/workflows/ci.yml` y en
+> `tests/test_ci_workflow.py`.
+
 Esta feature (`04-ci-wiring-product-tests`) separa el job único `test` de
 `.github/workflows/ci.yml` en dos jobs top-level (`circuit-tests` y
 `product-tests`), sin agregar stack, dependencia ni herramienta nueva.

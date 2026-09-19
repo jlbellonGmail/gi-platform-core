@@ -7,7 +7,7 @@ from dataclasses import dataclass
 class TenantContext:
     user_id: str
     organization_id: str
-    site_id: str | None = None
+    location_id: str | None = None
 
 
 @dataclass(frozen=True)

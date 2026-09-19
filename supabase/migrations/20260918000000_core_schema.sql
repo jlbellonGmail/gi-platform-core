@@ -8,7 +8,7 @@ create table if not exists core.organizations (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
-create table if not exists core.sites (
+create table if not exists core.locations (
   id uuid primary key default gen_random_uuid(),
   organization_id uuid not null references core.organizations(id) on delete cascade,
   name text not null check (length(btrim(name)) > 0),
@@ -61,39 +61,39 @@ create table if not exists core.membership_roles (
   created_at timestamptz not null default now(),
   unique (membership_id, role_id)
 );
-create table if not exists core.site_access (
+create table if not exists core.location_access (
   membership_id uuid not null references core.organization_memberships(id) on delete cascade,
-  site_id uuid not null references core.sites(id) on delete cascade,
+ location_id uuid not null references core.locations(id) on delete cascade,
   active boolean not null default true,
   created_at timestamptz not null default now(),
-  primary key (membership_id, site_id)
+ primary key (membership_id, location_id)
 );
 create table if not exists core.audit_events (
   id uuid primary key default gen_random_uuid(),
   action text not null check (length(btrim(action)) > 0),
   actor_user_id uuid references core.user_profiles(id) on delete set null,
   organization_id uuid references core.organizations(id) on delete set null,
-  site_id uuid references core.sites(id) on delete set null,
+ location_id uuid references core.locations(id) on delete set null,
   outcome text not null check (outcome in ('success', 'allowed', 'denied', 'failure')),
   metadata jsonb not null default '{}'::jsonb,
   occurred_at timestamptz not null default now()
 );
 
-create index if not exists sites_organization_idx on core.sites(organization_id);
+create index if not exists locations_organization_idx on core.locations(organization_id);
 create index if not exists memberships_user_org_idx on core.organization_memberships(user_id, organization_id);
 create index if not exists roles_organization_idx on core.roles(organization_id);
 create index if not exists membership_roles_membership_idx on core.membership_roles(membership_id);
-create index if not exists site_access_site_idx on core.site_access(site_id);
-create index if not exists audit_org_site_time_idx on core.audit_events(organization_id, site_id, occurred_at desc);
+create index if not exists location_access_location_idx on core.location_access(location_id);
+create index if not exists audit_org_location_time_idx on core.audit_events(organization_id, location_id, occurred_at desc);
 
 alter table core.organizations enable row level security;
-alter table core.sites enable row level security;
+alter table core.locations enable row level security;
 alter table core.user_profiles enable row level security;
 alter table core.organization_memberships enable row level security;
 alter table core.roles enable row level security;
 alter table core.permissions enable row level security;
 alter table core.membership_roles enable row level security;
-alter table core.site_access enable row level security;
+alter table core.location_access enable row level security;
 alter table core.audit_events enable row level security;
 
 drop policy if exists organizations_member_read on core.organizations;
@@ -101,11 +101,11 @@ create policy organizations_member_read on core.organizations for select to auth
   exists (select 1 from core.organization_memberships m join core.user_profiles u on u.id = m.user_id
           where m.organization_id = organizations.id and m.active and u.external_subject = auth.uid()::text and u.active)
 );
-drop policy if exists sites_member_read on core.sites;
-create policy sites_member_read on core.sites for select to authenticated using (
-  exists (select 1 from core.site_access a join core.organization_memberships m on m.id = a.membership_id
+drop policy if exists locations_member_read on core.locations;
+create policy locations_member_read on core.locations for select to authenticated using (
+  exists (select 1 from core.location_access a join core.organization_memberships m on m.id = a.membership_id
           join core.user_profiles u on u.id = m.user_id
-          where a.site_id = sites.id and a.active and m.active and u.external_subject = auth.uid()::text and u.active)
+          where a.location_id = locations.id and a.active and m.active and u.external_subject = auth.uid()::text and u.active)
 );
 drop policy if exists profiles_self_read on core.user_profiles;
 create policy profiles_self_read on core.user_profiles for select to authenticated using (external_subject = auth.uid()::text);
@@ -125,16 +125,17 @@ create policy membership_roles_member_read on core.membership_roles for select t
   exists (select 1 from core.organization_memberships m join core.user_profiles u on u.id = m.user_id
           where m.id = membership_roles.membership_id and m.active and u.external_subject = auth.uid()::text)
 );
-drop policy if exists site_access_member_read on core.site_access;
-create policy site_access_member_read on core.site_access for select to authenticated using (
+drop policy if exists location_access_member_read on core.location_access;
+create policy location_access_member_read on core.location_access for select to authenticated using (
   exists (select 1 from core.organization_memberships m join core.user_profiles u on u.id = m.user_id
-          where m.id = site_access.membership_id and m.active and u.external_subject = auth.uid()::text)
+          where m.id = location_access.membership_id and m.active and u.external_subject = auth.uid()::text)
 );
 drop policy if exists audit_actor_read on core.audit_events;
 create policy audit_actor_read on core.audit_events for select to authenticated using (
   actor_user_id in (select u.id from core.user_profiles u where u.external_subject = auth.uid()::text)
 );
 
-grant usage on schema core to authenticated, service_role;
+grant usage on schema core to anon, authenticated, service_role;
+grant select on all tables in schema core to anon;
 grant select on all tables in schema core to authenticated;
 grant all on all tables in schema core to service_role;

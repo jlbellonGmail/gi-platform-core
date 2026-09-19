@@ -2,7 +2,7 @@
 
 ## Capas
 
-El paquete `gi_platform_core` mantiene la dirección:
+El paquete instalable `gi-platform-core` (`gi_platform_core`) mantiene la dirección:
 `API/contratos → Application/Use Cases → Domain → Ports → Adapters`.
 Los contratos públicos viven en `contracts.py`; los casos de uso en
 `application.py`; las entidades e invariantes en `domain.py`; los puertos en
@@ -39,7 +39,7 @@ políticas RLS. El service role usado por el backend anfitrión puede persistir;
 las sesiones `authenticated` sólo leen filas dentro de su Organization/Site
 mediante las policies explícitas.
 
-El alcance de Sites se persiste normalizado en `core.site_access`; no se
+El alcance de Sites se persiste normalizado en `core.location_access`; no se
 serializa como una columna de `organization_memberships`. El adaptador carga
 ese alcance al reconstruir el store y lo escribe junto con la membership, lo
 que mantiene equivalencia con `InMemoryCoreStore`.

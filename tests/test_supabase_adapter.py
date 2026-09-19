@@ -37,14 +37,14 @@ def test_supabase_adapter_decodes_role_and_site_access_shapes():
 
     role = SupabaseCoreStore._from_row(Role, {
         'id': 'r', 'organization_id': 'o', 'name': 'reader',
-        'permission_codes': ['site:read'], 'active': True,
+        'permission_codes': ['location:read'], 'active': True,
     })
     membership = SupabaseCoreStore._from_row(OrganizationMembership, {
         'id': 'm', 'user_id': 'u', 'organization_id': 'o',
-        'active': True, 'site_ids': ['s'],
+        'active': True, 'location_ids': ['s'],
     })
-    assert role.permission_codes == frozenset({'site:read'})
-    assert membership.site_ids == frozenset({'s'})
+    assert role.permission_codes == frozenset({'location:read'})
+    assert membership.location_ids == frozenset({'s'})
 
 
 def test_supabase_store_persists_site_access_in_its_own_table():
@@ -58,14 +58,14 @@ def test_supabase_store_persists_site_access_in_its_own_table():
         store = SupabaseCoreStore('https://example.supabase.co', 'server-key')
         service = CoreService(store)
         organization = service.create_organization('Acme')
-        site = service.create_site(organization.id, 'North')
+        site = service.create_location(organization.id, 'North')
         user = service.create_user('subject', 'User')
         membership = service.add_membership(user.id, organization.id)
-        service.grant_site_access(membership.id, site.id)
+        service.grant_location_access(membership.id, site.id)
 
-    site_access_posts = [request for request in requests if '/rest/v1/site_access?' in request.full_url]
-    assert len(site_access_posts) == 1
-    body = json.loads(site_access_posts[0].data.decode())
-    assert body == {'membership_id': membership.id, 'site_id': site.id, 'active': True}
+    location_access_posts = [request for request in requests if '/rest/v1/location_access?' in request.full_url]
+    assert len(location_access_posts) == 1
+    body = json.loads(location_access_posts[0].data.decode())
+    assert body == {'membership_id': membership.id, 'location_id': site.id, 'active': True}
     membership_posts = [request for request in requests if '/rest/v1/organization_memberships?' in request.full_url]
-    assert 'site_ids' not in json.loads(membership_posts[-1].data.decode())
+    assert 'location_ids' not in json.loads(membership_posts[-1].data.decode())

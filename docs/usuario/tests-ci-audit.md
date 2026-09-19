@@ -1,7 +1,10 @@
 # Validación del template
 
-Ejecuta `pytest -q` para los tests del circuito. Los tests de producto todavía
-son un placeholder porque este repositorio no declara stack de producto.
+> **Nota de vigencia:** el texto histórico sobre un `product-tests` placeholder
+> ya no aplica a GI-PLATFORM-CORE. El CI actual ejecuta pruebas reales del Core;
+> consultar `.github/workflows/ci.yml`.
+
+Ejecuta `pytest -q` para los tests del circuito y del Core.
 
 En CI, `circuit-tests`, `product-tests` y `local-reconciler-tests` aparecen
 separados. El último requiere Windows y confirma la limpieza segura de
