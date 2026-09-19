@@ -66,10 +66,10 @@ esas dos validaciones.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-19T17:22:33Z
+- Actualizado: 2026-09-19T17:23:43Z
 - Versión: v0.1.0
 - Rama: feature/v0.1.0-02-supabase-gi-dev-validation
-- HEAD: 009029cb28f8a4d2907b1d4196b5dd1098732a12
+- HEAD: 5a2658734b39e4652fadbe530e6d61a4b7a554ab
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
 - Worktrees: 2
