@@ -6,5 +6,5 @@
 - [x] T4: implementar validación autenticada y aislamiento RLS.
 - [x] T5: documentar operación y añadir pruebas unitarias.
 - [x] T6: ejecutar bootstrap autenticado contra gi-dev.
-- [ ] T7: ejecutar suite, QA, Reviewer, convergencia y gates finales.
-- [ ] T8: preparar PR sin merge.
+- [x] T7: ejecutar suite, QA, Reviewer, convergencia y gates finales.
+- [x] T8: preparar PR sin merge.

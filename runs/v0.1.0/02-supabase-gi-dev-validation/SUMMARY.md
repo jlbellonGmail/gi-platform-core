@@ -1,6 +1,6 @@
 # 02-supabase-gi-dev-validation
 
-Estado: validado localmente; pendiente PR.
+Estado: READY_FOR_PR; PR #1 abierta; HITL pendiente.
 Versión: v0.1.0.
 Tipo: Feature.
 SDD: FULL.
@@ -26,8 +26,8 @@ contra gi-dev con credenciales introducidas localmente por el operador.
 ## Validación
 
 La validación autenticada pasó: nueve tablas HTTP 200, una organization
-visible y aislamiento RLS sintético aprobado. Los gates finales de la Feature
-continúan en ejecución.
+visible y aislamiento RLS sintético aprobado. QA, Reviewer, convergencia y CI
+remoto están aprobados.
 
 ## Decisiones
 
@@ -36,7 +36,8 @@ No se crean roles, permisos, locations ni accesos; no se modifican policies.
 ## Incidencias
 
 La ejecución externa usó interacción local segura y una clave server-side
-exclusiva de gi-dev; ningún secreto quedó en evidencia.
+exclusiva de gi-dev; ningún secreto quedó en evidencia. PR: #1 contra
+`develop`. Merge: pendiente de decisión humana MERGE/NO MERGE.
 
 ## Detalle
 
