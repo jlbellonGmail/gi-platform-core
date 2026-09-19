@@ -1,11 +1,9 @@
 status: PASS
 scope: 04-post-merge-close-dispatch
-head: c7d74a9a6d355c6bde1fc7a524fcd09a4ff6d221
+head: b17ad03
 base: develop
 
-- CI PR #4, run 35472720807: product-tests PASS.
-- CI PR #4, run 35472720807: local-reconciler-tests PASS.
-- CI PR #4, run 35472720807: circuit-tests PASS.
+- CI PR #4, run 35473015939: product-tests/local-reconciler-tests/circuit-tests en ejecución sobre este HEAD; el gate sólo se ejecutará después de su conclusión verde.
 - Feature contract: PASS.
 - Tests específicos: 36 passed.
 - Suite combinada: 46 passed; un fallo ambiental preexistente de Windows en
