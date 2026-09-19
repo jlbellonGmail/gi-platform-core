@@ -34,15 +34,15 @@ integración con credenciales server-side y revisar el diff local antes de
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-19T17:53:53Z
+- Actualizado: 2026-09-19T18:09:23Z
 - Versión: v0.1.0
-- Rama: develop
-- HEAD: 009029cb28f8a4d2907b1d4196b5dd1098732a12
+- Rama: feature/v0.1.0-03-post-hitl-versioned-evidence
+- HEAD: 27ed54f63c381d460470f007b264a5429d08f53e
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
-- Worktrees: 2
-- Worktrees Git: 2
-- Unidades activas: = [feature/v0.1.0-02-supabase-gi-dev-validation]
+- Worktrees: 3
+- Worktrees Git: 3
+- Unidades activas: = [feature/v0.1.0-02-supabase-gi-dev-validation]; = [feature/v0.1.0-03-post-hitl-versioned-evidence]
 - PR activa: UNKNOWN / sin PR abierta
 - CI: UNKNOWN / sin CI verificable
 - CI vigente: UNKNOWN / sin CI verificable
