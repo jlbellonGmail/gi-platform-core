@@ -8,6 +8,8 @@ del Template.
 
 - [-] 01-core-platform-v010 — Core neutral de tenancy, identidad,
   autorización contextual, aislamiento, auditoría y contratos públicos v0.1.0.
+- [ ] 02-supabase-gi-dev-validation — Integración, bootstrap sintético y
+  validación autenticada de RLS del Core contra Supabase gi-dev.
 
 ## Procedencia de la baseline
 
