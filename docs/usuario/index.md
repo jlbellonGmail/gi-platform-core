@@ -36,5 +36,6 @@ fuente canónica, regenerar adaptadores y declarar modelos por ejecución.
 - [Post Hitl Versioned Evidence](post-hitl-versioned-evidence.md)
 - [Post Merge Close Dispatch](post-merge-close-dispatch.md)
 - [Person Identity Linking](person-identity-linking.md)
+- [Release readiness current roadmap](release-readiness-current-roadmap.md)
 
 <!-- FEATURE_LINKS_END -->

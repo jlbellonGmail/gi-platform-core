@@ -11,13 +11,19 @@ def run(*args):
 
 def test_release_gate_is_safe_for_the_current_v200_candidate():
     result = run("-Version", "v2.0.0", "-DryRun")
-    if result.returncode == 0:
-        assert "PASS DRY-RUN" in result.stdout
-    else:
-        assert any(
-            reason in result.stderr
-            for reason in ("ROADMAP incompleto", "CI no encontrado", "Rama incorrecta")
-        )
+    assert result.returncode != 0
+    assert "manifiesto de alcance" in result.stderr
+
+
+def test_release_gate_uses_the_current_release_manifest_not_historical_template_phases():
+    content = SCRIPT.read_text(encoding="utf-8")
+    assert "18-status-observabilidad" not in content
+    assert "19-unidades-paralelizacion" not in content
+    assert "20-releases-evolucion" not in content
+    assert "21-validacion-integral-v2" not in content
+    assert "22-auditoria-release-v2" not in content
+    assert "manifest.json" in content
+    assert "roadmapItems" in content
 
 
 def test_release_gate_rejects_invalid_semver():
