@@ -37,5 +37,6 @@ fuente canónica, regenerar adaptadores y declarar modelos por ejecución.
 - [Post Merge Close Dispatch](post-merge-close-dispatch.md)
 - [Person Identity Linking](person-identity-linking.md)
 - [Release readiness current roadmap](release-readiness-current-roadmap.md)
+- [Release evidence](release-evidence.md)
 
 <!-- FEATURE_LINKS_END -->
