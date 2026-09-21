@@ -21,7 +21,7 @@ del Template.
   históricas incompatibles.
 - [x] 07-release-evidence — Materializar la evidencia versionada de la release
   para el gate de readiness posterior al merge.
-- [-] 09-release-history-manifest — Eliminar la referencia rígida a un tag
+- [x] 09-release-history-manifest — Eliminar la referencia rígida a un tag
   histórico inexistente y validar tags reales desde el manifiesto.
 
 ## Procedencia de la baseline
@@ -38,6 +38,7 @@ del Template.
 Las entradas funcionales deben ser líneas `NN-slug — descripción`. La entrada
 01 queda en READY_FOR_PR después de la validación local; solo un merge humano
 puede cambiarla a `[x]`.
+
 
 
 
