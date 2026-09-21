@@ -24,18 +24,18 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-21T07:57:01Z
+- Actualizado: 2026-09-21T11:48:59Z
 - Versión: v0.2.1
-- Rama: maintenance/v0.2.2-T01-release-governance-reconciliation
-- HEAD: 490ce8a2d09ec4d35c01b76834fa91a47104eb10
-- Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
+- Rama: develop
+- HEAD: 8df666c2613eaa401e81b850a1e5e3120666fb8c
+- Remoto: https://github.com/jlbellonGmail/gi-platform-core
 - Working tree: dirty
-- Worktrees: 16
-- Worktrees Git: 16
-- Unidades activas: 02-supabase-gi-dev-validation= [feature/v0.1.0-02-supabase-gi-dev-validation]; 03-post-hitl-versioned-evidence= [feature/v0.1.0-03-post-hitl-versioned-evidence]; 04-post-merge-close-dispatch= [feature/v0.1.0-04-post-merge-close-dispatch]; 06-release-readiness-current-roadmap= [feature/v0.2.1-06-release-readiness-current-roadmap]; 07-release-evidence= [feature/v0.2.1-07-release-evidence]; 08-release-evidence-pr=unknown [feature/v0.2.1-08-release-evidence-pr]; 09-release-history-manifest= [feature/v0.2.1-09-release-history-manifest]; 10-package-version-consistency= [feature/v0.2.1-10-package-version-consistency]; T01-release-governance-reconciliation= [maintenance/v0.2.2-T01-release-governance-reconciliation]
+- Worktrees: 3
+- Worktrees Git: 3
+- Unidades activas: ninguna
 - PR activa: UNKNOWN / sin PR abierta
-- CI: UNKNOWN / sin CI verificable
-- CI vigente: UNKNOWN / sin CI verificable
-- Última release: UNKNOWN / no disponible
+- CI:  @ 8df666c2613eaa401e81b850a1e5e3120666fb8c
+- CI vigente:  @ 8df666c2613eaa401e81b850a1e5e3120666fb8c
+- Última release: v0.2.1
 
 <!-- STATUS:AUTO:END -->
