@@ -1,6 +1,6 @@
-"""GI-PLATFORM-CORE public package v0.2.0."""
+"""GI-PLATFORM-CORE public package v0.2.1."""
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 from .adapters import InMemoryCoreStore
 from .application import CoreService

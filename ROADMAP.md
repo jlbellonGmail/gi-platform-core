@@ -24,6 +24,8 @@ del Template.
 - [x] 09-release-history-manifest — Eliminar la referencia rígida a un tag
   histórico inexistente y validar tags reales desde el manifiesto.
 
+- [ ] 10-package-version-consistency — Alinear la versión exportada por el paquete con la versión distribuida del wheel v0.2.1.
+
 ## Procedencia de la baseline
 
 - Template: v2.0.0
