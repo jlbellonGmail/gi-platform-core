@@ -21,6 +21,10 @@ del Template.
   históricas incompatibles.
 - [x] 07-release-evidence — Materializar la evidencia versionada de la release
   para el gate de readiness posterior al merge.
+- [x] 09-release-history-manifest — Eliminar la referencia rígida a un tag
+  histórico inexistente y validar tags reales desde el manifiesto.
+
+- [x] 10-package-version-consistency — Alinear la versión exportada por el paquete con la versión distribuida del wheel v0.2.1.
 
 ## Procedencia de la baseline
 
@@ -36,6 +40,9 @@ del Template.
 Las entradas funcionales deben ser líneas `NN-slug — descripción`. La entrada
 01 queda en READY_FOR_PR después de la validación local; solo un merge humano
 puede cambiarla a `[x]`.
+
+
+
 
 
 

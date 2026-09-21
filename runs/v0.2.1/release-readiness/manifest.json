@@ -3,6 +3,8 @@
   "roadmapItems": [
     "05-person-identity-linking",
     "06-release-readiness-current-roadmap",
-    "07-release-evidence"
-  ]
+    "07-release-evidence",
+    "09-release-history-manifest"
+  ],
+  "historicalTags": ["v0.1.0", "v0.2.0"]
 }
