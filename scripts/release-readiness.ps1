@@ -4,6 +4,7 @@ param(
     [string] $CandidateBranch = "develop",
     [string] $TargetBranch = "main",
     [string] $RepositoryRoot = "",
+    [string[]] $RoadmapItems = @(),
     [switch] $DryRun
 )
 
@@ -32,11 +33,17 @@ try {
         $roadmapPath = Join-Path $root "ROADMAP.md"
         Assert-Condition (Test-Path -LiteralPath $roadmapPath -PathType Leaf) "ROADMAP.md inexistente."
         $roadmap = Get-Content -LiteralPath $roadmapPath -Raw -Encoding UTF8
-        $required = @("18-status-observabilidad", "19-unidades-paralelizacion", "20-releases-evolucion", "21-validacion-integral-v2", "22-auditoria-release-v2")
+        $run = Join-Path $root "runs\$Version\release-readiness"
+        $manifestPath = Join-Path $run "manifest.json"
+        Assert-Condition (Test-Path -LiteralPath $manifestPath -PathType Leaf) "Falta el manifiesto de alcance de release: $manifestPath."
+        $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        $required = if ($RoadmapItems.Count -gt 0) { @($RoadmapItems) } else { @($manifest.roadmapItems) }
+        Assert-Condition ($required.Count -gt 0) "El manifiesto de release debe declarar al menos un item del ROADMAP."
         foreach ($item in $required) {
-            $match = [regex]::Match($roadmap, "(?m)^- \[(?<state>[ x-])\] $([regex]::Escape($item))\b")
-            Assert-Condition $match.Success "ROADMAP incompleto: falta '$item'."
-            Assert-Condition ($match.Groups["state"].Value -eq "x") "ROADMAP incompleto: '$item' no esta cerrado."
+            Assert-Condition ($item -match '^[0-9]{2}-[a-z0-9]+(?:-[a-z0-9]+)*$') "Item de ROADMAP invalido en el manifiesto: '$item'."
+            $matches = @([regex]::Matches($roadmap, "(?m)^- \[(?<state>[ x-])\] $([regex]::Escape($item))\b"))
+            Assert-Condition ($matches.Count -eq 1) "ROADMAP ambiguo o incompleto: '$item'."
+            Assert-Condition ($matches[0].Groups["state"].Value -eq "x") "ROADMAP incompleto: '$item' no esta cerrado."
         }
 
     Assert-Condition ($CandidateBranch -notin @("", "main")) "La candidata debe provenir de una rama de integracion distinta de main."
@@ -48,8 +55,7 @@ try {
         $developSha = Invoke-Git @("rev-parse", "develop^{commit}")
         Assert-Condition ($candidateSha -eq $developSha) "La candidata no coincide con el HEAD local de develop."
 
-        $run = Join-Path $root "runs\$Version\22-auditoria-release-v2"
-        Assert-Condition (Test-Path -LiteralPath $run -PathType Container) "Falta la auditoria de release para $Version (F17)."
+        Assert-Condition (Test-Path -LiteralPath $run -PathType Container) "Falta la evidencia de release para $Version."
         foreach ($file in @("SUMMARY.md", "audit-1.md", "test-report-1.md", "code-review-1.md")) {
             Assert-Condition (Test-Path -LiteralPath (Join-Path $run $file) -PathType Leaf) "Falta evidencia de release: $run\$file."
         }

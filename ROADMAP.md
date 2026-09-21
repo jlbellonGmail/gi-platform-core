@@ -16,6 +16,9 @@ del Template.
   resolver evidencias por versión y slug de work unit.
 - [x] 04-post-merge-close-dispatch — Habilitar el cierre post-merge manual
   seguro cuando el evento automático queda suprimido por GITHUB_TOKEN.
+- [ ] 06-release-readiness-current-roadmap — Alinear el gate de readiness de
+  releases con el ROADMAP vigente del repositorio y eliminar referencias
+  históricas incompatibles.
 
 ## Procedencia de la baseline
 
