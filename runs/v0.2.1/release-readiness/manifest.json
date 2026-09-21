@@ -1,10 +1,12 @@
 {
   "schemaVersion": 1,
   "roadmapItems": [
+    "01-core-platform-v010",
     "05-person-identity-linking",
     "06-release-readiness-current-roadmap",
     "07-release-evidence",
-    "09-release-history-manifest"
+    "09-release-history-manifest",
+    "10-package-version-consistency"
   ],
   "historicalTags": ["v0.1.0", "v0.2.0"]
 }

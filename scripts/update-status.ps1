@@ -61,11 +61,12 @@ try {
         $roadmap = if (Test-Path -LiteralPath "ROADMAP.md") { Get-Content -Raw -Encoding UTF8 ROADMAP.md } else { "" }
         $units = @()
         foreach ($tree in $trees) {
-            $mode = ""; $slug = ""; $version = ""
-            if ($tree.branch -match '^feature/(?:(?<version>v[0-9]+\.[0-9]+\.[0-9]+)-)?(?<slug>\d{2}-[a-z0-9-]+)$') { $mode = "Feature" }
-            elseif ($tree.branch -match '^milestone/(?:(?<version>v[0-9]+\.[0-9]+\.[0-9]+)-)?(?<slug>[a-z0-9-]+)$') { $mode = "Milestone" }
-            elseif ($tree.branch -match '^maintenance/(?:(?<version>v[0-9]+\.[0-9]+\.[0-9]+)-)?(?<slug>T[0-9]{2}-[a-z0-9-]+)(?:-fix)?$') { $mode = "Maintenance" }
+            $mode = ""; $slug = ""; $version = ""; $branchMatch = $null
+            if (($branchMatch = [regex]::Match($tree.branch, '^feature/(?:(?<version>v[0-9]+\.[0-9]+\.[0-9]+)-)?(?<slug>\d{2}-[a-z0-9-]+)$')).Success) { $mode = "Feature" }
+            elseif (($branchMatch = [regex]::Match($tree.branch, '^milestone/(?:(?<version>v[0-9]+\.[0-9]+\.[0-9]+)-)?(?<slug>[a-z0-9-]+)$')).Success) { $mode = "Milestone" }
+            elseif (($branchMatch = [regex]::Match($tree.branch, '^maintenance/(?:(?<version>v[0-9]+\.[0-9]+\.[0-9]+)-)?(?<slug>T[0-9]{2}-[a-z0-9-]+)(?:-fix)?$')).Success) { $mode = "Maintenance" }
             if ($mode) {
+                $slug = $branchMatch.Groups['slug'].Value; $version = $branchMatch.Groups['version'].Value
                 $line = [regex]::Match($roadmap, "(?m)^- \[(?<state>[ x-])\] $([regex]::Escape($slug))\b")
                 $state = if ($line.Success) { switch ($line.Groups.state.Value) { ' ' { 'pending' } '-' { 'ready' } 'x' { 'done' } } } else { 'unknown' }
                 $lifecycle = if ($state -eq "done") { "CLOSED" } elseif ($state -eq "ready") { "PR_OPEN" } else { "ACTIVE" }
@@ -76,11 +77,11 @@ try {
             }
         }
         $workingTree = if (Invoke-Git @("status", "--porcelain")) { "dirty" } else { "clean" }
-        $projectVersion = 'v2.0.0'
-        if (Test-Path -LiteralPath "GOAL.md") {
-            $goalText = Get-Content -LiteralPath "GOAL.md" -Raw -Encoding UTF8
-            $goalMatch = [regex]::Match($goalText, '(?i)GI-PLATFORM-CORE\s+v(?<version>\d+\.\d+\.\d+)')
-            if ($goalMatch.Success) { $projectVersion = "v$($goalMatch.Groups['version'].Value)" }
+        $projectVersion = 'UNKNOWN'
+        if (Test-Path -LiteralPath "pyproject.toml") {
+            $projectText = Get-Content -LiteralPath "pyproject.toml" -Raw -Encoding UTF8
+            $projectMatch = [regex]::Match($projectText, '(?m)^version\s*=\s*"(?<version>\d+\.\d+\.\d+)"\s*$')
+            if ($projectMatch.Success) { $projectVersion = "v$($projectMatch.Groups['version'].Value)" }
         }
         $remoteResult = Invoke-Optional "git" @("remote", "get-url", "origin")
         $remote = if ($remoteResult.Code -eq 0 -and $remoteResult.Text) { $remoteResult.Text } else { "UNKNOWN / sin remoto" }
@@ -90,7 +91,7 @@ try {
         if ($Json) { Write-Output $jsonText; exit 0 }
         $prText = if ($pr) { "#$($pr.number) $($pr.url)" } else { "UNKNOWN / sin PR abierta" }
         $ciText = if ($ci) { "$($ci.conclusion) @ $($ci.headSha)" } else { "UNKNOWN / sin CI verificable" }
-        $unitText = if ($units.Count) { ($units | ForEach-Object { "$($_.slug)=$($_.state) [$($_.branch)]" }) -join '; ' } else { 'ninguna' }
+        $unitText = if ($units.Count) { ($units | ForEach-Object { "$($_.unitId)=$($_.state) [$($_.branch)]" }) -join '; ' } else { 'ninguna' }
         $block = @("<!-- STATUS:AUTO:BEGIN -->", "", "## Estado verificado automáticamente", "", "- Actualizado: $([DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ'))", "- Versión: $projectVersion", "- Rama: $branch", "- HEAD: $head", "- Remoto: $($snapshot.remote)", "- Working tree: $workingTree", "- Worktrees: $($trees.Count)", "- Worktrees Git: $($trees.Count)", "- Unidades activas: $unitText", "- PR activa: $prText", "- CI: $ciText", "- CI vigente: $ciText", "- Última release: $(if ($release) { $release.tagName } else { 'UNKNOWN / no disponible' })", "", "<!-- STATUS:AUTO:END -->") -join $NL
         $status = Join-Path $root "STATUS.md"
         $content = [IO.File]::ReadAllText($status, [Text.Encoding]::UTF8)

@@ -26,6 +26,7 @@ def test_release_gate_uses_the_current_release_manifest_not_historical_template_
     assert "roadmapItems" in content
     assert "v1.1.0" not in content
     assert "historicalTags" in content
+    assert "cubrir exactamente los items funcionales" in content
 
 
 def test_release_gate_rejects_invalid_semver():

@@ -1,6 +1,6 @@
 # GI-PLATFORM-CORE
 
-Core reusable v0.2.0 para productos y verticales GI. Provee tenancy,
+Core reusable v0.2.1 para productos y verticales GI. Provee tenancy,
 identidad base, memberships, roles, permisos, autorización contextual,
 aislamiento y auditoría sin depender de Dental ni de una UI.
 

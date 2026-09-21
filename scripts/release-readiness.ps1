@@ -45,6 +45,10 @@ try {
             Assert-Condition ($matches.Count -eq 1) "ROADMAP ambiguo o incompleto: '$item'."
             Assert-Condition ($matches[0].Groups["state"].Value -eq "x") "ROADMAP incompleto: '$item' no esta cerrado."
         }
+        $roadmapItems = @([regex]::Matches($roadmap, '(?m)^- \[[ x-]\] (?<id>\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*)\b') | ForEach-Object { $_.Groups['id'].Value })
+        $missingItems = @($roadmapItems | Where-Object { $_ -notin $required })
+        $extraItems = @($required | Where-Object { $_ -notin $roadmapItems })
+        Assert-Condition ($missingItems.Count -eq 0 -and $extraItems.Count -eq 0) "El manifiesto de release debe cubrir exactamente los items funcionales del ROADMAP. Faltan: $($missingItems -join ', '); extras: $($extraItems -join ', ')."
 
     Assert-Condition ($CandidateBranch -notin @("", "main")) "La candidata debe provenir de una rama de integracion distinta de main."
     $current = Invoke-Git @("branch", "--show-current")
