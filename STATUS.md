@@ -34,18 +34,18 @@ integración con credenciales server-side y revisar el diff local antes de
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-19T22:30:10Z
+- Actualizado: 2026-09-21T01:31:49Z
 - Versión: v0.1.0
-- Rama: develop
-- HEAD: 740b23ad6f2ea2c29e54ee532f0eeb29dc17a820
-- Remoto: https://github.com/jlbellonGmail/gi-platform-core
+- Rama: feature/v0.2.0-05-person-identity-linking
+- HEAD: f87ce4380ae4c980f77c815fc0af0f174a60ab83
+- Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
-- Worktrees: 3
-- Worktrees Git: 3
-- Unidades activas: ninguna
+- Worktrees: 5
+- Worktrees Git: 5
+- Unidades activas: = [feature/v0.1.0-02-supabase-gi-dev-validation]; = [feature/v0.1.0-03-post-hitl-versioned-evidence]; = [feature/v0.1.0-04-post-merge-close-dispatch]; = [feature/v0.2.0-05-person-identity-linking]
 - PR activa: UNKNOWN / sin PR abierta
-- CI:  @ b45255551681d86219d278e970be1de11e8011dd
-- CI vigente:  @ b45255551681d86219d278e970be1de11e8011dd
+- CI: UNKNOWN / sin CI verificable
+- CI vigente: UNKNOWN / sin CI verificable
 - Última release: UNKNOWN / no disponible
 
 <!-- STATUS:AUTO:END -->
