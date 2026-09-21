@@ -26,7 +26,7 @@ del Template.
 
 - [x] 10-package-version-consistency — Alinear la versión exportada por el paquete con la versión distribuida del wheel v0.2.1.
 
-- [ ] T01-release-governance-reconciliation — Reconciliar evidencia histórica,
+- [x] T01-release-governance-reconciliation — Reconciliar evidencia histórica,
   controles de release y estado operativo tras la auditoría v0.2.1.
 
 ## Procedencia de la baseline
