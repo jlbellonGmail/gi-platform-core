@@ -93,10 +93,15 @@ try {
 
         $tag = Invoke-Optional "git" @("rev-parse", "$Version^{commit}")
         Assert-Condition ($tag.Code -ne 0) "Tag $Version ya existe; se rechaza cualquier overwrite."
-        $oldTag = Invoke-Optional "git" @("rev-parse", "v1.1.0^{commit}")
-        Assert-Condition ($oldTag.Code -eq 0 -and $oldTag.Text -eq "d13ffcf34b6d982a7b3b89a364c17762f5efad70") "v1.1.0 no coincide con su commit historico inmutable."
-        $oldTagType = Invoke-Git @("cat-file", "-t", "v1.1.0")
-        Assert-Condition ($oldTagType -eq "tag") "v1.1.0 debe conservar un objeto tag anotado."
+        $historicalTags = @($manifest.historicalTags)
+        Assert-Condition ($historicalTags.Count -gt 0) "El manifiesto debe declarar al menos un tag historico a preservar."
+        foreach ($historicalTag in $historicalTags) {
+            Assert-Condition ($historicalTag -match '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$') "Tag historico invalido en el manifiesto: '$historicalTag'."
+            $historicalCommit = Invoke-Optional "git" @("rev-parse", "$historicalTag^{commit}")
+            Assert-Condition ($historicalCommit.Code -eq 0 -and $historicalCommit.Text -match '^[0-9a-f]{40}$') "Tag historico ausente o invalido: $historicalTag."
+            $historicalTagType = Invoke-Git @("cat-file", "-t", $historicalTag)
+            Assert-Condition ($historicalTagType -eq "tag") "$historicalTag debe conservar un objeto tag anotado."
+        }
 
         $mode = if ($DryRun) { "DRY-RUN" } else { "READINESS-ONLY" }
         Write-Output "PASS ${mode}: $Version candidata en $candidateSha; sin publicaciones ni cambios remotos."
