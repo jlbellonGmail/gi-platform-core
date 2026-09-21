@@ -21,6 +21,8 @@ del Template.
   históricas incompatibles.
 - [x] 07-release-evidence — Materializar la evidencia versionada de la release
   para el gate de readiness posterior al merge.
+- [ ] 09-release-history-manifest — Eliminar la referencia rígida a un tag
+  histórico inexistente y validar tags reales desde el manifiesto.
 
 ## Procedencia de la baseline
 

@@ -49,5 +49,6 @@ calificación subjetiva.
 - [Person Identity Linking](person-identity-linking.md)
 - [Release readiness current roadmap](release-readiness-current-roadmap.md)
 - [Release evidence](release-evidence.md)
+- [Release history manifest](release-history-manifest.md)
 
 <!-- FEATURE_LINKS_END -->

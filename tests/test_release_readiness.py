@@ -24,6 +24,8 @@ def test_release_gate_uses_the_current_release_manifest_not_historical_template_
     assert "22-auditoria-release-v2" not in content
     assert "manifest.json" in content
     assert "roadmapItems" in content
+    assert "v1.1.0" not in content
+    assert "historicalTags" in content
 
 
 def test_release_gate_rejects_invalid_semver():
