@@ -19,7 +19,7 @@ del Template.
 - [x] 06-release-readiness-current-roadmap — Alinear el gate de readiness de
   releases con el ROADMAP vigente del repositorio y eliminar referencias
   históricas incompatibles.
-- [ ] 07-release-evidence — Materializar la evidencia versionada de la release
+- [-] 07-release-evidence — Materializar la evidencia versionada de la release
   para el gate de readiness posterior al merge.
 
 ## Procedencia de la baseline
@@ -36,6 +36,7 @@ del Template.
 Las entradas funcionales deben ser líneas `NN-slug — descripción`. La entrada
 01 queda en READY_FOR_PR después de la validación local; solo un merge humano
 puede cambiarla a `[x]`.
+
 
 
 
