@@ -44,6 +44,7 @@ calificación subjetiva.
 - [Core Platform V010](core-platform-v010.md)
 - [Core public contract V010](core-contract-v010.md)
 - [Supabase gi-dev validation](supabase-gi-dev-validation.md)
+- [Package version consistency](package-version-consistency.md)
 - [Post Hitl Versioned Evidence](post-hitl-versioned-evidence.md)
 - [Post Merge Close Dispatch](post-merge-close-dispatch.md)
 - [Person Identity Linking](person-identity-linking.md)

@@ -1,6 +1,6 @@
 # Estado operativo
 
-Proyecto nuevo: GI-PLATFORM-CORE.
+GI-PLATFORM-CORE v0.2.1 está publicado y listo para consumo mediante su wheel.
 
 ## Procedencia
 
@@ -9,43 +9,33 @@ Proyecto nuevo: GI-PLATFORM-CORE.
 
 ## Estado
 
-- Rama estable/local: `develop`.
-- Trabajo activo: persistencia Supabase del Core e integración de contratos;
-  corregido el almacenamiento normalizado de `site_access`.
-- Validación local: pytest `278 passed`.
-- Validación posterior: PostgreSQL efímero con roles Supabase simulados pasó
-  DDL, 9 tablas, 9 policies, RLS en 9 tablas y aislamiento efectivo.
-- ROADMAP funcional: `01-core-platform-v010` en READY_FOR_PR.
-- Work units activas: ninguna.
-- Runs de producto: ninguno.
-- Skills: cero, estado válido hasta demostrar una necesidad especializada.
-- MCP reales: cero; catálogo declarativo vacío.
-- Modelos/proveedores: cero configurados; routing declarativo preparado.
+- `develop` es la rama de integración.
+- Release publicada: `v0.2.1`, con wheel `gi_platform_core-0.2.1-py3-none-any.whl`.
+- Contratos públicos: CoreApi `0.1.0`; identidad `0.2.0`.
+- La reconciliación de gobernanza se ejecuta como `T01-release-governance-reconciliation`.
 
 ## Próximo paso exacto
 
-Revisar y aplicar en un proyecto Supabase real la migración
-`supabase/migrations/20260918000000_core_schema.sql`, ejecutar pruebas de
-integración con credenciales server-side y revisar el diff local antes de
-  crear una PR. No se hizo push ni se crearon tags. Docker Desktop no tiene
-  el daemon activo para una validación PostgreSQL local.
+Consultar el bloque automático y Git/GitHub para el estado vigente. Toda nueva
+release debe pasar readiness prepublicación, CI y la instalación externa del
+wheel antes de crear su tag.
 
 <!-- STATUS:AUTO:BEGIN -->
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-21T05:14:41Z
-- Versión: v0.1.0
-- Rama: develop
-- HEAD: bdbc95e6fa141765a689a73502b7522e472a60c5
+- Actualizado: 2026-09-21T07:57:01Z
+- Versión: v0.2.1
+- Rama: maintenance/v0.2.2-T01-release-governance-reconciliation
+- HEAD: 490ce8a2d09ec4d35c01b76834fa91a47104eb10
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
-- Worktrees: 14
-- Worktrees Git: 14
-- Unidades activas: = [feature/v0.1.0-02-supabase-gi-dev-validation]; = [feature/v0.1.0-03-post-hitl-versioned-evidence]; = [feature/v0.1.0-04-post-merge-close-dispatch]; = [feature/v0.2.1-06-release-readiness-current-roadmap]; = [feature/v0.2.1-07-release-evidence]; = [feature/v0.2.1-08-release-evidence-pr]; = [feature/v0.2.1-09-release-history-manifest]; = [feature/v0.2.1-10-package-version-consistency]
+- Worktrees: 16
+- Worktrees Git: 16
+- Unidades activas: 02-supabase-gi-dev-validation= [feature/v0.1.0-02-supabase-gi-dev-validation]; 03-post-hitl-versioned-evidence= [feature/v0.1.0-03-post-hitl-versioned-evidence]; 04-post-merge-close-dispatch= [feature/v0.1.0-04-post-merge-close-dispatch]; 06-release-readiness-current-roadmap= [feature/v0.2.1-06-release-readiness-current-roadmap]; 07-release-evidence= [feature/v0.2.1-07-release-evidence]; 08-release-evidence-pr=unknown [feature/v0.2.1-08-release-evidence-pr]; 09-release-history-manifest= [feature/v0.2.1-09-release-history-manifest]; 10-package-version-consistency= [feature/v0.2.1-10-package-version-consistency]; T01-release-governance-reconciliation= [maintenance/v0.2.2-T01-release-governance-reconciliation]
 - PR activa: UNKNOWN / sin PR abierta
-- CI: success @ bdbc95e6fa141765a689a73502b7522e472a60c5
-- CI vigente: success @ bdbc95e6fa141765a689a73502b7522e472a60c5
-- Última release: v0.2.1
+- CI: UNKNOWN / sin CI verificable
+- CI vigente: UNKNOWN / sin CI verificable
+- Última release: UNKNOWN / no disponible
 
 <!-- STATUS:AUTO:END -->

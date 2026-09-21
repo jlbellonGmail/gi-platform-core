@@ -6,7 +6,7 @@ GI-PLATFORM-CORE fue inicializado desde Template v2.0.0. Este archivo no
 contiene funcionalidades inventadas ni conserva las fases de construcción
 del Template.
 
-- [-] 01-core-platform-v010 — Core neutral de tenancy, identidad,
+- [x] 01-core-platform-v010 — Core neutral de tenancy, identidad,
   autorización contextual, aislamiento, auditoría y contratos públicos v0.1.0.
 - [x] 05-person-identity-linking — Vinculación tenant-aware de Person con una
   identidad de acceso Core, CoreApi v0.2.0 y servicio HTTP.
@@ -26,6 +26,9 @@ del Template.
 
 - [x] 10-package-version-consistency — Alinear la versión exportada por el paquete con la versión distribuida del wheel v0.2.1.
 
+- [ ] T01-release-governance-reconciliation — Reconciliar evidencia histórica,
+  controles de release y estado operativo tras la auditoría v0.2.1.
+
 ## Procedencia de la baseline
 
 - Template: v2.0.0
@@ -37,9 +40,8 @@ del Template.
 - `[-]`: READY_FOR_PR.
 - `[x]`: completado después del merge.
 
-Las entradas funcionales deben ser líneas `NN-slug — descripción`. La entrada
-01 queda en READY_FOR_PR después de la validación local; solo un merge humano
-puede cambiarla a `[x]`.
+Las entradas funcionales deben ser líneas `NN-slug — descripción`. Los items
+TNN documentan mantenimiento de gobernanza y siguen el mismo lifecycle.
 
 
 

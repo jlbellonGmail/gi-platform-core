@@ -1,4 +1,4 @@
-param([string]$RepositoryRoot="", [string]$WorktreeDir="", [string]$Version="v2.0.0")
+param([string]$RepositoryRoot="", [string]$WorktreeDir="", [string]$Version="")
 $ErrorActionPreference = "Stop"
 function Git([string[]]$Arguments) {
   $gitCommand = Get-Command git -CommandType Application -ErrorAction Stop | Select-Object -First 1
@@ -13,9 +13,9 @@ try {
     $errors = [Collections.Generic.List[string]]::new()
     $warnings = [Collections.Generic.List[string]]::new()
     $roadmap = Get-Content "ROADMAP.md" -Raw -Encoding UTF8
-    if ($Version -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') { throw "Version invalida: $Version" }
-    $v2 = Join-Path $root (Join-Path "runs" $Version)
-    $dirs = @(Get-ChildItem $v2 -Directory -ErrorAction SilentlyContinue)
+    if ($Version -and $Version -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') { throw "Version invalida: $Version" }
+    $runsRoot = Join-Path $root "runs"
+    $dirs = if ($Version) { @(Get-ChildItem (Join-Path $runsRoot $Version) -Directory -ErrorAction SilentlyContinue) } else { @(Get-ChildItem $runsRoot -Directory -Recurse -ErrorAction SilentlyContinue) }
     $runT = @($dirs | Where-Object { $_.Name -match '^T\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*$' })
     $roadT = @([regex]::Matches($roadmap,'(?m)^-\s+(?:\[[ x-]\]\s+)?(?<id>T\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*)\b.*') | ForEach-Object { $_.Groups["id"].Value })
     if (($roadT | Group-Object | Where-Object Count -gt 1).Count) { [void]$errors.Add("identidad Txx duplicada en ROADMAP.md") }
@@ -61,7 +61,7 @@ try {
     $summaries = @(Get-ChildItem $v2 -Filter SUMMARY.md -File -Recurse -ErrorAction SilentlyContinue)
     foreach ($match in [regex]::Matches($roadmap,'(?m)^- \[x\] (?<id>[a-z0-9]+-[a-z0-9]+(?:-[a-z0-9]+)*)\b.*?Fase\s+(?<n>\d+)')) {
       $phaseId = $match.Groups["id"].Value
-      $phaseSummary = Join-Path $v2 (Join-Path $phaseId "SUMMARY.md")
+      $phaseSummary = Join-Path $runsRoot (Join-Path $Version (Join-Path $phaseId "SUMMARY.md"))
       if (-not (Test-Path $phaseSummary -PathType Leaf) -or [string]::IsNullOrWhiteSpace((Get-Content $phaseSummary -Raw -Encoding UTF8))) {
         $n = [int]$match.Groups["n"].Value
         [void]$errors.Add("ROADMAP F$("{0:D2}" -f $n) [x] sin SUMMARY de cierre: $phaseId")

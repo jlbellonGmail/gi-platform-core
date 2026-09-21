@@ -1,3 +1,7 @@
-attempt: 1
+```yaml
 status: approved
-tests: `python -m pytest -q tests/test_core_platform.py` — 11 passed
+attempt: 1
+scope: 10-package-version-consistency
+```
+
+`python -m pytest -q tests/test_core_platform.py` — 11 passed en la evidencia original.
