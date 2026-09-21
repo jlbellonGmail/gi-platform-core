@@ -136,4 +136,4 @@ def test_public_contract_is_json_serializable_and_normalizes_sets(core):
 
 
 def test_package_and_public_contract_version_are_aligned():
-    assert __version__ == "0.1.0"
+    assert __version__ == "0.2.0"

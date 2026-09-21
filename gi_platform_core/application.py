@@ -3,8 +3,8 @@
 from dataclasses import replace
 
 from .authorization import AuthorizationDecision, TenantContext
-from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
-from .errors import IsolationError, NotFoundError, ValidationError
+from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
+from .errors import ConflictError, IsolationError, NotFoundError, ValidationError
 from .ports import CoreStore
 
 
@@ -101,6 +101,12 @@ class CoreService:
         return updated
 
     def authorize(self, context: TenantContext, permission_code: str) -> AuthorizationDecision:
+        user = self.store.get_user(context.user_id)
+        organization = self.store.get_organization(context.organization_id)
+        if user is None or not user.active:
+            return self._denied(context, "user is inactive or unknown")
+        if organization is None or not organization.active:
+            return self._denied(context, "organization is inactive or unknown")
         try:
             membership = next(m for m in self.store.all_memberships() if m.user_id == context.user_id and m.organization_id == context.organization_id)
         except StopIteration:
@@ -114,10 +120,43 @@ class CoreService:
             if context.location_id not in membership.location_ids:
                 return self._denied(context, "location access is not granted")
         roles = [self.store.get_role(link.role_id) for link in self.store.all_membership_roles() if link.membership_id == membership.id and self.store.get_role(link.role_id) is not None]
-        if any(role.organization_id == context.organization_id and permission_code in role.permission_codes for role in roles):
+        permission = self.store.permissions.get(permission_code)
+        if permission is None or not permission.active:
+            return self._denied(context, "permission is inactive or unknown")
+        if any(role.active and role.organization_id == context.organization_id and permission_code in role.permission_codes for role in roles):
             self._audit("authorization.checked", context.user_id, context.organization_id, context.location_id, "allowed", permission=permission_code)
             return AuthorizationDecision(True, "permission granted", context)
         return self._denied(context, "permission denied")
+
+    def resolve_identity(self, organization_id: str, user_id: str, external_subject: str) -> UserProfile:
+        organization = self.store.get_organization(organization_id)
+        user = self.store.get_user(user_id)
+        membership = next((item for item in self.store.all_memberships()
+                           if item.organization_id == organization_id and item.user_id == user_id), None)
+        if (organization is None or not organization.active or user is None or not user.active
+                or user.external_subject != external_subject or membership is None or not membership.active):
+            self._audit("identity.resolved", user_id, organization_id, None, "denied")
+            raise NotFoundError("identity not found")
+        self._audit("identity.resolved", user.id, organization_id, None, "success")
+        return user
+
+    def link_identity(self, context: TenantContext, person_id: str, user_id: str, external_subject: str):
+        self.authorize(context, "organization:identity_link").require()
+        self.resolve_identity(context.organization_id, user_id, external_subject)
+        entity = IdentityLink(context.organization_id, person_id, user_id)
+        try:
+            result = self.store.link_identity_atomic(entity)
+        except ConflictError as exc:
+            self._audit("identity.linked", context.user_id, context.organization_id, None, "failure", person_id=person_id)
+            raise ConflictError(str(exc)) from exc
+        self._audit("identity.linked", context.user_id, context.organization_id, None, "success", person_id=person_id, user_id=user_id)
+        return result
+
+    def unlink_identity(self, context: TenantContext, person_id: str):
+        self.authorize(context, "organization:identity_unlink").require()
+        result = self.store.unlink_identity_atomic(context.organization_id, person_id)
+        self._audit("identity.unlinked", context.user_id, context.organization_id, None, "success", person_id=person_id, idempotent=str(result is None).lower())
+        return result
 
     def list_locations(self, context: TenantContext) -> list[Location]:
         self.authorize(context, "location:read").require()

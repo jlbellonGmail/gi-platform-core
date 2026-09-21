@@ -91,6 +91,22 @@ class OrganizationMembership:
 
 
 @dataclass(frozen=True)
+class IdentityLink:
+    """Opaque vertical Person reference linked to a Core access identity."""
+
+    organization_id: str
+    person_id: str
+    user_id: str
+    id: str = field(default_factory=new_id)
+    active: bool = True
+
+    def __post_init__(self) -> None:
+        required(self.organization_id, "identity_link.organization_id")
+        required(self.person_id, "identity_link.person_id")
+        required(self.user_id, "identity_link.user_id")
+
+
+@dataclass(frozen=True)
 class MembershipRole:
     membership_id: str
     role_id: str

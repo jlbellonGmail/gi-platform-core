@@ -13,8 +13,8 @@ from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
-from .errors import CoreError
+from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
+from .errors import ConflictError, CoreError
 
 
 class SupabaseError(CoreError):
@@ -32,6 +32,7 @@ class SupabaseCoreStore:
         "roles": Role,
         "permissions": Permission,
         "membership_roles": MembershipRole,
+        "identity_links": IdentityLink,
     }
 
     def __init__(self, url: str, key: str, *, timeout: float = 10.0) -> None:
@@ -47,6 +48,7 @@ class SupabaseCoreStore:
         self.permissions: dict[str, Permission] = {}
         self.roles: dict[str, Role] = {}
         self.membership_roles: dict[str, MembershipRole] = {}
+        self.identity_links: dict[str, IdentityLink] = {}
         self._refresh()
 
     def _request(self, table: str, method: str = "GET", *, query: str = "", body: Any = None, prefer: str = "return=representation") -> list[dict[str, Any]]:
@@ -80,6 +82,7 @@ class SupabaseCoreStore:
                 elif isinstance(entity, OrganizationMembership): self.memberships[entity.id] = entity
                 elif isinstance(entity, Role): self.roles[entity.id] = entity
                 elif isinstance(entity, MembershipRole): self.membership_roles[entity.id] = entity
+                elif isinstance(entity, IdentityLink): self.identity_links[entity.id] = entity
         for row in self._request("location_access"):
             membership = self.memberships.get(row.get("membership_id"))
             if membership and row.get("active", True):
@@ -121,6 +124,32 @@ class SupabaseCoreStore:
     def save_permission(self, entity): self.permissions[entity.code] = entity; self._save("permissions", entity, "code")
     def save_role(self, entity): self.roles[entity.id] = entity; self._save("roles", entity)
     def save_membership_role(self, entity): self.membership_roles[entity.id] = entity; self._save("membership_roles", entity)
+    def save_identity_link(self, entity): self.identity_links[entity.id] = entity; self._save("identity_links", entity, "organization_id,person_id")
+
+    def link_identity_atomic(self, entity):
+        rows = self._request("rpc/link_identity", "POST", body={
+            "p_organization_id": entity.organization_id, "p_person_id": entity.person_id,
+            "p_user_id": entity.user_id,
+        })
+        row = rows[0] if isinstance(rows, list) and rows else None
+        if row:
+            result = self._from_row(IdentityLink, row)
+            if result.user_id != entity.user_id:
+                raise ConflictError("person is already linked to another identity")
+            self.identity_links[result.id] = result
+            return result
+        return entity
+
+    def unlink_identity_atomic(self, organization_id, person_id):
+        rows = self._request("rpc/unlink_identity", "POST", body={
+            "p_organization_id": organization_id, "p_person_id": person_id,
+        })
+        row = rows[0] if isinstance(rows, list) and rows else None
+        if not row:
+            return None
+        result = self._from_row(IdentityLink, row)
+        self.identity_links.pop(result.id, None)
+        return result
 
     def _save_location_access(self, membership_id: str, location_id: str) -> None:
         self._request(
@@ -139,8 +168,10 @@ class SupabaseCoreStore:
     def get_user(self, entity_id): return self.users.get(entity_id)
     def get_membership(self, entity_id): return self.memberships.get(entity_id)
     def get_role(self, entity_id): return self.roles.get(entity_id)
+    def get_identity_link(self, entity_id): return self.identity_links.get(entity_id)
     def all_locations(self): return self.locations.values()
     def all_memberships(self): return self.memberships.values()
     def all_roles(self): return self.roles.values()
     def all_membership_roles(self): return self.membership_roles.values()
+    def all_identity_links(self): return self.identity_links.values()
     def all_permissions(self): return self.permissions.values()

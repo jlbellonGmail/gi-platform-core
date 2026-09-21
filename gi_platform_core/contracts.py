@@ -8,6 +8,7 @@ from .application import CoreService
 from .authorization import TenantContext
 
 CONTRACT_VERSION = "0.1.0"
+IDENTITY_CONTRACT_VERSION = "0.2.0"
 
 
 def _json_value(value: Any) -> Any:
@@ -23,11 +24,11 @@ def _json_value(value: Any) -> Any:
     return value
 
 
-def _public(entity: object) -> dict:
+def _public(entity: object, version: str = CONTRACT_VERSION) -> dict:
     value = asdict(entity)
     value.pop("occurred_at", None)
     value = _json_value(value)
-    value["contract_version"] = CONTRACT_VERSION
+    value["contract_version"] = version
     return value
 
 
@@ -73,3 +74,18 @@ class CoreApi:
     def authorize(self, user_id: str, organization_id: str, permission: str, location_id: str | None = None) -> dict:
         decision = self.service.authorize(TenantContext(user_id, organization_id, location_id), permission)
         return {"contract_version": CONTRACT_VERSION, "allowed": decision.allowed, "reason": decision.reason, "context": _public(decision.context)}
+
+    def validate_identity(self, organization_id: str, user_id: str, external_subject: str) -> dict:
+        user = self.service.resolve_identity(organization_id, user_id, external_subject)
+        return {"contract_version": IDENTITY_CONTRACT_VERSION, "organization_id": organization_id,
+                "user": _public(user, IDENTITY_CONTRACT_VERSION), "valid": True}
+
+    def link_identity(self, actor_user_id: str, organization_id: str, person_id: str,
+                      user_id: str, external_subject: str) -> dict:
+        link = self.service.link_identity(TenantContext(actor_user_id, organization_id), person_id, user_id, external_subject)
+        return _public(link, IDENTITY_CONTRACT_VERSION)
+
+    def unlink_identity(self, actor_user_id: str, organization_id: str, person_id: str) -> dict:
+        link = self.service.unlink_identity(TenantContext(actor_user_id, organization_id), person_id)
+        return {"contract_version": IDENTITY_CONTRACT_VERSION, "organization_id": organization_id,
+                "person_id": person_id, "removed": link is not None}

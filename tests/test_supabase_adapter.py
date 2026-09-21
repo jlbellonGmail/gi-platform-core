@@ -25,7 +25,7 @@ def test_supabase_store_uses_host_configuration_and_core_profile_headers():
         store = SupabaseCoreStore('https://example.supabase.co/', 'server-key')
         CoreService(store).create_organization('Acme')
 
-    assert len(requests) == 10  # 7 entity refreshes + site access refresh + organization + audit
+    assert len(requests) == 11  # 8 entity refreshes + site access refresh + organization + audit
     assert all(request.headers['Accept-profile'] == 'core' for request, _ in requests)
     assert all(request.headers['Authorization'] == 'Bearer server-key' for request, _ in requests)
     assert requests[-2][0].method == 'POST'

@@ -21,6 +21,25 @@ Cada decisión nueva se agrega como una sección propia (`## Decisión:
 un historial acumulativo de arquitectura, no un snapshot que se
 sobreescribe.
 
+## Decisión: servicio HTTP y vínculo de identidad CoreApi v0.2.0
+
+El Core existente es una biblioteca Python 3.12+ sin servidor HTTP ni
+dependencias runtime. Para exponer identidad por HTTP se agrega un adaptador
+WSGI basado en la biblioteca estándar (`gi_platform_core.http`), con runner
+`gi_platform_core.http_server`. WSGI mantiene el paquete portable y evita
+introducir un framework o proceso de autenticación paralelo.
+
+La autenticación es una dependencia explícita del host: `CORE_AUTH_MODULE`
+apunta a un callable que valida el mecanismo ya existente y devuelve actor y
+tenant. Core no parsea JWT, no acepta actor/tenant del body y no inventa
+credenciales. Health/readiness quedan públicos; las operaciones requieren el
+contexto autenticado.
+
+La relación `identity_links` mantiene `person_id` opaco y se persiste detrás de
+`CoreStore`. En memoria usa lock; Supabase usa funciones SQL con advisory lock
+transaccional. No se promete atomicidad distribuida con auditoría: la
+operación persistente y el evento de auditoría son pasos observables separados.
+
 ## Decisión: fuente canónica agentica y router de modelos
 
 Los roles, modelos, fallbacks y MCP del circuito se centralizan en
