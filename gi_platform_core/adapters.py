@@ -1,6 +1,8 @@
 """Minimal infrastructure adapters; replaceable without changing use cases."""
 
-from .domain import AuditEvent, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
+from threading import RLock
+from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
+from .errors import ConflictError
 
 
 class InMemoryCoreStore:
@@ -14,7 +16,9 @@ class InMemoryCoreStore:
         self.permissions: dict[str, Permission] = {}
         self.roles: dict[str, Role] = {}
         self.membership_roles: dict[str, MembershipRole] = {}
+        self.identity_links: dict[str, IdentityLink] = {}
         self.audit_events: list[AuditEvent] = []
+        self._identity_lock = RLock()
 
     def record_audit(self, event: AuditEvent) -> None:
         self.audit_events.append(event)
@@ -39,6 +43,33 @@ class InMemoryCoreStore:
 
     def save_membership_role(self, entity: MembershipRole) -> None:
         self.membership_roles[entity.id] = entity
+
+    def save_identity_link(self, entity: IdentityLink) -> None:
+        self.identity_links[entity.id] = entity
+
+    def get_identity_link(self, entity_id: str): return self.identity_links.get(entity_id)
+    def all_identity_links(self): return self.identity_links.values()
+
+    def link_identity_atomic(self, entity: IdentityLink) -> IdentityLink:
+        with self._identity_lock:
+            existing = next((item for item in self.identity_links.values()
+                             if item.active and item.organization_id == entity.organization_id
+                             and item.person_id == entity.person_id), None)
+            if existing and existing.user_id != entity.user_id:
+                raise ConflictError("person is already linked to another identity")
+            if existing:
+                return existing
+            self.save_identity_link(entity)
+            return entity
+
+    def unlink_identity_atomic(self, organization_id: str, person_id: str):
+        with self._identity_lock:
+            existing = next((item for item in self.identity_links.values()
+                             if item.active and item.organization_id == organization_id
+                             and item.person_id == person_id), None)
+            if existing:
+                self.identity_links.pop(existing.id, None)
+            return existing
 
     def get_organization(self, entity_id: str): return self.organizations.get(entity_id)
     def get_location(self, entity_id: str): return self.locations.get(entity_id)

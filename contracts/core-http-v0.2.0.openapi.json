@@ -1,0 +1,12 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "GI Platform Core identity HTTP API", "version": "0.2.0"},
+  "paths": {
+    "/healthz": {"get": {"responses": {"200": {"description": "healthy"}}}},
+    "/readyz": {"get": {"responses": {"200": {"description": "ready"}, "503": {"description": "not ready"}}}},
+    "/v1/organizations/{organization_id}/identity-validation": {"post": {"security": [{"bearerAuth": []}], "parameters": [{"in": "path", "name": "organization_id", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/IdentityInput"}}}}, "responses": {"200": {"description": "resolved"}, "401": {"description": "unauthenticated"}, "404": {"description": "not found"}}}},
+    "/v1/organizations/{organization_id}/identity-links": {"post": {"security": [{"bearerAuth": []}], "parameters": [{"in": "path", "name": "organization_id", "required": true, "schema": {"type": "string"}}], "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/LinkInput"}}}}, "responses": {"201": {"description": "linked"}, "401": {"description": "unauthenticated"}, "403": {"description": "forbidden"}, "409": {"description": "conflict"}}}},
+    "/v1/organizations/{organization_id}/identity-links/{person_id}": {"delete": {"security": [{"bearerAuth": []}], "parameters": [{"in": "path", "name": "organization_id", "required": true, "schema": {"type": "string"}}, {"in": "path", "name": "person_id", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "removed or already absent"}, "403": {"description": "forbidden"}}}}
+  },
+  "components": {"securitySchemes": {"bearerAuth": {"type": "http", "scheme": "bearer"}}, "schemas": {"IdentityInput": {"type": "object", "required": ["user_id", "external_subject"], "properties": {"user_id": {"type": "string"}, "external_subject": {"type": "string"}}, "additionalProperties": false}, "LinkInput": {"allOf": [{"$ref": "#/components/schemas/IdentityInput"}, {"type": "object", "required": ["person_id"], "properties": {"person_id": {"type": "string"}}}]}}}
+}

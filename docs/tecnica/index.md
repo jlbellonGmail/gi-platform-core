@@ -46,5 +46,6 @@ calificación subjetiva.
 - [Supabase gi-dev validation](supabase-gi-dev-validation.md)
 - [Post Hitl Versioned Evidence](post-hitl-versioned-evidence.md)
 - [Post Merge Close Dispatch](post-merge-close-dispatch.md)
+- [Person Identity Linking](person-identity-linking.md)
 
 <!-- FEATURE_LINKS_END -->

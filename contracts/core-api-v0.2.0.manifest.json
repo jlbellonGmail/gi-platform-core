@@ -1,0 +1,26 @@
+{
+  "contract_version": "0.2.0",
+  "compatible_with": ["0.1.0"],
+  "operations": [
+    {"name": "validate_identity", "purpose": "Resolve an active UserProfile by user_id and exact external_subject inside an active organization membership", "authorization": "authenticated tenant context; organization comes from auth context", "response": "IdentityValidation"},
+    {"name": "link_identity", "purpose": "Link an opaque vertical person reference to an existing Core identity", "authorization": "organization:identity_link", "response": "IdentityLink"},
+    {"name": "unlink_identity", "purpose": "Remove an identity link without changing membership", "authorization": "organization:identity_unlink", "response": "UnlinkResult"}
+  ],
+  "errors": [
+    {"code": "authentication_required", "status": 401},
+    {"code": "authorization_denied", "status": 403},
+    {"code": "not_found", "status": 404},
+    {"code": "validation_error", "status": 400},
+    {"code": "conflict", "status": 409}
+  ],
+  "invariants": [
+    "Existing CoreApi v0.1.0 operations and response version remain compatible.",
+    "Resolution requires exact user_id plus external_subject and an active organization, user, and membership.",
+    "The body cannot select actor or tenant; both come from the authenticated host context.",
+    "Link and unlink never create, activate, deactivate, or alter memberships.",
+    "A person has at most one active identity link per organization; same-target link is idempotent and conflicting target returns 409.",
+    "Cross-organization requests are rejected without revealing target existence.",
+    "Resolution, link, and unlink emit Core audit events with sanitized metadata.",
+    "Core treats person_id as opaque and never resolves identity by email, phone, or document."
+  ]
+}
