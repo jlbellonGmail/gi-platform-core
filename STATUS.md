@@ -34,18 +34,18 @@ integración con credenciales server-side y revisar el diff local antes de
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-21T01:53:07Z
+- Actualizado: 2026-09-21T02:08:21Z
 - Versión: v0.1.0
 - Rama: develop
-- HEAD: d88f962c78878abc5f34f1a29770e382fbd80a85
+- HEAD: 3f3932f17f68c760baabe0cc1b0faef068ad599d
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core
 - Working tree: dirty
 - Worktrees: 3
 - Worktrees Git: 3
 - Unidades activas: ninguna
 - PR activa: UNKNOWN / sin PR abierta
-- CI:  @ 38ffeedae66aa386c35e2ae4e75408695f752bcc
-- CI vigente:  @ 38ffeedae66aa386c35e2ae4e75408695f752bcc
-- Última release: v0.1.0
+- CI:  @ 3f3932f17f68c760baabe0cc1b0faef068ad599d
+- CI vigente:  @ 3f3932f17f68c760baabe0cc1b0faef068ad599d
+- Última release: v0.2.0
 
 <!-- STATUS:AUTO:END -->
