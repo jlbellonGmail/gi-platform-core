@@ -34,18 +34,18 @@ integración con credenciales server-side y revisar el diff local antes de
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-21T04:57:57Z
+- Actualizado: 2026-09-21T05:14:41Z
 - Versión: v0.1.0
 - Rama: develop
-- HEAD: bfd363b76407f45c92b9d7fa33ab7f475f63819d
+- HEAD: bdbc95e6fa141765a689a73502b7522e472a60c5
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
-- Worktrees: 13
-- Worktrees Git: 13
+- Worktrees: 14
+- Worktrees Git: 14
 - Unidades activas: = [feature/v0.1.0-02-supabase-gi-dev-validation]; = [feature/v0.1.0-03-post-hitl-versioned-evidence]; = [feature/v0.1.0-04-post-merge-close-dispatch]; = [feature/v0.2.1-06-release-readiness-current-roadmap]; = [feature/v0.2.1-07-release-evidence]; = [feature/v0.2.1-08-release-evidence-pr]; = [feature/v0.2.1-09-release-history-manifest]; = [feature/v0.2.1-10-package-version-consistency]
 - PR activa: UNKNOWN / sin PR abierta
-- CI: success @ bfd363b76407f45c92b9d7fa33ab7f475f63819d
-- CI vigente: success @ bfd363b76407f45c92b9d7fa33ab7f475f63819d
+- CI: success @ bdbc95e6fa141765a689a73502b7522e472a60c5
+- CI vigente: success @ bdbc95e6fa141765a689a73502b7522e472a60c5
 - Última release: v0.2.1
 
 <!-- STATUS:AUTO:END -->
