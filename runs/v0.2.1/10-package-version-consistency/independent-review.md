@@ -1,5 +1,5 @@
 scope: 10-package-version-consistency
-head: 54578a6
+head: HEAD
 base: develop
 status: approved
 findings: none
