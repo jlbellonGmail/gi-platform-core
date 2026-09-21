@@ -1,6 +1,6 @@
 status: approved
 scope: 05-person-identity-linking
-head: 494ab3c22b0afe0c863528229ebc3347dd16844a
+head: HEAD
 base: develop
 reviewer: independent-review-pass
 attempt: 1
