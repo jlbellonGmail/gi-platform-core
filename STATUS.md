@@ -24,10 +24,10 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-22T04:13:00Z
+- Actualizado: 2026-09-22T04:27:50Z
 - Versión: v0.3.0
-- Rama: docs/v0.3.0-status-published
-- HEAD: da85f94e3882dd57a98b2fb09bca6e316905d029
+- Rama: docs/v0.3.0-status-final2
+- HEAD: 5536d4247905dd4b60418fc58812f1f04e1b9b03
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
 - Worktrees: 17
