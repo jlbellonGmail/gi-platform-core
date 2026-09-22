@@ -13,7 +13,7 @@ from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
+from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile, Tenant
 from .errors import ConflictError, CoreError
 
 
@@ -25,7 +25,7 @@ class SupabaseCoreStore:
     """CoreStore implementation using the Supabase PostgREST API."""
 
     _tables = {
-        "organizations": Organization,
+        "organizations": Tenant,
         "locations": Location,
         "user_profiles": UserProfile,
         "organization_memberships": OrganizationMembership,
@@ -50,6 +50,10 @@ class SupabaseCoreStore:
         self.membership_roles: dict[str, MembershipRole] = {}
         self.identity_links: dict[str, IdentityLink] = {}
         self._refresh()
+
+    @property
+    def tenants(self):
+        return self.organizations
 
     def _request(self, table: str, method: str = "GET", *, query: str = "", body: Any = None, prefer: str = "return=representation") -> list[dict[str, Any]]:
         headers = {"apikey": self.key, "Authorization": f"Bearer {self.key}", "Content-Type": "application/json", "Accept-Profile": "core", "Content-Profile": "core", "Prefer": prefer}
@@ -93,6 +97,9 @@ class SupabaseCoreStore:
 
     @staticmethod
     def _from_row(cls, row: dict[str, Any]):
+        row = dict(row)
+        if "tenant_id" not in row and "organization_id" in row:
+            row["tenant_id"] = row["organization_id"]
         values = {key: value for key, value in row.items() if key in cls.__dataclass_fields__}
         if cls is Role: values["permission_codes"] = frozenset(values.pop("permission_codes", []))
         if cls is OrganizationMembership: values["location_ids"] = frozenset(values.pop("location_ids", []))
@@ -103,6 +110,8 @@ class SupabaseCoreStore:
     @staticmethod
     def _row(entity: Any, table: str | None = None) -> dict[str, Any]:
         row = asdict(entity)
+        if "tenant_id" in row and table in {"organizations", "locations", "organization_memberships", "roles", "identity_links", "audit_events"}:
+            row["organization_id"] = row.pop("tenant_id")
         if isinstance(entity, Role): row["permission_codes"] = sorted(row["permission_codes"])
         if isinstance(entity, OrganizationMembership):
             if table == "organization_memberships": row.pop("location_ids", None)
@@ -128,7 +137,7 @@ class SupabaseCoreStore:
 
     def link_identity_atomic(self, entity):
         rows = self._request("rpc/link_identity", "POST", body={
-            "p_organization_id": entity.organization_id, "p_person_id": entity.person_id,
+            "p_tenant_id": entity.tenant_id, "p_person_id": entity.person_id,
             "p_user_id": entity.user_id,
         })
         row = rows[0] if isinstance(rows, list) and rows else None
@@ -142,7 +151,7 @@ class SupabaseCoreStore:
 
     def unlink_identity_atomic(self, organization_id, person_id):
         rows = self._request("rpc/unlink_identity", "POST", body={
-            "p_organization_id": organization_id, "p_person_id": person_id,
+            "p_tenant_id": organization_id, "p_person_id": person_id,
         })
         row = rows[0] if isinstance(rows, list) and rows else None
         if not row:

@@ -16,10 +16,21 @@ from .contracts import CoreApi
 from .errors import CoreError, NotFoundError, ValidationError
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class AuthenticatedActor:
     user_id: str
-    organization_id: str
+    tenant_id: str
+
+    def __init__(self, user_id: str, tenant_id: str | None = None, *, organization_id: str | None = None):
+        resolved = tenant_id if tenant_id is not None else organization_id
+        if not resolved:
+            raise ValueError("tenant_id is required")
+        object.__setattr__(self, "user_id", user_id)
+        object.__setattr__(self, "tenant_id", resolved)
+
+    @property
+    def organization_id(self) -> str:
+        return self.tenant_id
 
 
 Authenticator = Callable[[dict[str, str]], AuthenticatedActor | None]
@@ -58,6 +69,23 @@ def create_app(api: CoreApi, authenticate: Authenticator, *, ready: Callable[[],
             return _json(start_response, 401, {"error": {"code": "authentication_required", "message": "authentication required", "contract_version": "0.2.0"}})
         parts = [part for part in path.split("/") if part]
         try:
+            if len(parts) == 4 and parts[:2] == ["v1", "tenants"] and parts[3] == "identity-validation" and method == "POST":
+                tenant_id = parts[2]
+                if actor.tenant_id != tenant_id:
+                    raise NotFoundError("tenant not found")
+                payload = _body(environ)
+                return _json(start_response, 200, api.validate_identity(tenant_id, _required(payload, "user_id"), _required(payload, "external_subject")))
+            if len(parts) == 4 and parts[:2] == ["v1", "tenants"] and parts[3] == "identity-links" and method == "POST":
+                tenant_id = parts[2]
+                if actor.tenant_id != tenant_id:
+                    raise NotFoundError("tenant not found")
+                payload = _body(environ)
+                return _json(start_response, 201, api.link_identity(actor.user_id, tenant_id, _required(payload, "person_id"), _required(payload, "user_id"), _required(payload, "external_subject")))
+            if len(parts) == 5 and parts[:2] == ["v1", "tenants"] and parts[3] == "identity-links" and method == "DELETE":
+                tenant_id = parts[2]
+                if actor.tenant_id != tenant_id:
+                    raise NotFoundError("tenant not found")
+                return _json(start_response, 200, api.unlink_identity(actor.user_id, tenant_id, parts[4]))
             if len(parts) == 4 and parts[:3] == ["v1", "organizations", parts[2]] and parts[3] == "identity-validation" and method == "POST":
                 organization_id = parts[2]
                 if actor.organization_id != organization_id:

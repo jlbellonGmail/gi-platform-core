@@ -3,7 +3,7 @@
 from dataclasses import replace
 
 from .authorization import AuthorizationDecision, TenantContext
-from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile
+from .domain import AuditEvent, IdentityLink, MembershipRole, Organization, OrganizationMembership, Permission, Role, Location, UserProfile, Tenant
 from .errors import ConflictError, IsolationError, NotFoundError, ValidationError
 from .ports import CoreStore
 
@@ -16,10 +16,19 @@ class CoreService:
         self.store.record_audit(AuditEvent(action, actor, organization, location, outcome, metadata))
 
     def create_organization(self, name: str, actor_user_id: str | None = None) -> Organization:
-        entity = Organization(name)
+        entity = Tenant(name)
         self.store.save_organization(entity)
         self._audit("organization.created", actor_user_id, entity.id, None, "success")
         return entity
+
+    def create_tenant(self, name: str, actor_user_id: str | None = None) -> Tenant:
+        entity = Tenant(name)
+        self.store.save_organization(entity)
+        self._audit("tenant.created", actor_user_id, entity.id, None, "success")
+        return entity
+
+    def list_tenants(self, user_id: str) -> list[Tenant]:
+        return self.list_organizations(user_id)
 
     def create_location(self, organization_id: str, name: str, actor_user_id: str | None = None) -> Location:
         self._organization(organization_id)

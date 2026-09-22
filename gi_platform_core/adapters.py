@@ -20,6 +20,10 @@ class InMemoryCoreStore:
         self.audit_events: list[AuditEvent] = []
         self._identity_lock = RLock()
 
+    @property
+    def tenants(self):
+        return self.organizations
+
     def record_audit(self, event: AuditEvent) -> None:
         self.audit_events.append(event)
 
