@@ -28,7 +28,7 @@ del Template.
 
 - [x] T01-release-governance-reconciliation — Reconciliar evidencia histórica,
   controles de release y estado operativo tras la auditoría v0.2.1.
-- [-] 11-core03-tenant-readiness — Consolidar Tenant, contratos públicos,
+- [x] 11-core03-tenant-readiness — Consolidar Tenant, contratos públicos,
   seguridad, documentación y readiness para módulos consumidores.
 
 ## Procedencia de la baseline
