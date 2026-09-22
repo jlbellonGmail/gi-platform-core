@@ -25,10 +25,10 @@ class SupabaseCoreStore:
     """CoreStore implementation using the Supabase PostgREST API."""
 
     _tables = {
-        "organizations": Tenant,
+        "tenants": Tenant,
         "locations": Location,
         "user_profiles": UserProfile,
-        "organization_memberships": OrganizationMembership,
+        "memberships": OrganizationMembership,
         "roles": Role,
         "permissions": Permission,
         "membership_roles": MembershipRole,
@@ -110,11 +110,9 @@ class SupabaseCoreStore:
     @staticmethod
     def _row(entity: Any, table: str | None = None) -> dict[str, Any]:
         row = asdict(entity)
-        if "tenant_id" in row and table in {"organizations", "locations", "organization_memberships", "roles", "identity_links", "audit_events"}:
-            row["organization_id"] = row.pop("tenant_id")
         if isinstance(entity, Role): row["permission_codes"] = sorted(row["permission_codes"])
         if isinstance(entity, OrganizationMembership):
-            if table == "organization_memberships": row.pop("location_ids", None)
+            if table == "memberships": row.pop("location_ids", None)
             else: row["location_ids"] = sorted(row["location_ids"])
         row.pop("created_at", None); row.pop("updated_at", None); row.pop("occurred_at", None)
         return row
@@ -122,18 +120,18 @@ class SupabaseCoreStore:
     def _save(self, table: str, entity: Any, key: str = "id") -> None:
         self._request(table, "POST", query=f"?on_conflict={key}", body=self._row(entity, table), prefer="resolution=merge-duplicates,return=representation")
 
-    def save_organization(self, entity): self.organizations[entity.id] = entity; self._save("organizations", entity)
+    def save_organization(self, entity): self.organizations[entity.id] = entity; self._save("tenants", entity)
     def save_location(self, entity): self.locations[entity.id] = entity; self._save("locations", entity)
     def save_user(self, entity): self.users[entity.id] = entity; self._save("user_profiles", entity)
     def save_membership(self, entity):
         self.memberships[entity.id] = entity
-        self._save("organization_memberships", entity)
+        self._save("memberships", entity)
         for location_id in entity.location_ids:
             self._save_location_access(entity.id, location_id)
     def save_permission(self, entity): self.permissions[entity.code] = entity; self._save("permissions", entity, "code")
     def save_role(self, entity): self.roles[entity.id] = entity; self._save("roles", entity)
     def save_membership_role(self, entity): self.membership_roles[entity.id] = entity; self._save("membership_roles", entity)
-    def save_identity_link(self, entity): self.identity_links[entity.id] = entity; self._save("identity_links", entity, "organization_id,person_id")
+    def save_identity_link(self, entity): self.identity_links[entity.id] = entity; self._save("identity_links", entity, "tenant_id,person_id")
 
     def link_identity_atomic(self, entity):
         rows = self._request("rpc/link_identity", "POST", body={

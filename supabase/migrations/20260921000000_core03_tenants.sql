@@ -12,6 +12,20 @@ begin
   end if;
 end $$;
 
+-- Defensive bootstrap for installations where the v0.2 identity migration was
+-- skipped. The normal order still applies 20260920000000 first.
+create table if not exists core.identity_links (
+  id uuid primary key default gen_random_uuid(),
+  tenant_id uuid not null references core.tenants(id) on delete cascade,
+  person_id text not null check (length(btrim(person_id)) > 0),
+  user_id uuid not null references core.user_profiles(id) on delete cascade,
+  active boolean not null default true,
+  created_at timestamptz not null default now(),
+  unique (tenant_id, person_id)
+);
+alter table core.identity_links enable row level security;
+grant select, insert, update, delete on core.identity_links to service_role;
+
 do $$
 declare
   item record;
@@ -34,6 +48,8 @@ alter index if exists core.memberships_user_org_idx rename to memberships_user_t
 alter index if exists core.roles_organization_idx rename to roles_tenant_idx;
 alter index if exists core.audit_org_location_time_idx rename to audit_tenant_location_time_idx;
 alter index if exists core.identity_links_user_org_idx rename to identity_links_user_tenant_idx;
+create index if not exists identity_links_user_tenant_idx
+  on core.identity_links(user_id, tenant_id);
 
 -- Read-only aliases let older database readers transition without duplicating data.
 create or replace view core.organizations as select * from core.tenants;

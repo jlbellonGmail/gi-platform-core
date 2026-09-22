@@ -29,7 +29,7 @@ def test_supabase_store_uses_host_configuration_and_core_profile_headers():
     assert all(request.headers['Accept-profile'] == 'core' for request, _ in requests)
     assert all(request.headers['Authorization'] == 'Bearer server-key' for request, _ in requests)
     assert requests[-2][0].method == 'POST'
-    assert requests[-2][0].full_url.endswith('/rest/v1/organizations?on_conflict=id')
+    assert requests[-2][0].full_url.endswith('/rest/v1/tenants?on_conflict=id')
 
 
 def test_supabase_adapter_decodes_role_and_site_access_shapes():
@@ -67,5 +67,5 @@ def test_supabase_store_persists_site_access_in_its_own_table():
     assert len(location_access_posts) == 1
     body = json.loads(location_access_posts[0].data.decode())
     assert body == {'membership_id': membership.id, 'location_id': site.id, 'active': True}
-    membership_posts = [request for request in requests if '/rest/v1/organization_memberships?' in request.full_url]
+    membership_posts = [request for request in requests if '/rest/v1/memberships?' in request.full_url]
     assert 'location_ids' not in json.loads(membership_posts[-1].data.decode())
