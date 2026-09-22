@@ -51,13 +51,51 @@ alter index if exists core.identity_links_user_org_idx rename to identity_links_
 create index if not exists identity_links_user_tenant_idx
   on core.identity_links(user_id, tenant_id);
 
--- Read-only aliases let older database readers transition without duplicating data.
-create or replace view core.organizations as select * from core.tenants;
-create or replace view core.organization_memberships as select * from core.memberships;
+-- CORE03 is a breaking vocabulary migration: no Organization compatibility
+-- views remain in the canonical Core schema.
+drop view if exists core.organizations;
+drop view if exists core.organization_memberships;
+
+alter index if exists core.organizations_pkey rename to tenants_pkey;
+alter index if exists core.organization_memberships_pkey rename to memberships_pkey;
+alter index if exists core.organization_memberships_user_id_organization_id_key rename to memberships_user_id_tenant_id_key;
+alter index if exists core.identity_links_organization_id_person_id_key rename to identity_links_tenant_id_person_id_key;
+alter index if exists core.roles_organization_id_name_key rename to roles_tenant_id_name_key;
+alter index if exists core.sites_organization_id_name_key rename to locations_tenant_id_name_key;
+alter index if exists core.sites_pkey rename to locations_pkey;
+alter index if exists core.site_access_pkey rename to location_access_pkey;
+
+do $$
+declare
+  item record;
+begin
+  for item in select * from (values
+    ('audit_events', 'audit_events_organization_id_fkey', 'audit_events_tenant_id_fkey'),
+    ('audit_events', 'audit_events_site_id_fkey', 'audit_events_location_id_fkey'),
+    ('identity_links', 'identity_links_organization_id_fkey', 'identity_links_tenant_id_fkey'),
+    ('locations', 'sites_organization_id_fkey', 'locations_tenant_id_fkey'),
+    ('locations', 'locations_organization_id_fkey', 'locations_tenant_id_fkey'),
+    ('locations', 'sites_name_check', 'locations_name_check'),
+    ('location_access', 'site_access_membership_id_fkey', 'location_access_membership_id_fkey'),
+    ('location_access', 'site_access_site_id_fkey', 'location_access_location_id_fkey')
+  ) constraints(table_name, old_name, new_name)
+  loop
+    if exists (
+      select 1 from pg_constraint c
+      join pg_class t on t.oid = c.conrelid
+      join pg_namespace n on n.oid = t.relnamespace
+      where n.nspname = 'core' and t.relname = item.table_name
+        and c.conname = item.old_name
+    ) then
+      execute format('alter table core.%I rename constraint %I to %I', item.table_name, item.old_name, item.new_name);
+    end if;
+  end loop;
+end $$;
 
 alter table core.tenants enable row level security;
 alter table core.memberships enable row level security;
 drop policy if exists organizations_member_read on core.tenants;
+drop policy if exists tenants_member_read on core.tenants;
 create policy tenants_member_read on core.tenants for select to authenticated using (
   exists (select 1 from core.memberships m join core.user_profiles u on u.id = m.user_id
           where m.tenant_id = tenants.id and m.active
