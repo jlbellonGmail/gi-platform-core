@@ -41,4 +41,5 @@ fuente canónica, regenerar adaptadores y declarar modelos por ejecución.
 - [Release evidence](release-evidence.md)
 - [Release history manifest](release-history-manifest.md)
 
+ - [Integración Tenant CORE03](core03-tenant-integration.md)
 <!-- FEATURE_LINKS_END -->
