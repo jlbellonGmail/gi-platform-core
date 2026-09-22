@@ -4,6 +4,7 @@ param(
     [string] $CandidateBranch = "develop",
     [string] $TargetBranch = "main",
     [string] $RepositoryRoot = "",
+    [string[]] $RoadmapItems = @(),
     [switch] $DryRun
 )
 
@@ -32,12 +33,22 @@ try {
         $roadmapPath = Join-Path $root "ROADMAP.md"
         Assert-Condition (Test-Path -LiteralPath $roadmapPath -PathType Leaf) "ROADMAP.md inexistente."
         $roadmap = Get-Content -LiteralPath $roadmapPath -Raw -Encoding UTF8
-        $required = @("18-status-observabilidad", "19-unidades-paralelizacion", "20-releases-evolucion", "21-validacion-integral-v2", "22-auditoria-release-v2")
+        $run = Join-Path $root "runs\$Version\release-readiness"
+        $manifestPath = Join-Path $run "manifest.json"
+        Assert-Condition (Test-Path -LiteralPath $manifestPath -PathType Leaf) "Falta el manifiesto de alcance de release: $manifestPath."
+        $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        $required = if ($RoadmapItems.Count -gt 0) { @($RoadmapItems) } else { @($manifest.roadmapItems) }
+        Assert-Condition ($required.Count -gt 0) "El manifiesto de release debe declarar al menos un item del ROADMAP."
         foreach ($item in $required) {
-            $match = [regex]::Match($roadmap, "(?m)^- \[(?<state>[ x-])\] $([regex]::Escape($item))\b")
-            Assert-Condition $match.Success "ROADMAP incompleto: falta '$item'."
-            Assert-Condition ($match.Groups["state"].Value -eq "x") "ROADMAP incompleto: '$item' no esta cerrado."
+            Assert-Condition ($item -match '^[0-9]{2}-[a-z0-9]+(?:-[a-z0-9]+)*$') "Item de ROADMAP invalido en el manifiesto: '$item'."
+            $matches = @([regex]::Matches($roadmap, "(?m)^- \[(?<state>[ x-])\] $([regex]::Escape($item))\b"))
+            Assert-Condition ($matches.Count -eq 1) "ROADMAP ambiguo o incompleto: '$item'."
+            Assert-Condition ($matches[0].Groups["state"].Value -eq "x") "ROADMAP incompleto: '$item' no esta cerrado."
         }
+        $roadmapItems = @([regex]::Matches($roadmap, '(?m)^- \[[ x-]\] (?<id>\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*)\b') | ForEach-Object { $_.Groups['id'].Value })
+        $missingItems = @($roadmapItems | Where-Object { $_ -notin $required })
+        $extraItems = @($required | Where-Object { $_ -notin $roadmapItems })
+        Assert-Condition ($missingItems.Count -eq 0 -and $extraItems.Count -eq 0) "El manifiesto de release debe cubrir exactamente los items funcionales del ROADMAP. Faltan: $($missingItems -join ', '); extras: $($extraItems -join ', ')."
 
     Assert-Condition ($CandidateBranch -notin @("", "main")) "La candidata debe provenir de una rama de integracion distinta de main."
     $current = Invoke-Git @("branch", "--show-current")
@@ -48,8 +59,7 @@ try {
         $developSha = Invoke-Git @("rev-parse", "develop^{commit}")
         Assert-Condition ($candidateSha -eq $developSha) "La candidata no coincide con el HEAD local de develop."
 
-        $run = Join-Path $root "runs\$Version\22-auditoria-release-v2"
-        Assert-Condition (Test-Path -LiteralPath $run -PathType Container) "Falta la auditoria de release para $Version (F17)."
+        Assert-Condition (Test-Path -LiteralPath $run -PathType Container) "Falta la evidencia de release para $Version."
         foreach ($file in @("SUMMARY.md", "audit-1.md", "test-report-1.md", "code-review-1.md")) {
             Assert-Condition (Test-Path -LiteralPath (Join-Path $run $file) -PathType Leaf) "Falta evidencia de release: $run\$file."
         }
@@ -87,10 +97,15 @@ try {
 
         $tag = Invoke-Optional "git" @("rev-parse", "$Version^{commit}")
         Assert-Condition ($tag.Code -ne 0) "Tag $Version ya existe; se rechaza cualquier overwrite."
-        $oldTag = Invoke-Optional "git" @("rev-parse", "v1.1.0^{commit}")
-        Assert-Condition ($oldTag.Code -eq 0 -and $oldTag.Text -eq "d13ffcf34b6d982a7b3b89a364c17762f5efad70") "v1.1.0 no coincide con su commit historico inmutable."
-        $oldTagType = Invoke-Git @("cat-file", "-t", "v1.1.0")
-        Assert-Condition ($oldTagType -eq "tag") "v1.1.0 debe conservar un objeto tag anotado."
+        $historicalTags = @($manifest.historicalTags)
+        Assert-Condition ($historicalTags.Count -gt 0) "El manifiesto debe declarar al menos un tag historico a preservar."
+        foreach ($historicalTag in $historicalTags) {
+            Assert-Condition ($historicalTag -match '^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$') "Tag historico invalido en el manifiesto: '$historicalTag'."
+            $historicalCommit = Invoke-Optional "git" @("rev-parse", "$historicalTag^{commit}")
+            Assert-Condition ($historicalCommit.Code -eq 0 -and $historicalCommit.Text -match '^[0-9a-f]{40}$') "Tag historico ausente o invalido: $historicalTag."
+            $historicalTagType = Invoke-Git @("cat-file", "-t", $historicalTag)
+            Assert-Condition ($historicalTagType -eq "tag") "$historicalTag debe conservar un objeto tag anotado."
+        }
 
         $mode = if ($DryRun) { "DRY-RUN" } else { "READINESS-ONLY" }
         Write-Output "PASS ${mode}: $Version candidata en $candidateSha; sin publicaciones ni cambios remotos."

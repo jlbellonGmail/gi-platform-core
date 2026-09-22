@@ -6,8 +6,13 @@ from dataclasses import dataclass
 @dataclass(frozen=True)
 class TenantContext:
     user_id: str
-    organization_id: str
+    tenant_id: str
     location_id: str | None = None
+
+    @property
+    def organization_id(self) -> str:
+        """Legacy alias retained for pre-CORE03 consumers."""
+        return self.tenant_id
 
 
 @dataclass(frozen=True)

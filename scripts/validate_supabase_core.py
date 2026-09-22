@@ -18,10 +18,10 @@ from urllib.request import Request, urlopen
 
 
 TABLES = (
-    "organizations",
+    "tenants",
     "locations",
     "user_profiles",
-    "organization_memberships",
+    "memberships",
     "roles",
     "permissions",
     "membership_roles",

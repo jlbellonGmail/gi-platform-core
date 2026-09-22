@@ -12,8 +12,8 @@ try {
     $match=[regex]::Match($content,'(?s)<!-- STATUS:AUTO:BEGIN -->.*?<!-- STATUS:AUTO:END -->');$block=$match.Value
     $branch=Invoke-Git @("branch","--show-current");if(!$branch){$branch="(detached)"};$head=Invoke-Git @("rev-parse","HEAD");$errors=@();$warnings=@()
     if((Field $block "Rama")-ne$branch){$errors+="INCONSISTENTE rama no coincide"}
-    if((Field $block "HEAD")-notmatch[regex]::Escape($head)){$warnings+="STALE HEAD: snapshot regenerable"}
-    $tree=if((Invoke-Git @("status","--porcelain"))){"dirty"}else{"clean"};if((Field $block "Working tree")-ne$tree){$warnings+="STALE working tree: snapshot regenerable"}
+    # STATUS.md se versiona: su propio commit cambia HEAD y no puede contener
+    # simultáneamente el SHA futuro. El snapshot no invalida la reentrada.
     $gh=if($env:GH_TOKEN){(Get-Command gh -ErrorAction SilentlyContinue).Source}else{$null}
     if(!$gh){$warnings+="TEMPORAL gh no disponible; PR/CI no verificables"}else{
         $pr=Optional $gh @("pr","list","--head",$branch,"--state","open","--json","number,headRefOid","--limit","1")

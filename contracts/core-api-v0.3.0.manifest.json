@@ -1,0 +1,13 @@
+{
+  "contract_version": "0.3.0",
+  "compatible_with": ["0.1.0", "0.2.0"],
+  "operations": [
+    {"name": "create_tenant", "purpose": "Create a technical tenant root", "authorization": "host-controlled bootstrap", "response": "Tenant"},
+    {"name": "list_tenants", "purpose": "List active tenants visible through active memberships", "authorization": "active membership", "response": "Tenant[]"}
+  ],
+  "invariants": [
+    "tenant_id is opaque to Core consumers and preserves existing tenant UUIDs during migration",
+    "Tenant has no commercial, subscription, billing or customer-person data",
+    "Cross-tenant authorization and location access are denied by default"
+  ]
+}

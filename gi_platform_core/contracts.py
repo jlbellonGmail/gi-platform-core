@@ -9,6 +9,7 @@ from .authorization import TenantContext
 
 CONTRACT_VERSION = "0.1.0"
 IDENTITY_CONTRACT_VERSION = "0.2.0"
+TENANT_CONTRACT_VERSION = "0.3.0"
 
 
 def _json_value(value: Any) -> Any:
@@ -28,6 +29,8 @@ def _public(entity: object, version: str = CONTRACT_VERSION) -> dict:
     value = asdict(entity)
     value.pop("occurred_at", None)
     value = _json_value(value)
+    if "tenant_id" in value:
+        value["organization_id"] = value["tenant_id"]
     value["contract_version"] = version
     return value
 
@@ -41,11 +44,24 @@ class CoreApi:
     def create_organization(self, name: str) -> dict:
         return _public(self.service.create_organization(name))
 
+    def create_tenant(self, name: str) -> dict:
+        result = _public(self.service.create_tenant(name), TENANT_CONTRACT_VERSION)
+        result["tenant_id"] = result["id"]
+        return result
+
     def create_location(self, organization_id: str, name: str) -> dict:
         return _public(self.service.create_location(organization_id, name))
 
     def list_organizations(self, user_id: str) -> list[dict]:
         return [_public(item) for item in self.service.list_organizations(user_id)]
+
+    def list_tenants(self, user_id: str) -> list[dict]:
+        result = []
+        for item in self.service.list_tenants(user_id):
+            public = _public(item, TENANT_CONTRACT_VERSION)
+            public["tenant_id"] = public["id"]
+            result.append(public)
+        return result
 
     def list_memberships(self, user_id: str) -> list[dict]:
         return [_public(item) for item in self.service.list_memberships(user_id)]

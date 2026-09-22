@@ -1,6 +1,6 @@
 # GI-PLATFORM-CORE
 
-Core reusable v0.2.0 para productos y verticales GI. Provee tenancy,
+Core reusable v0.3.0 para productos y verticales GI. Provee tenancy,
 identidad base, memberships, roles, permisos, autorización contextual,
 aislamiento y auditoría sin depender de Dental ni de una UI.
 
@@ -32,7 +32,7 @@ El ejemplo reproducible está en `examples/core_integration.py`. La aplicación
 anfitriona puede sustituir `InMemoryCoreStore` por `SupabaseCoreStore` y debe
 mantener la clave Supabase sólo en backend/server-side.
 
-La versión 0.2.0 agrega resolución exacta y link/unlink de una referencia
+La versión 0.3.0 consolida Tenant y `tenant_id`. La versión 0.2.0 agrega resolución exacta y link/unlink de una referencia
 opaca `person_id`, sin modificar memberships. También incluye un adaptador HTTP
 WSGI estándar; ver `docs/tecnica/person-identity-linking.md`.
 
@@ -40,7 +40,7 @@ Para comprobar una instancia Supabase sin mutar datos:
 
 ```powershell
 python scripts/validate_supabase_core.py --public-only
-python scripts/validate_supabase_core.py --expect-visible organizations
+python scripts/validate_supabase_core.py --expect-visible tenants
 ```
 
 La segunda variante requiere `SUPABASE_ACCESS_TOKEN` de un usuario autenticado
