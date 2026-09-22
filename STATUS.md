@@ -24,15 +24,15 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-22T02:15:19Z
+- Actualizado: 2026-09-22T03:52:37Z
 - Versión: v0.3.0
-- Rama: feature/v0.3.0-11-core03-tenant-readiness
-- HEAD: 21c772a71a5acebdbb61115749c6991d0a3df907
+- Rama: main
+- HEAD: 333e1665784a41248f957e9ce14d44d02764d46f
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
-- Worktrees: 18
-- Worktrees Git: 18
-- Unidades activas: 02-supabase-gi-dev-validation= [feature/v0.1.0-02-supabase-gi-dev-validation]; 03-post-hitl-versioned-evidence= [feature/v0.1.0-03-post-hitl-versioned-evidence]; 04-post-merge-close-dispatch= [feature/v0.1.0-04-post-merge-close-dispatch]; 06-release-readiness-current-roadmap= [feature/v0.2.1-06-release-readiness-current-roadmap]; 07-release-evidence= [feature/v0.2.1-07-release-evidence]; 08-release-evidence-pr=unknown [feature/v0.2.1-08-release-evidence-pr]; 09-release-history-manifest= [feature/v0.2.1-09-release-history-manifest]; 10-package-version-consistency= [feature/v0.2.1-10-package-version-consistency]; T01-close-roadmap=unknown [maintenance/v0.2.2-T01-close-roadmap]; T01-release-governance-reconciliation= [maintenance/v0.2.2-T01-release-governance-reconciliation]; 11-core03-tenant-readiness= [feature/v0.3.0-11-core03-tenant-readiness]
+- Worktrees: 17
+- Worktrees Git: 17
+- Unidades activas: 02-supabase-gi-dev-validation= [feature/v0.1.0-02-supabase-gi-dev-validation]; 03-post-hitl-versioned-evidence= [feature/v0.1.0-03-post-hitl-versioned-evidence]; 04-post-merge-close-dispatch= [feature/v0.1.0-04-post-merge-close-dispatch]; 06-release-readiness-current-roadmap= [feature/v0.2.1-06-release-readiness-current-roadmap]; 07-release-evidence= [feature/v0.2.1-07-release-evidence]; 08-release-evidence-pr=unknown [feature/v0.2.1-08-release-evidence-pr]; 09-release-history-manifest= [feature/v0.2.1-09-release-history-manifest]; 10-package-version-consistency= [feature/v0.2.1-10-package-version-consistency]; T01-close-roadmap=unknown [maintenance/v0.2.2-T01-close-roadmap]; T01-release-governance-reconciliation= [maintenance/v0.2.2-T01-release-governance-reconciliation]
 - PR activa: UNKNOWN / sin PR abierta
 - CI: UNKNOWN / sin CI verificable
 - CI vigente: UNKNOWN / sin CI verificable
