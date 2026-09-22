@@ -1,10 +1,10 @@
 # 11-core03-tenant-readiness — Cierre Tenant
 
 Versión: v0.3.0
-Estado: READY_FOR_PR
+Estado: READY_FOR_HITL
 Tipo: Feature
 SDD: FULL
-PR: #22 https://github.com/jlbellonGmail/gi-platform-core/pull/22
+PR: #22 https://github.com/jlbellonGmail/gi-platform-core/pull/22; CI verde
 Merge: no autorizado; requiere decisión humana
 
 ## Objetivo
@@ -44,4 +44,6 @@ que aún tienen `sites`; no se ejecuta sobre una base nueva ya creada con
 
 ## Detalle
 
-No se modificaron otros repositorios, no se creó release ni se hizo merge.
+No se modificaron otros repositorios, no se creó release ni se hizo merge. El
+gate post-HITL quedó bloqueado correctamente por ausencia de
+`human-authorization.md`.
