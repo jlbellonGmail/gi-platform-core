@@ -1,6 +1,6 @@
 # Estado operativo
 
-GI-PLATFORM-CORE v0.3.0 está preparado para revisión humana; no se publicó release.
+GI-PLATFORM-CORE v0.3.0 está publicada y disponible para los módulos consumidores.
 
 ## Procedencia
 
@@ -24,10 +24,10 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-22T03:52:37Z
+- Actualizado: 2026-09-22T04:13:00Z
 - Versión: v0.3.0
-- Rama: main
-- HEAD: 333e1665784a41248f957e9ce14d44d02764d46f
+- Rama: docs/v0.3.0-status-published
+- HEAD: da85f94e3882dd57a98b2fb09bca6e316905d029
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
 - Worktrees: 17
