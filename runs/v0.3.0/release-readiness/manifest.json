@@ -1,5 +1,16 @@
 {
   "schemaVersion": 1,
-  "roadmapItems": ["11-core03-tenant-readiness"],
+  "roadmapItems": [
+    "01-core-platform-v010",
+    "05-person-identity-linking",
+    "02-supabase-gi-dev-validation",
+    "03-post-hitl-versioned-evidence",
+    "04-post-merge-close-dispatch",
+    "06-release-readiness-current-roadmap",
+    "07-release-evidence",
+    "09-release-history-manifest",
+    "10-package-version-consistency",
+    "11-core03-tenant-readiness"
+  ],
   "historicalTags": ["v0.1.0", "v0.2.0", "v0.2.1"]
 }
