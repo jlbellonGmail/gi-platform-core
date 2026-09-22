@@ -45,7 +45,9 @@ class CoreApi:
         return _public(self.service.create_organization(name))
 
     def create_tenant(self, name: str) -> dict:
-        return _public(self.service.create_tenant(name), TENANT_CONTRACT_VERSION)
+        result = _public(self.service.create_tenant(name), TENANT_CONTRACT_VERSION)
+        result["tenant_id"] = result["id"]
+        return result
 
     def create_location(self, organization_id: str, name: str) -> dict:
         return _public(self.service.create_location(organization_id, name))
@@ -54,7 +56,12 @@ class CoreApi:
         return [_public(item) for item in self.service.list_organizations(user_id)]
 
     def list_tenants(self, user_id: str) -> list[dict]:
-        return [_public(item, TENANT_CONTRACT_VERSION) for item in self.service.list_tenants(user_id)]
+        result = []
+        for item in self.service.list_tenants(user_id):
+            public = _public(item, TENANT_CONTRACT_VERSION)
+            public["tenant_id"] = public["id"]
+            result.append(public)
+        return result
 
     def list_memberships(self, user_id: str) -> list[dict]:
         return [_public(item) for item in self.service.list_memberships(user_id)]
