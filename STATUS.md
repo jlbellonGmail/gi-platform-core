@@ -1,6 +1,6 @@
 # Estado operativo
 
-GI-PLATFORM-CORE v0.2.1 está publicado y listo para consumo mediante su wheel.
+GI-PLATFORM-CORE v0.3.0 está preparado para revisión humana; no se publicó release.
 
 ## Procedencia
 
@@ -10,8 +10,8 @@ GI-PLATFORM-CORE v0.2.1 está publicado y listo para consumo mediante su wheel.
 ## Estado
 
 - `develop` es la rama de integración.
-- Release publicada: `v0.2.1`, con wheel `gi_platform_core-0.2.1-py3-none-any.whl`.
-- Contratos públicos: CoreApi `0.1.0`; identidad `0.2.0`.
+- Release vigente anterior: `v0.2.1`.
+- Contratos públicos: Tenant `0.3.0`; compatibilidad identity `0.2.0` y legacy `0.1.0`.
 - La reconciliación de gobernanza se ejecuta como `T01-release-governance-reconciliation`.
 
 ## Próximo paso exacto
@@ -24,18 +24,18 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-21T11:48:59Z
-- Versión: v0.2.1
-- Rama: develop
-- HEAD: 8df666c2613eaa401e81b850a1e5e3120666fb8c
-- Remoto: https://github.com/jlbellonGmail/gi-platform-core
+- Actualizado: 2026-09-22T02:15:19Z
+- Versión: v0.3.0
+- Rama: feature/v0.3.0-11-core03-tenant-readiness
+- HEAD: 21c772a71a5acebdbb61115749c6991d0a3df907
+- Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
 - Working tree: dirty
-- Worktrees: 3
-- Worktrees Git: 3
-- Unidades activas: ninguna
+- Worktrees: 18
+- Worktrees Git: 18
+- Unidades activas: 02-supabase-gi-dev-validation= [feature/v0.1.0-02-supabase-gi-dev-validation]; 03-post-hitl-versioned-evidence= [feature/v0.1.0-03-post-hitl-versioned-evidence]; 04-post-merge-close-dispatch= [feature/v0.1.0-04-post-merge-close-dispatch]; 06-release-readiness-current-roadmap= [feature/v0.2.1-06-release-readiness-current-roadmap]; 07-release-evidence= [feature/v0.2.1-07-release-evidence]; 08-release-evidence-pr=unknown [feature/v0.2.1-08-release-evidence-pr]; 09-release-history-manifest= [feature/v0.2.1-09-release-history-manifest]; 10-package-version-consistency= [feature/v0.2.1-10-package-version-consistency]; T01-close-roadmap=unknown [maintenance/v0.2.2-T01-close-roadmap]; T01-release-governance-reconciliation= [maintenance/v0.2.2-T01-release-governance-reconciliation]; 11-core03-tenant-readiness= [feature/v0.3.0-11-core03-tenant-readiness]
 - PR activa: UNKNOWN / sin PR abierta
-- CI:  @ 8df666c2613eaa401e81b850a1e5e3120666fb8c
-- CI vigente:  @ 8df666c2613eaa401e81b850a1e5e3120666fb8c
-- Última release: v0.2.1
+- CI: UNKNOWN / sin CI verificable
+- CI vigente: UNKNOWN / sin CI verificable
+- Última release: UNKNOWN / no disponible
 
 <!-- STATUS:AUTO:END -->
