@@ -1,4 +1,4 @@
-scope: single-maintainer
+scope: 11-core03-tenant-readiness
 head: HEAD
 base: develop
 status: approved
