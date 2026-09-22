@@ -53,6 +53,6 @@ calificación subjetiva.
 - [Release history manifest](release-history-manifest.md)
 - [Readiness final v0.2.1](release-v021-final-readiness.md)
 
- - [CORE03 Tenant readiness](core03-tenant-readiness.md)
+- [11-core03-tenant-readiness](core03-tenant-readiness.md)
 <!-- FEATURE_LINKS_END -->
 
