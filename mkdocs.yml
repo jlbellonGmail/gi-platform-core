@@ -34,5 +34,7 @@ nav:
   - Usuario: usuario/index.md
 
 plugins:
-  - search
-  - tags
+ - search
+ - tags
+validation:
+ omitted_files: ignore
