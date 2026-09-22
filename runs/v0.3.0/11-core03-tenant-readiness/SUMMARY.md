@@ -4,7 +4,7 @@ Versión: v0.3.0
 Estado: READY_FOR_PR
 Tipo: Feature
 SDD: FULL
-PR: pendiente de crear hacia develop
+PR: #22 https://github.com/jlbellonGmail/gi-platform-core/pull/22
 Merge: no autorizado; requiere decisión humana
 
 ## Objetivo
@@ -26,7 +26,7 @@ documentación de arquitectura/integración y evidencias Template v2.
 
 ## Validación
 
-25 pruebas focalizadas pasan; compileall y diff-check pasan. La verificación
+37 pruebas focalizadas pasan; compileall y diff-check pasan. La verificación
 remota confirmó tablas Tenant, RLS, 13 FKs, funciones tenant-scoped y ausencia
 de objetos/columnas Organization.
 
