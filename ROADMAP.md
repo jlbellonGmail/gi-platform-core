@@ -35,8 +35,6 @@ del Template.
 
 - Template: v2.0.0
 - SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
-- Adopción vigente: Template v2.0.4
-- SHA: `f2a7a247f5c3408a4a1ef234a80e069fe40b9b3e`
 
 ## Convenciones
 
