@@ -26,18 +26,18 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-28T23:51:27.3318571Z
+- Actualizado: 2026-09-28T23:53:50.0875579Z
 - Versión de desarrollo: v0.3.0
 - Fuente de versión: git tag
-- Rama: develop
-- HEAD: 31caa0dafe7d4d2765290b6c162716ef85eecbff
+- Rama: maintenance/template-v2.0.4
+- HEAD: 85c2bcf98c44e1ef54ffc7d85b1bdc184fd194b9
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
-- Relación con remoto: 0	0
+- Relación con remoto: sin upstream verificable
 - Working tree: clean
 - Worktrees Git actuales: 1
 - Unidades activas: ninguna (no hay unidades ACTIVE)
 - PR vigente: ninguna PR abierta para este HEAD
-- CI vigente: in_progress/ @ 31caa0dafe7d4d2765290b6c162716ef85eecbff
+- CI vigente: NOT RUN / no CI para este HEAD
 - Última release publicada: v0.3.0 (publicada 09/22/2026 04:12:14)
 - Último tag: v0.3.0
 
