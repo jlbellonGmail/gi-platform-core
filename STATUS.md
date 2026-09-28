@@ -6,6 +6,8 @@ GI-PLATFORM-CORE v0.3.0 está publicada y disponible para los módulos consumido
 
 - Template base: v2.0.0
 - Template SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
+- Template adoptado: v2.0.4
+- Template SHA adoptado: `f2a7a247f5c3408a4a1ef234a80e069fe40b9b3e`
 
 ## Estado
 
@@ -24,18 +26,19 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-22T04:13:00Z
-- Versión: v0.3.0
-- Rama: docs/v0.3.0-status-published
-- HEAD: da85f94e3882dd57a98b2fb09bca6e316905d029
+- Actualizado: 2026-09-28T23:50:20.9995164Z
+- Versión de desarrollo: v0.3.0
+- Fuente de versión: git tag
+- Rama: develop
+- HEAD: aa79c8567cf3faf3184bc1f30bb783e97edbdcd9
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
+- Relación con remoto: 0	0
 - Working tree: dirty
-- Worktrees: 17
-- Worktrees Git: 17
-- Unidades activas: 02-supabase-gi-dev-validation= [feature/v0.1.0-02-supabase-gi-dev-validation]; 03-post-hitl-versioned-evidence= [feature/v0.1.0-03-post-hitl-versioned-evidence]; 04-post-merge-close-dispatch= [feature/v0.1.0-04-post-merge-close-dispatch]; 06-release-readiness-current-roadmap= [feature/v0.2.1-06-release-readiness-current-roadmap]; 07-release-evidence= [feature/v0.2.1-07-release-evidence]; 08-release-evidence-pr=unknown [feature/v0.2.1-08-release-evidence-pr]; 09-release-history-manifest= [feature/v0.2.1-09-release-history-manifest]; 10-package-version-consistency= [feature/v0.2.1-10-package-version-consistency]; T01-close-roadmap=unknown [maintenance/v0.2.2-T01-close-roadmap]; T01-release-governance-reconciliation= [maintenance/v0.2.2-T01-release-governance-reconciliation]
-- PR activa: UNKNOWN / sin PR abierta
-- CI: UNKNOWN / sin CI verificable
-- CI vigente: UNKNOWN / sin CI verificable
-- Última release: UNKNOWN / no disponible
+- Worktrees Git actuales: 1
+- Unidades activas: ninguna (no hay unidades ACTIVE)
+- PR vigente: ninguna PR abierta para este HEAD
+- CI vigente: completed/success @ aa79c8567cf3faf3184bc1f30bb783e97edbdcd9
+- Última release publicada: v0.3.0 (publicada 09/22/2026 04:12:14)
+- Último tag: v0.3.0
 
 <!-- STATUS:AUTO:END -->

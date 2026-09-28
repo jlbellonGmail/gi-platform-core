@@ -1,6 +1,6 @@
 # Constitución de GI-PLATFORM-CORE
 
-Normativa estable adoptada desde Template v2.0.0 (`f5d4b6cc029c34c0d0c05831bfd28134276fa167`). El
+Normativa estable originada en Template v2.0.0 (`f5d4b6cc029c34c0d0c05831bfd28134276fa167`), con adopción vigente de Template v2.0.4 (`f2a7a247f5c3408a4a1ef234a80e069fe40b9b3e`). El
 comportamiento ejecutable vigente sigue en [AGENTS.md](AGENTS.md); los
 principios no habilitan anticipadamente capacidades futuras.
 
