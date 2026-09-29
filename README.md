@@ -8,8 +8,6 @@ La procedencia de esta baseline es:
 
 - Template: v2.0.0
 - SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
-- Adopción de Template vigente: v2.0.4
-- SHA: `f2a7a247f5c3408a4a1ef234a80e069fe40b9b3e`
 
 La primera work unit funcional es `01-core-platform-v010`; su estado y
 evidencia se mantienen en `ROADMAP.md` y `runs/`. La integración de Dental y
