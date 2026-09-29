@@ -6,6 +6,8 @@ GI-PLATFORM-CORE v0.3.0 está publicada y disponible para los módulos consumido
 
 - Template base: v2.0.0
 - Template SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
+- Template adoptado: v2.0.4
+- Template SHA adoptado: `f2a7a247f5c3408a4a1ef234a80e069fe40b9b3e`
 
 ## Estado
 
@@ -24,18 +26,19 @@ wheel antes de crear su tag.
 
 ## Estado verificado automáticamente
 
-- Actualizado: 2026-09-29T00:32:05Z
-- Versión: v0.3.0
+- Actualizado: 2026-09-29T00:32:25.4467304Z
+- Versión de desarrollo: v0.3.0
+- Fuente de versión: git tag
 - Rama: maintenance/template-v2.0.4
-- HEAD: e0dfc27ae40befe7a51e4075b67371c265d8b5aa
+- HEAD: c9935c5d3150137992518bdbcaca4c158e0b87c9
 - Remoto: https://github.com/jlbellonGmail/gi-platform-core.git
+- Relación con remoto: 2	0
 - Working tree: dirty
-- Worktrees: 3
-- Worktrees Git: 3
-- Unidades activas: ninguna
-- PR activa: UNKNOWN / sin PR abierta
-- CI: UNKNOWN / sin CI verificable
-- CI vigente: UNKNOWN / sin CI verificable
-- Última release: UNKNOWN / no disponible
+- Worktrees Git actuales: 1
+- Unidades activas: ninguna (no hay unidades ACTIVE)
+- PR vigente: ninguna PR abierta para este HEAD
+- CI vigente: NOT RUN / no CI para este HEAD
+- Última release publicada: v0.3.0 (publicada 09/22/2026 04:12:14)
+- Último tag: v0.3.0
 
 <!-- STATUS:AUTO:END -->
