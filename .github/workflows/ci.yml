@@ -24,8 +24,8 @@ jobs:
           cache: "pip"
           cache-dependency-path: requirements-dev.txt
 
-      - name: Instalar dependencias
-        run: pip install -r requirements-dev.txt
+      - name: Instalar paquete y dependencias de desarrollo
+        run: pip install . -r requirements-dev.txt
 
       - name: Tests (pytest)
         run: pytest -v
