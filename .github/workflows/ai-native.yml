@@ -12,4 +12,4 @@ jobs:
   l3:
     permissions:
       contents: read
-    uses: jlbellonGmail/ai-native/.github/workflows/l3-consumer.yml@afd375d564e1c750043ad47e1e4a7b1917073700
+    uses: jlbellonGmail/ai-native/.github/workflows/l3-consumer.yml@da84fb1fb4cb0164300857f77fcf06b16f7202d7
