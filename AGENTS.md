@@ -1,5 +1,7 @@
 # Manual operativo de GI-PLATFORM-CORE
 
+> **Estado de plataforma (M7):** este repositorio esta migrado a AI-Native v3.0.1 (`ai-native.lock.json`, `.ai-native/migration-journal.json`); Template v2.x es LEGACY/TRANSITION. El resto de este manual describe el circuito Template original y se conserva como referencia. No existen en este arbol y no deben invocarse: `check-status.ps1`, `close-feature.ps1`, `complete-approved-pr.ps1`, `local-feature-reconcile.ps1`, `ready-for-pr.ps1`, `scripts/feature-contract.ps1`, `scripts/materialize-sdd.ps1`, `scripts/sync-agentic-adapters.ps1`, `scripts/workunit-lib.ps1`, `start-work-unit.ps1`, `update-status.ps1`, `wait-pr-ci.ps1`.
+
 Este archivo define cómo trabajar en este repositorio. Es un contrato de
 operación, no el backlog, una spec ni una fotografía del estado de Git.
 Para principios normativos consultar [CONSTITUTION.md](CONSTITUTION.md); para
