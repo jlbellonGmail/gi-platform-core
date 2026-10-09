@@ -8,7 +8,7 @@ La procedencia de esta baseline es:
 
 - Template: v2.0.0
 - SHA: `f5d4b6cc029c34c0d0c05831bfd28134276fa167`
-- Adopción de Template vigente: v2.0.4
+- Adopción de Template (histórica, previa a M6): v2.0.4; plataforma vigente: AI-Native v3.0.1
 - SHA: `f2a7a247f5c3408a4a1ef234a80e069fe40b9b3e`
 
 La primera work unit funcional es `01-core-platform-v010`; su estado y
